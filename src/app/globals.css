@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  background: #151f32 url("/home-banner-bg.png");
+  background-blend-mode: luminosity;
+  background-position: top;
+  background-position-y: -180%;
+  background-repeat: no-repeat;
+  background-size: auto;
+  bottom: 0;
+}
+
+.btn-blue {
+  --tw-gradient-from: #328af1;
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(50, 138, 241, 0));
+  --tw-gradient-to: #328af1;
+  --tw-text-opacity: 1;
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  --tw-text-opacity: 1;
+  color: rgb(50 138 241 / var(--tw-text-opacity));
+  transition: all 0.3s;
+}
+
+.btn-blue:not(:disabled):hover {
+  --tw-gradient-from: #328af1;
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(50, 138, 241, 0));
+  --tw-gradient-to: #21c8f6;
+  --tw-text-opacity: 1;
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  -webkit-text-decoration-line: none;
+  text-decoration-line: none;
+  transition: all 0.3s;
+}
+
+.startsHere {
+  background: #526dd9;
+  background: -webkit-linear-gradient(to right, #526dd9 29%, #35a5ea 100%);
+  background: -moz-linear-gradient(to right, #526dd9 29%, #35a5ea 100%);
+  background: linear-gradient(to right, #526dd9 29%, #35a5ea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.purpulish-bg {
+  background: linear-gradient(0deg, #8b60ed, #b372bd);
+}
+
+.grayish-bg {
+  background: linear-gradient(180deg, #a1b6e5, #253d63);
+}
+
+.sm-text-c{
+  color: #bad9fc;
+}

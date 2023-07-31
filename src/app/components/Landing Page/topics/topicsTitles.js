@@ -1,0 +1,44 @@
+ const TopicsTitles = [
+    {
+        name:"html",
+        img:"html"
+    },
+    {
+        name:"css",
+        img:"css"
+    },
+    {
+        name:"JavaScript",
+        img:"javascript"
+    },
+    {
+        name:"Bootstrap",
+        img:"bootstrap"
+    },
+    {
+        name:"ReactJs",
+        img:"react"
+    },
+    {
+        name:"nodeJs",
+        img:"nodeJs"
+    },
+    {
+        name:"npm",
+        img:"npm"
+    },
+    {
+        name:"git",
+        img:"git"
+    },
+    {
+        name:"security",
+        img:"security"
+    },
+    {
+        name:"mongoDB",
+        img:"mongodb"
+    }
+]
+
+export default TopicsTitles
