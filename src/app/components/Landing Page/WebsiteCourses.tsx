@@ -10,7 +10,7 @@ function WebsiteCourses() {
         alt="illustration"
         width={2000}
         height={2000}
-        className="absolute -top-52 -z-10 m-auto w-full opacity-75"
+        className="absolute -top-52 m-auto w-full opacity-75"
       />
       <div className="text-white w-[600px] m-auto text-center">
         <p className="text-4xl font-medium">A stream of endless knowledge</p>

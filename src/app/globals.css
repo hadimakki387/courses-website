@@ -3,15 +3,17 @@
 @tailwind utilities;
 
 
-body {
-  background: #151f32 url("/home-banner-bg.png");
+.main{
+  background: #151f32  url("/home-banner-bg.png");
   background-blend-mode: luminosity;
   background-position: top;
-  background-position-y: -180%;
+  background-position-y: -50%;
   background-repeat: no-repeat;
   background-size: auto;
   bottom: 0;
+
 }
+
 
 .btn-blue {
   --tw-gradient-from: #328af1;

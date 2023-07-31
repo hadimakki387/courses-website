@@ -8,7 +8,7 @@ import Video from "./components/Video";
 
 export default function Home() {
   return (
-    <div className="w-[99vw] ">
+    <div className=" main">
       <NavBar />
       <div className="mx-64">
         <Header/>

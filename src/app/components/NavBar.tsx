@@ -3,7 +3,7 @@ import React from "react";
 
 function NavBar() {
   return (
-    <div className="flex justify-between items-center w-[98%] m-auto mt-4">
+    <div className="flex justify-between items-center w-[98%] m-auto pt-4">
       <div className="text-white">BrandName</div>
       <div className="text-white flex justify-center items-center gap-4 ">
         <Link href="/SignIn" className="hover:underline">
