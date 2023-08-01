@@ -6,19 +6,24 @@ import Youtube from "./svgs/Youtube";
 import Learn from "./ULs/Learn";
 import Discuss from "./ULs/Discuss";
 import Extras from "./ULs/Extras";
+import Image from "next/image";
 
 function Footer() {
   return (
     <div className="footer-wrap mobile:text-lg snipcss-sxLRM w-full max-[1023px]:px-4">
-      <img
+      <Image
         className="lazy pointer-events-none absolute right-0 bottom-0 hidden mix-blend-luminosity lg:inline-block lazyloaded style-QlC34"
-        src="https://laracasts.com/images/laracasts-gang.png"
+        width={1000}
+        height={1000}
+        src={"/laracasts-gang.png"}
         alt="Laracasts robot mascots"
         id="style-QlC34"
       />
-      <img
+      <Image
         className="lazy pointer-events-none absolute left-0 bottom-0 lazyloaded style-vVxCC"
-        src="https://laracasts.com/images/laravel-footer-logo.png"
+        src={"/laravel-footer-logo.png"}
+        height={1000}
+        width={1000}
         alt=""
         id="style-vVxCC"
       />
