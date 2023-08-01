@@ -18,7 +18,7 @@ function SignUp({showSignUp}:{showSignUp:any}) {
       >
         <CloseSvg />
       </button>
-      <section className="h-full w-full p-16  lg:px-4 style-tQjk2">
+      <section className="h-full w-full p-16 max-[480px]:p-7 lg:px-4 style-tQjk2 ">
         <div
           className="flex h-full flex-col justify-between px-4"
           data-v-2836fdb5-s=""

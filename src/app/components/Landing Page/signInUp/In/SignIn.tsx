@@ -8,7 +8,7 @@ import PasswordInput from "./Inputs/PasswordInput";
 function SignIn({showSignIn}:{showSignIn:any}) {
   return (
     <div
-      className=" bg-panel-900  text-white relative md:rounded-2xl max-h-90 md:mx-auto w-full overflow-auto px-6 py-9 flex flex-col mt-auto lg:mt-0 snipcss-sMhwa style-o6bUK"
+      className=" bg-panel-900  text-white relative md:rounded-2xl max-h-90 md:mx-auto w-full overflow-auto px-6 py-9 flex flex-col mt-auto lg:mt-0 snipcss-sMhwa style-o6bUK "
       data-v-2836fdb5=""
       id="style-o6bUK"
     >
@@ -18,7 +18,7 @@ function SignIn({showSignIn}:{showSignIn:any}) {
       >
         <CloseSvg />
       </button>
-      <section className="h-full w-full p-16  lg:px-4 style-tQjk2">
+      <section className="h-full w-full p-16 max-[480px]:p-7 lg:px-4 style-tQjk2">
         <div
           className="flex h-full flex-col justify-between px-4"
           data-v-2836fdb5-s=""

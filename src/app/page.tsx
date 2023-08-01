@@ -30,43 +30,44 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // Check if the user is on a Windows platform
+    const isWindows = navigator.platform.includes("Win");
+
     if (signIn || signUp) {
       document.body.classList.add("overflow-hidden");
-      document.body.classList.add("pr-[17px]");
+      if (isWindows) {
+        document.body.classList.add("pr-[17px]");
+      }
     } else {
       document.body.classList.remove("overflow-hidden");
-      document.body.classList.remove("pr-[17px]");
+      if (isWindows) {
+        document.body.classList.remove("pr-[17px]");
+      }
     }
   }, [signIn, signUp]);
   return (
     <>
 
     {/* the signIn/Up windows */}
+   
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
-          signIn ? "-translate-y-[50%]" : "-translate-y-[-100%]"
-        } transition-all duration-300`}
+          signIn ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]" : "-translate-y-[-100%]"
+        } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        <ClickAwayListener
-          onClickAway={() => {
-            setSignIn(false);
-          }}
-        >
+        
           <SignIn showSignIn={showSignIn} />
-        </ClickAwayListener>
+        
       </div>
+      
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
-          signUp ? "-translate-y-[50%]" : "-translate-y-[-100%]"
-        } transition-all duration-300`}
+          signUp ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]" : "-translate-y-[-100%]"
+        } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        <ClickAwayListener
-          onClickAway={() => {
-            setSignUp(false);
-          }}
-        >
+       
           <SignUp showSignUp={showSignUp} />
-        </ClickAwayListener>
+       
       </div>
       {/* the signIn/Up windows */}
 
