@@ -1,14 +1,14 @@
 import Link from "next/link";
 import React from "react";
 
-function NavBar() {
+function NavBar({showSignIn}:{showSignIn:any}) {
   return (
     <div className="flex justify-between items-center w-[98%] m-auto pt-4">
       <div className="text-white">BrandName</div>
       <div className="text-white flex justify-center items-center gap-4 ">
-        <Link href="/SignIn" className="hover:underline">
+        <button  className="hover:underline" onClick={showSignIn}>
           Sign In
-        </Link>
+        </button>
 
         <Link
           href={"/SignIn"}

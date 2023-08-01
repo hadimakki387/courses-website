@@ -1,44 +1,73 @@
  const TopicsTitles = [
     {
         name:"html",
-        img:"html"
+        img:"html",
+        vidNb:18
     },
     {
         name:"css",
-        img:"css"
+        img:"css",
+        vidNb:24
     },
     {
         name:"JavaScript",
-        img:"javascript"
+        img:"javascript",
+        vidNb:36
     },
     {
         name:"Bootstrap",
-        img:"bootstrap"
+        img:"bootstrap",
+        vidNb:26
     },
     {
         name:"ReactJs",
-        img:"react"
+        img:"react",
+        vidNb:44
     },
     {
         name:"nodeJs",
-        img:"nodeJs"
+        img:"nodeJs",
+        vidNb:16
     },
     {
         name:"npm",
-        img:"npm"
+        img:"npm",
+        vidNb:16
     },
     {
         name:"git",
-        img:"git"
-    },
-    {
-        name:"security",
-        img:"security"
+        img:"git",
+        vidNb:18
     },
     {
         name:"mongoDB",
-        img:"mongodb"
-    }
+        img:"mongodb",
+        vidNb:15
+        
+    },
+    {
+        name:"Clean Code",
+        img:"clean-code-logo"
+    },
+    {
+        name:"Authenticaion",
+        img:"authentication-logo",
+        vidNb:13
+    },
+    {
+        name:"OOP",
+        img:"OOP-logo"
+    },
+    {
+        name:"DOM",
+        img:"DOM",
+        vidNb:8
+    },
+    {
+        name:"jQeury",
+        img:"Jquery",
+        vidNb:11
+    },
 ]
 
 export default TopicsTitles

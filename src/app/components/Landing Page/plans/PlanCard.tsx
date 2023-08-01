@@ -29,7 +29,7 @@ function PlanCard({
     }
   };
   return (
-    <div className="relative rounded-xl flex flex-col gap-2 h-80 bg-[#18273f] hover:bg-[#182b47] transition-all duration-200  w-1/3 p-4 text-white">
+    <div className="relative rounded-xl flex flex-col gap-2 h-[22rem] bg-[#18273f] hover:bg-[#182b47] transition-all duration-200  w-1/3 p-4 text-white">
       <div className="flex justify-between items-center">
         <div className="text-xs">
           {isMonthly ? (
@@ -47,7 +47,7 @@ function PlanCard({
             </button>
           )}
         </div>
-        <div className="text-[#328af1]">${isTeam ? Price * team : Price}</div>
+        <div className="text-[#328af1] text-2xl">${isTeam ? Price * team : Price}</div>
       </div>
       <div className="w-full ">
         <p className="sm-text-c text-center">{title}</p>
@@ -63,14 +63,14 @@ function PlanCard({
       </div>
       <div className="text-center text-xs mx-4 ">{description}</div>
       {isTeam && (
-        <div className="flex justify-around items-center">
-          <button onClick={decrease}>-</button>
-          <div>{team}</div>
-          <button onClick={increase}>+</button>
+        <div className="flex justify-between items-center relative top-[0.2rem] mx-2">
+          <button onClick={decrease} className="bg-[#1b3152] px-2 rounded-md">-</button>
+          <div className="bg-[#151f32] w-20  py-[2px] rounded-md text-center">{team}</div>
+          <button onClick={increase} className="bg-[#1b3152] px-2 rounded-md">+</button>
         </div>
       )}
       <div className="w-full ">
-        <button className="bg-[#1b3152] absolute bottom-2  text-white hover:text-[#20a7d7] hover:bg-[rgb(30,54,90)] transition-all duration-200 rounded-xl text-sm  py-2 w-[86%]">
+        <button className="bg-[#1b3152] absolute bottom-4  text-white hover:text-[#20a7d7] hover:bg-[rgb(30,54,90)] transition-all duration-200 rounded-xl text-sm  py-2 w-[86%]">
           Select Plan
         </button>
       </div>

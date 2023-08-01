@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css?family=Cabin:400,500,600,700,400i,500i,600i,700i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap");
+
+* {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+
+.footer-wrap {
+  background-image: radial-gradient(circle at 15% -3%, #365280, #080e17 116%);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: auto;
+  overflow: hidden;
+  position: relative;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+}
+
+.footer-wrap .footer-section.top .container {
+  background: url(https://laracasts.com/images/mic-drop@2x.webp) no-repeat 0 0;
+  background-size: 80px;
+  padding-top: 4em;
+  background-image: url("https://laracasts.com/images/mic-drop@2x.webp");
+  background-position-x: 0px;
+  background-position-y: 0px;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+}
+
+@media (min-width: 992px) {
+  .footer-wrap .footer-section.top .container {
+    background-size: 176px;
+    padding-bottom: 80px;
+    padding-top: 80px;
+  }
+}
+
+.text-grey-600\/50 {
+  color: rgba(186, 217, 252, 0.5);
+}
+
+.link {
+  --tw-text-opacity: 1;
+  color: rgb(50 138 241 / var(--tw-text-opacity));
+}
+
+.inherits-color {
+  color: inherit;
+}
+
+a.link:not(.no-transition) {
+  transition: color 0.3s;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+input {
+  color: inherit;
+  font-family: Poppins, Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.rounded-xl {
+  border-radius: 0.934rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(34 34 34 / var(--tw-text-opacity));
+}
+
+
+
+.btn {
+  --tw-text-opacity: 1;
+  background-clip: padding-box;
+  border-color: transparent;
+  border-radius: 16px;
+  border-width: 1px;
+  color: rgb(34 34 34 / var(--tw-text-opacity));
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.15;
+  max-width: 30rem;
+
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition-duration: 0.15s;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-blue {
+  --tw-gradient-from: #328af1;
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(50, 138, 241, 0));
+  --tw-gradient-to: #328af1;
+  --tw-text-opacity: 1;
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.py-5 {
+  padding-bottom: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.btn:hover {
+  --tw-text-opacity: 1;
+  color: rgb(50 138 241 / var(--tw-text-opacity));
+}
+
+.btn-blue:not(:disabled):hover {
+  --tw-gradient-from: #328af1;
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(50, 138, 241, 0));
+  --tw-gradient-to: #21c8f6;
+  --tw-text-opacity: 1;
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  -webkit-text-decoration-line: none;
+  text-decoration-line: none;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
+.text-grey-600 {
+  --tw-text-opacity: 1;
+  color: rgb(186 217 252 / var(--tw-text-opacity));
+}
+
+/* These were inline style tags. Uses id+class to override almost everything */
+#style-QlC34.style-QlC34 {
+  max-width: 780px;
+}
+#style-vVxCC.style-vVxCC {
+  max-width: 535px;
+}
