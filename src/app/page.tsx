@@ -19,6 +19,8 @@ export default function Home() {
       setSignIn(!signIn);
     }
     setSignIn(!signIn);
+    document.body.classList.toggle("overflow-hidden");
+    document.body.classList.toggle("pr-[17px]");
   };
 
   const [signUp, setSignUp] = useState(false);
@@ -29,6 +31,8 @@ export default function Home() {
       setSignUp(!signUp);
     }
     setSignUp(!signUp);
+    document.body.classList.toggle("overflow-hidden");
+    document.body.classList.toggle("pr-[17px]");
   };
 
   return (
@@ -47,7 +51,9 @@ export default function Home() {
       >
         <SignUp showSignUp={showSignUp} />
       </div>
-      <div className="relative main">
+      <div
+        className={`relative main ${signIn || signUp ? "brightness-50 " : ""} transition-all duration-300`}
+      >
         <NavBar showSignIn={showSignIn} showSignUp={showSignUp} />
 
         <div className="mx-64">

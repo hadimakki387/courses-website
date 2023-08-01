@@ -38,7 +38,7 @@ function SignIn({showSignIn}:{showSignIn:any}) {
                     {/* Here goes the form */}
                     <form>
                       <div className="control" data-js="email_field">
-                        <Email />
+                        <Email name="signInEmail"/>
                       </div>
                       <div className="control" data-js="password_field">
                         <PasswordInput />

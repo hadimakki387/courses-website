@@ -1,7 +1,7 @@
 import React from "react";
 import CheckSvg from "../SVGs/CheckSvg";
 
-function Email() {
+function Email({name}:{name:string}) {
   return (
     <>
       <label
@@ -14,7 +14,7 @@ function Email() {
         <input
           id="email_12505.664105939994"
           type="text"
-          name="email_12505.664105939994"
+          name={name}
           data-js="email"
           className="input is-minimal text-sm text-white"
           autoComplete="username"

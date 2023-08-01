@@ -36,9 +36,9 @@ function SignUp({showSignUp}:{showSignUp:any}) {
                   <div className="mt-8">
 
                     {/* Here goes the form */}
-                    <form>
+                    <form action="" method="POST" >
                       <div className="control" data-js="email_field">
-                        <Email />
+                        <Email name="signUpEmail"/>
                       </div>
                       <div className="control" data-js="password_field">
                         <PasswordInput />

@@ -12,10 +12,8 @@ function PasswordInput() {
       </label>
       <div className="relative flex items-center border-b border-panel-700">
         <input
-          id="password_66304.12609659045"
           type="password"
-          name="password_66304.12609659045"
-          data-js="password"
+          name="UserPassword"
           className="input is-minimal text-sm text-white"
           autoComplete="current-password"
           placeholder="Enter Password"
