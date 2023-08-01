@@ -3,7 +3,7 @@ import React from "react";
 
 function TopicsCard({img,name,vidNb}:{img:string,name:string,vidNb:any}) {
   return (
-    <div className="flex  items-center bg-[#18273f] w-2/12 rounded-xl py-3 px-3 gap-3">
+    <div className="flex  items-center bg-[#18273f] w-2/12 rounded-xl py-3 px-3 gap-3 max-[1530px]:w-1/4 max-[1100px]:w-1/3 max-md:w-full">
       <Image
         src={`/topics/${img}.png`}
         alt="html"
