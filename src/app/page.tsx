@@ -1,62 +1,83 @@
 "use client";
-
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import Header from "./components/Landing Page/Header";
 import WebsiteCourses from "./components/Landing Page/WebsiteCourses";
 import Footer from "./components/Landing Page/footer/Footer";
 import Plans from "./components/Landing Page/plans/Plans";
-
 import NavBar from "./components/NavBar";
 import SignIn from "./components/Landing Page/signInUp/In/SignIn";
 import SignUp from "./components/Landing Page/signInUp/Up/SignUp";
+import ClickAwayListener from "react-click-away-listener";
 
 export default function Home() {
   const [signIn, setSignIn] = useState(false);
+  const [signUp, setSignUp] = useState(false);
 
   const showSignIn = () => {
     if (signUp) {
-      setSignUp(!SignUp);
-      setSignIn(!signIn);
+      setSignUp(false);
     }
-    setSignIn(!signIn);
-    document.body.classList.toggle("overflow-hidden");
-    document.body.classList.toggle("pr-[17px]");
+    setSignIn((prevSignIn) => !prevSignIn);
+ 
   };
-
-  const [signUp, setSignUp] = useState(false);
 
   const showSignUp = () => {
     if (signIn) {
-      setSignIn(!SignIn);
-      setSignUp(!signUp);
+      setSignIn(false);
     }
-    setSignUp(!signUp);
-    document.body.classList.toggle("overflow-hidden");
-    document.body.classList.toggle("pr-[17px]");
+    setSignUp((prevSignUp) => !prevSignUp);
+    
   };
 
+  useEffect(() => {
+    if (signIn || signUp) {
+      document.body.classList.add("overflow-hidden");
+      document.body.classList.add("pr-[17px]");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+      document.body.classList.remove("pr-[17px]");
+    }
+  }, [signIn, signUp]);
   return (
     <>
+
+    {/* the signIn/Up windows */}
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
           signIn ? "-translate-y-[50%]" : "-translate-y-[-100%]"
         } transition-all duration-300`}
       >
-        <SignIn showSignIn={showSignIn} />
+        <ClickAwayListener
+          onClickAway={() => {
+            setSignIn(false);
+          }}
+        >
+          <SignIn showSignIn={showSignIn} />
+        </ClickAwayListener>
       </div>
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
           signUp ? "-translate-y-[50%]" : "-translate-y-[-100%]"
         } transition-all duration-300`}
       >
-        <SignUp showSignUp={showSignUp} />
+        <ClickAwayListener
+          onClickAway={() => {
+            setSignUp(false);
+          }}
+        >
+          <SignUp showSignUp={showSignUp} />
+        </ClickAwayListener>
       </div>
+      {/* the signIn/Up windows */}
+
       <div
-        className={`relative main ${signIn || signUp ? "brightness-50 " : ""} transition-all duration-300`}
+        className={`relative main ${
+          signIn || signUp ? "brightness-50 " : ""
+        } transition-all duration-300`}
       >
         <NavBar showSignIn={showSignIn} showSignUp={showSignUp} />
 
-        <div className="mx-64">
+        <div className="mx-[13%] max-[990px]:mx-[5%] max-[500px]:mx-2">
           <Header />
           <WebsiteCourses />
           <Plans />

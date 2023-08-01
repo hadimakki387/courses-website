@@ -29,7 +29,7 @@ function PlanCard({
     }
   };
   return (
-    <div className="relative rounded-xl flex flex-col gap-2 h-[22rem] bg-[#18273f] hover:bg-[#182b47] transition-all duration-200  w-1/3 p-4 text-white">
+    <div className="relative rounded-xl flex flex-col gap-2 h-[22rem] bg-[#18273f] hover:bg-[#182b47] transition-all duration-200  w-1/3 p-4 text-white  max-[700px]:w-1/2 max-[700px]:m-auto max-[520px]:w-3/4 max-[340px]:w-[90%]">
       <div className="flex justify-between items-center">
         <div className="text-xs">
           {isMonthly ? (
@@ -58,7 +58,7 @@ function PlanCard({
           width={150}
           height={150}
           src={`/${img}.svg`}
-          className="m-auto"
+          className="m-auto "
         />
       </div>
       <div className="text-center text-xs mx-4 ">{description}</div>

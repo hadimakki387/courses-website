@@ -9,7 +9,7 @@ import Extras from "./ULs/Extras";
 
 function Footer() {
   return (
-    <div className="footer-wrap mobile:text-lg snipcss-sxLRM w-full">
+    <div className="footer-wrap mobile:text-lg snipcss-sxLRM w-full max-[1023px]:px-4">
       <img
         className="lazy pointer-events-none absolute right-0 bottom-0 hidden mix-blend-luminosity lg:inline-block lazyloaded style-QlC34"
         src="https://laracasts.com/images/laracasts-gang.png"
@@ -69,7 +69,7 @@ function Footer() {
                 brands. Come inside, see for yourself, and massively level up
                 your development skills in the process.
               </p>
-              <div className="mx-auto mb-8 flex w-42 items-center justify-between gap-x-2 lg:mx-0 lg:w-28">
+              <div className="mx-auto mb-8 flex w-42 items-center justify-start max-[1023px]:justify-center gap-x-2">
                 <Youtube/>
                 <Twitter/>
                 <Github/>
