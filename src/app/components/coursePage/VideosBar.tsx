@@ -4,7 +4,7 @@ import SectionCard from "./SectionCard";
 import { FakeVideoContext } from "@/app/context/FakeVideosContext";
 
 function VideosBar() {
-const [videos,sections] = useContext(FakeVideoContext)
+  const [videos,PlayingVideo, sections, chosenVideo] = useContext(FakeVideoContext);
 
   return (
     <div className="flex flex-col gap-4 w-[25vw] bg-[#0d131d] h-screen text-white p-4">
