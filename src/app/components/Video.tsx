@@ -1,8 +1,23 @@
 import React from 'react'
 
 function Video() {
+  const videoUrl = "https://drive.google.com/file/d/1_cLzTQfFngtnMiqDs72NVhOtOZnLczoV/preview";
+  
   return (
-    <iframe width="560" height="315" src="https://drive.google.com/file/d/1BclYsj9nVyvywDUTDophTf5TsfzRzrdQ/preview"  allow="autoplay; encrypted-media" allowFullScreen></iframe>
+
+      <iframe
+        src={videoUrl}
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      ></iframe>
+    
   )
 }
 

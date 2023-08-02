@@ -1,5 +1,5 @@
 "use client";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Landing Page/Header";
 import WebsiteCourses from "./components/Landing Page/WebsiteCourses";
 import Footer from "./components/Landing Page/footer/Footer";
@@ -8,17 +8,18 @@ import NavBar from "./components/NavBar";
 import SignIn from "./components/Landing Page/signInUp/In/SignIn";
 import SignUp from "./components/Landing Page/signInUp/Up/SignUp";
 import ClickAwayListener from "react-click-away-listener";
+import SideBarDiv from "./components/Landing Page/SideBarDiv";
 
 export default function Home() {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
+  const [SideBar, setSideBar] = useState(false);
 
   const showSignIn = () => {
     if (signUp) {
       setSignUp(false);
     }
     setSignIn((prevSignIn) => !prevSignIn);
- 
   };
 
   const showSignUp = () => {
@@ -26,14 +27,17 @@ export default function Home() {
       setSignIn(false);
     }
     setSignUp((prevSignUp) => !prevSignUp);
-    
+  };
+
+  const showSideBar = () => {
+    setSideBar(!SideBar);
   };
 
   useEffect(() => {
     // Check if the user is on a Windows platform
     const isWindows = navigator.platform.includes("Win");
 
-    if (signIn || signUp) {
+    if (signIn || signUp || SideBar) {
       document.body.classList.add("overflow-hidden");
       if (isWindows) {
         document.body.classList.add("pr-[17px]");
@@ -44,39 +48,49 @@ export default function Home() {
         document.body.classList.remove("pr-[17px]");
       }
     }
-  }, [signIn, signUp]);
+  }, [signIn, signUp, SideBar]);
   return (
     <>
-
-    {/* the signIn/Up windows */}
-   
+    
+      {/* the signIn/Up windows */}
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
-          signIn ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]" : "-translate-y-[-100%]"
+          signIn
+            ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]"
+            : "-translate-y-[-100%]"
         } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        
-          <SignIn showSignIn={showSignIn} />
-        
+        <SignIn showSignIn={showSignIn} />
       </div>
-      
+
       <div
         className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
-          signUp ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]" : "-translate-y-[-100%]"
+          signUp
+            ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]"
+            : "-translate-y-[-100%]"
         } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-       
-          <SignUp showSignUp={showSignUp} />
-       
+        <SignUp showSignUp={showSignUp} />
+      </div>
+      <div
+        className={`fixed top-0 right-0 z-10  ${
+          SideBar ? "translate-x-0" : "translate-x-full "
+        } transition-all duration-300`}
+      >
+        <SideBarDiv showSideBar={setSideBar} />
       </div>
       {/* the signIn/Up windows */}
 
       <div
         className={`relative main ${
-          signIn || signUp ? "brightness-50 " : ""
+          signIn || signUp || SideBar ? "brightness-50 " : ""
         } transition-all duration-300`}
       >
-        <NavBar showSignIn={showSignIn} showSignUp={showSignUp} />
+        <NavBar
+          showSignIn={showSignIn}
+          showSignUp={showSignUp}
+          showSideBar={showSideBar}
+        />
 
         <div className="mx-[13%] max-[990px]:mx-[5%] max-[500px]:mx-2">
           <Header />

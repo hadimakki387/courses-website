@@ -18,7 +18,6 @@ function Page() {
   function showMenu() {
     setMenu(!menu);
   }
-  console.log(menu)
 
   return (
     <div className="w-full h-full  flex bg-zinc-950 text-white ">
