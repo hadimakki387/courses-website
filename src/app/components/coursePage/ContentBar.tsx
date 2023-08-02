@@ -7,7 +7,7 @@ function ContentBar() {
   const [videos,PlayingVideo, sections, chosenVideo,SideBar] = useContext(FakeVideoContext);
 
   return (
-    <div className={`bg-[#151f32] w-full ${SideBar?"brightness-50 transition-all duration-300":""}`}>
+    <div className={`course-lighter-bg-color w-full ${SideBar?"brightness-50 transition-all duration-300":""}`}>
       <div
         className="mx-auto flex justify-center relative "
         style={{

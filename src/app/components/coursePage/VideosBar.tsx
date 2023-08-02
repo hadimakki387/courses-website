@@ -9,7 +9,7 @@ function VideosBar() {
 
   return (
     <div
-      className={`flex flex-col gap-4 w-[25vw] bg-[#0d131d] h-screen text-white p-4 ${
+      className={`flex flex-col gap-4 w-[25vw]  h-screen text-white p-4 ${
         SideBar ? "brightness-50 transition-all duration-300" : ""
       }`}
     >

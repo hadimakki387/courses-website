@@ -82,13 +82,9 @@ export default function Home() {
       >
         <SignUp showSignUp={showSignUp} getSignUpData={getSignUpData}/>
       </div>
-      <div
-        className={`fixed top-0 right-0 z-10  ${
-          SideBar ? "translate-x-0" : "translate-x-full "
-        } transition-all duration-300`}
-      >
-        <SideBarDiv showSideBar={setSideBar} />
-      </div>
+      
+        <SideBarDiv showSideBar={setSideBar} SideBar={SideBar}/>
+      
       {/* the signIn/Up windows */}
 
       <div

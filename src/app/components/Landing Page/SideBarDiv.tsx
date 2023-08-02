@@ -3,8 +3,12 @@ import Link from "next/link";
 import React from "react";
 import ClickAwayListener from "react-click-away-listener";
 
-function SideBarDiv({ showSideBar }: { showSideBar: any }) {
+function SideBarDiv({ showSideBar ,SideBar}: { showSideBar: any ,SideBar:Boolean}) {
   const items=[
+    {
+      text1:"Home",
+      text2:"Home Sweet Home"
+    },
     {
       text1:"Course",
       text2:"Start Studying"
@@ -23,7 +27,11 @@ function SideBarDiv({ showSideBar }: { showSideBar: any }) {
     },
   ]
   return (
-    <ClickAwayListener onClickAway={() => showSideBar(false)}>
+    <div
+        className={`fixed top-0 right-0 z-10  ${
+          SideBar ? "translate-x-0" : "translate-x-full "
+        } transition-all duration-300`}
+      ><ClickAwayListener onClickAway={() => showSideBar(false)}>
       <div className="text-white relative w-[20vw] max-[1000px]:w-[40vw] max-[600px]:w-[60vw] h-screen bg-[#0d131d]">
         <div className="flex flex-col p-8 gap-4">
           <div className="flex items-center gap-4">
@@ -55,10 +63,11 @@ function SideBarDiv({ showSideBar }: { showSideBar: any }) {
             </Link>
           </div>
           })}
-          
+
         </div>
       </div>
-    </ClickAwayListener>
+    </ClickAwayListener></div>
+    
   );
 }
 
