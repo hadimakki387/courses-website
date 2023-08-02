@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import NavBar from "../NavBar";
 import { FakeVideoContext } from "@/app/context/FakeVideosContext";
 import VideosBar from "./VideosBar";
 import ContentBar from "./ContentBar";
+import SideBarDiv from "../Landing Page/SideBarDiv";
 
 function Index() {
   const videos = [
@@ -41,6 +42,8 @@ function Index() {
     },
   ];
 
+
+
   const [PlayingVideo, setPlayingVideo] = useState(
     "https://drive.google.com/file/d/1MnFN26OMJ8MzvAQctAbZGK9ohUNvs2rQ/preview"
   );
@@ -52,6 +55,27 @@ function Index() {
     }
   }
 
+  const [SideBar, setSideBar] = useState(false);
+
+  const showSideBar = () => {
+    setSideBar(!SideBar);
+  };
+
+  useEffect(() => {
+    const isWindows = navigator.platform.includes("Win");
+
+    if (SideBar) {
+      document.body.classList.add("overflow-hidden");
+      if (isWindows) {
+        document.body.classList.add("pr-[17px]");
+      }
+    } else {
+      document.body.classList.remove("overflow-hidden");
+      if (isWindows) {
+        document.body.classList.remove("pr-[17px]");
+      }
+    }
+  }, [ SideBar]);
 
   return (
     <div className="bg-[#0d131d] ">
@@ -62,12 +86,18 @@ function Index() {
         showSignUp={() => {
           console.log("hello");
         }}
-        showSideBar={() => {
-          console.log("hello");
-        }}
+        showSideBar={showSideBar}
       />
       <div className="flex">
-        <FakeVideoContext.Provider value={[videos,PlayingVideo, sections, chosenVideo]}>
+      <div
+        className={`fixed top-0 right-0 z-10  ${
+          SideBar ? "translate-x-0" : "translate-x-full "
+        } transition-all duration-300`}
+      >
+        <SideBarDiv showSideBar={setSideBar} />
+      </div>
+      
+        <FakeVideoContext.Provider value={[videos,PlayingVideo, sections, chosenVideo,SideBar]}>
           <VideosBar />
           <ContentBar />
         </FakeVideoContext.Provider>

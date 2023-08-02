@@ -4,10 +4,15 @@ import SectionCard from "./SectionCard";
 import { FakeVideoContext } from "@/app/context/FakeVideosContext";
 
 function VideosBar() {
-  const [videos,PlayingVideo, sections, chosenVideo] = useContext(FakeVideoContext);
+  const [videos, PlayingVideo, sections, chosenVideo, SideBar] =
+    useContext(FakeVideoContext);
 
   return (
-    <div className="flex flex-col gap-4 w-[25vw] bg-[#0d131d] h-screen text-white p-4">
+    <div
+      className={`flex flex-col gap-4 w-[25vw] bg-[#0d131d] h-screen text-white p-4 ${
+        SideBar ? "brightness-50 transition-all duration-300" : ""
+      }`}
+    >
       <TitleOfSideBar />
       <div className="flex flex-col gap-2">
         {sections.map((section: any, index: any) => {
