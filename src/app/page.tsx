@@ -14,6 +14,8 @@ export default function Home() {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [SideBar, setSideBar] = useState(false);
+  const [signInData,setSignInData] = useState({})
+  const [signUpData,setSignUpData] = useState({})
 
   const showSignIn = () => {
     if (signUp) {
@@ -49,6 +51,14 @@ export default function Home() {
       }
     }
   }, [signIn, signUp, SideBar]);
+
+  const getSignInData = (e:any)=>{
+    setSignInData(e)
+  }
+  const getSignUpData = (e:any)=>{
+    setSignUpData(e)
+  }
+
   return (
     <>
     
@@ -60,7 +70,7 @@ export default function Home() {
             : "-translate-y-[-100%]"
         } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        <SignIn showSignIn={showSignIn} />
+        <SignIn showSignIn={showSignIn} getSignInData={getSignInData}/>
       </div>
 
       <div
@@ -70,7 +80,7 @@ export default function Home() {
             : "-translate-y-[-100%]"
         } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        <SignUp showSignUp={showSignUp} />
+        <SignUp showSignUp={showSignUp} getSignUpData={getSignUpData}/>
       </div>
       <div
         className={`fixed top-0 right-0 z-10  ${

@@ -1,11 +1,26 @@
-import React from "react";
+import React,{useState} from "react";
 import "./signUp.css";
 import CloseSvg from "../In/SVGs/CloseSvg";
 import Email from "../In/Inputs/Email";
 import PasswordInput from "../In/Inputs/PasswordInput";
 
 
-function SignUp({showSignUp}:{showSignUp:any}) {
+function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
+
+  const [signInData, setSignInData] = useState({});
+
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    getSignUpData(signInData)
+    console.log(signInData);
+  };
+
+ 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignInData((prevData) => ({ ...prevData, [name]: value }));
+  };
   return (
     <div
       className=" bg-panel-900  text-white relative md:rounded-2xl max-h-90 md:mx-auto w-full overflow-auto px-6 py-9 flex flex-col mt-auto lg:mt-0 snipcss-sMhwa style-o6bUK"
@@ -36,12 +51,12 @@ function SignUp({showSignUp}:{showSignUp:any}) {
                   <div className="mt-8">
 
                     {/* Here goes the form */}
-                    <form action="" method="POST" >
+                    <form onSubmit={handleSubmit} >
                       <div className="control" data-js="email_field">
-                        <Email name="signUpEmail"/>
+                        <Email name="signUpEmail" handleInputChange={handleInputChange}/>
                       </div>
                       <div className="control" data-js="password_field">
-                        <PasswordInput />
+                        <PasswordInput handleInputChange={handleInputChange}/>
                       </div>
                       <div className="mt-10 text-center">
                         <button

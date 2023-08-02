@@ -4,9 +4,27 @@ import React from "react";
 import ClickAwayListener from "react-click-away-listener";
 
 function SideBarDiv({ showSideBar }: { showSideBar: any }) {
+  const items=[
+    {
+      text1:"Course",
+      text2:"Start Studying"
+    },
+    {
+      text1:"Profile",
+      text2:"Check Your Profile"
+    },
+    {
+      text1:"Settings",
+      text2:"Make a tweek"
+    },
+    {
+      text1:"Logout",
+      text2:"but... why?"
+    },
+  ]
   return (
     <ClickAwayListener onClickAway={() => showSideBar(false)}>
-      <div className="text-white relative w-[20vw] h-screen bg-[#0d131d]">
+      <div className="text-white relative w-[20vw] max-[1000px]:w-[40vw] max-[600px]:w-[60vw] h-screen bg-[#0d131d]">
         <div className="flex flex-col p-8 gap-4">
           <div className="flex items-center gap-4">
             <div className="">
@@ -23,39 +41,21 @@ function SideBarDiv({ showSideBar }: { showSideBar: any }) {
               <p className="text-xs">plan</p>
             </div>
           </div>
-          <div className="text-xl font-medium">
+          
+          {items.map((item,index)=>{
+            return<div className="text-xl font-medium" key={index}>
             <Link
               href={"/MERN-course"}
               className="hover:text-sky-600 flex flex-col "
             >
               <span className="-mb-2">
-                Course
+                {item.text1}
               </span>
-              <span className="text-[10px] text-zinc-500  ">//Start Studying</span>
+              <span className="text-[10px] text-zinc-500  ">&#47;&#47;{item.text2}</span>
             </Link>
           </div>
-          <div className="text-xl font-medium">
-          <Link
-              href={"/"}
-              className="hover:text-sky-600 flex flex-col "
-            >
-              <span className="-mb-2">
-                Settings
-              </span>
-              <span className="text-[10px]  text-zinc-500">//Make a tweek</span>
-            </Link>
-          </div>
-          <div className="text-xl font-medium">
-          <Link
-              href={"/"}
-              className="hover:text-sky-600  flex flex-col "
-            >
-              <span className="-mb-2">
-                Logout
-              </span>
-              <span className="text-[10px]  text-zinc-500">//but... why?</span>
-            </Link>
-          </div>
+          })}
+          
         </div>
       </div>
     </ClickAwayListener>
