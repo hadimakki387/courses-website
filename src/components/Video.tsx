@@ -1,5 +1,6 @@
+import { FakeVideoContext } from "@/context/FakeVideosContext";
 import React, { useContext,useEffect } from "react";
-import { FakeVideoContext } from "../context/FakeVideosContext";
+
 
 function Video() {
   const [videos,PlayingVideo, sections, chosenVideo] =useContext(FakeVideoContext);

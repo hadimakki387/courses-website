@@ -1,5 +1,6 @@
+import Index from "@/components/coursePage/Index";
 import React ,{ useState } from "react";
-import Index from "../components/coursePage/Index";
+
 
 
 function page() {

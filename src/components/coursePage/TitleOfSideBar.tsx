@@ -1,8 +1,11 @@
-import { FakeVideoContext } from '@/app/context/FakeVideosContext';
+
+import { FakeVideoContext } from '@/context/FakeVideosContext';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext } from 'react';
 
 function TitleOfSideBar() {
-  const [videos] = useContext(FakeVideoContext);
+  const [videos, PlayingVideo, sections, chosenVideo, SideBar,showVideosBar] = useContext(FakeVideoContext);
 
   let totalMinutes = 0;
   let totalSeconds = 0;
@@ -21,7 +24,8 @@ function TitleOfSideBar() {
   totalSeconds %= 60;
 
   return (
-    <div className='flex items-center gap-4'>
+    <div className='flex justify-between'>
+      <div className='flex items-center gap-4'>
       <div>LOGO</div>
       <div className='flex flex-col'>
         <div>MERN stack from scratch</div>
@@ -36,6 +40,11 @@ function TitleOfSideBar() {
         </div>
       </div>
     </div>
+    <div onClick={showVideosBar}>
+      <FontAwesomeIcon icon={faX} />
+    </div>
+    </div>
+    
   );
 }
 

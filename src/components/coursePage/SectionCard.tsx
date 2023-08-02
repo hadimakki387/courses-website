@@ -3,7 +3,8 @@ import React, { useState , useContext} from "react";
 import RunButton from "./RunButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { FakeVideoContext } from "@/app/context/FakeVideosContext";
+import { FakeVideoContext } from "@/context/FakeVideosContext";
+
 
 // ... (imports and other code)
 

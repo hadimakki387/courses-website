@@ -1,10 +1,11 @@
 "use client";
 
+import AdminForm from "@/components/admin/Add Admin/AdminForm";
+import VideoForm from "@/components/admin/Add Video/VideoForm";
+import SidePanel from "@/components/admin/SidePanel";
 import React, { useState } from "react";
-import VideoForm from "../components/admin/Add Video/VideoForm";
-import AdminForm from "../components/admin/Add Admin/AdminForm";
-import SidePanel from "../components/admin/SidePanel";
-import Image from "next/image";
+
+
 
 function Page() {
   const [active, setActive] = useState("videos");

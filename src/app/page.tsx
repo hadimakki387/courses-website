@@ -1,14 +1,16 @@
 "use client";
+import Header from "@/components/Landing Page/Header";
+import SideBarDiv from "@/components/Landing Page/SideBarDiv";
+import WebsiteCourses from "@/components/Landing Page/WebsiteCourses";
+import Footer from "@/components/Landing Page/footer/Footer";
+import Plans from "@/components/Landing Page/plans/Plans";
+import SignIn from "@/components/Landing Page/signInUp/In/SignIn";
+import SignUp from "@/components/Landing Page/signInUp/Up/SignUp";
+import NavBar from "@/components/NavBar";
 import { useState, useEffect } from "react";
-import Header from "./components/Landing Page/Header";
-import WebsiteCourses from "./components/Landing Page/WebsiteCourses";
-import Footer from "./components/Landing Page/footer/Footer";
-import Plans from "./components/Landing Page/plans/Plans";
-import NavBar from "./components/NavBar";
-import SignIn from "./components/Landing Page/signInUp/In/SignIn";
-import SignUp from "./components/Landing Page/signInUp/Up/SignUp";
+
 import ClickAwayListener from "react-click-away-listener";
-import SideBarDiv from "./components/Landing Page/SideBarDiv";
+
 
 export default function Home() {
   const [signIn, setSignIn] = useState(false);
