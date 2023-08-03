@@ -77,3 +77,23 @@ body{
 .sm-text-c{
   color: #bad9fc;
 }
+
+.course-page-bg{
+  background: #0d131d;
+}
+
+.course-lighter-bg-color{
+  background: #151f32;
+}
+.course-lighter-bg-divs{
+  background: #18273f;
+}
+
+.from-frameworks-light{
+  --tw-gradient-to: #ec454f;
+  --tw-gradient-from: #f44881;
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to,rgba(244,72,129,0));
+  background-image: linear-gradient(to left,var(--tw-gradient-stops));
+
+}
+

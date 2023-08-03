@@ -1,7 +1,7 @@
 import React from "react";
 import CheckSvg from "../SVGs/CheckSvg";
 
-function Email({name}:{name:string}) {
+function Email({name,handleInputChange}:{name:string,handleInputChange:any}) {
   return (
     <>
       <label
@@ -19,6 +19,7 @@ function Email({name}:{name:string}) {
           className="input is-minimal text-sm text-white"
           autoComplete="username"
           placeholder="Enter Email"
+          onChange={handleInputChange}
         />
         <div className="absolute right-0 mx-auto -mt-px flex h-4 w-4 items-center justify-center rounded-full p-1 bg-gray-600">
           <CheckSvg />

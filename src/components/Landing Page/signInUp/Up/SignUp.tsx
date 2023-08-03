@@ -1,11 +1,26 @@
-import React from "react";
-import "./signIn.css";
-import CloseSvg from "./SVGs/CloseSvg";
-import CheckSvg from "./SVGs/CheckSvg";
-import Email from "./Inputs/Email";
-import PasswordInput from "./Inputs/PasswordInput";
+import React,{useState} from "react";
+import "./signUp.css";
+import CloseSvg from "../In/SVGs/CloseSvg";
+import Email from "../In/Inputs/Email";
+import PasswordInput from "../In/Inputs/PasswordInput";
 
-function SignIn({showSignIn}:{showSignIn:any}) {
+
+function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
+
+  const [signInData, setSignInData] = useState({});
+
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    getSignUpData(signInData)
+    console.log(signInData);
+  };
+
+ 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignInData((prevData) => ({ ...prevData, [name]: value }));
+  };
   return (
     <div
       className=" bg-panel-900  text-white relative md:rounded-2xl max-h-90 md:mx-auto w-full overflow-auto px-6 py-9 flex flex-col mt-auto lg:mt-0 snipcss-sMhwa style-o6bUK"
@@ -14,11 +29,11 @@ function SignIn({showSignIn}:{showSignIn:any}) {
     >
       <button
         className="pin-0 absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-blue/10 text-white transition-colors duration-300 hover:bg-grey-500 hover:text-blue md:top-[20px] md:right-[20px] md:h-10 md:w-10"
-        onClick={showSignIn}
+        onClick={showSignUp}
       >
         <CloseSvg />
       </button>
-      <section className="h-full w-full p-16  lg:px-4 style-tQjk2">
+      <section className="h-full w-full p-16 max-[480px]:p-7 lg:px-4 style-tQjk2 ">
         <div
           className="flex h-full flex-col justify-between px-4"
           data-v-2836fdb5-s=""
@@ -31,17 +46,17 @@ function SignIn({showSignIn}:{showSignIn:any}) {
               <div className="container mx-auto w-full">
                 <div className="mx-auto max-w-xs">
                   <h1 className="mb-8 text-center text-3xl font-light tracking-tight">
-                    Log In
+                    Sign Up
                   </h1>
                   <div className="mt-8">
 
                     {/* Here goes the form */}
-                    <form>
+                    <form onSubmit={handleSubmit} >
                       <div className="control" data-js="email_field">
-                        <Email name="signInEmail"/>
+                        <Email name="signUpEmail" handleInputChange={handleInputChange}/>
                       </div>
                       <div className="control" data-js="password_field">
-                        <PasswordInput />
+                        <PasswordInput handleInputChange={handleInputChange}/>
                       </div>
                       <div className="mt-10 text-center">
                         <button
@@ -49,11 +64,11 @@ function SignIn({showSignIn}:{showSignIn:any}) {
                           type="submit"
                         >
                           <span className="text-wrap inline-block flex-shrink-0">
-                            Log In
+                            Sign Up
                           </span>
                         </button>
                         <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline">
-                          Sign Up
+                          Login
                         </button>
                       </div>
                     </form>
@@ -70,4 +85,4 @@ function SignIn({showSignIn}:{showSignIn:any}) {
   );
 }
 
-export default SignIn;
+export default SignUp;

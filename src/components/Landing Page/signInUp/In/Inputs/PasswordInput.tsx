@@ -1,7 +1,7 @@
 import React from "react";
 import CheckSvg from "../SVGs/CheckSvg";
 
-function PasswordInput() {
+function PasswordInput({handleInputChange}:{handleInputChange:any}) {
   return (
     <>
       <label
@@ -17,6 +17,7 @@ function PasswordInput() {
           className="input is-minimal text-sm text-white"
           autoComplete="current-password"
           placeholder="Enter Password"
+          onChange={handleInputChange}
         />
         <button
           type="button"
