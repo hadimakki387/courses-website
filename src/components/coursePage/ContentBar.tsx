@@ -2,11 +2,23 @@ import React, { useContext } from "react";
 import Video from "../Video";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import NextVideoCard from "./NextVideoCard";
 
 function ContentBar() {
   const aspectRatio = 9 / 16;
-  const [videos, PlayingVideo, sections, chosenVideo, SideBar,showVideosBar] =
-  useContext(FakeVideoContext);
+  const [
+    videos,
+    PlayingVideo,
+    sections,
+    chosenVideo,
+    SideBar,
+    showVideosBar,
+    setPlayingVideo,
+  ] = useContext(FakeVideoContext);
+
+ 
 
   return (
     <div
@@ -24,7 +36,10 @@ function ContentBar() {
       >
         <Video />
       </div>
-      <div onClick={showVideosBar} className="min-[1300px]:hidden max-[450px]:mx-8 course-lighter-bg-divs flex items-center text-white mx-16 py-3 px-8 text-center rounded-lg">
+      <div
+        onClick={showVideosBar}
+        className="min-[1300px]:hidden max-[450px]:mx-8 course-lighter-bg-divs flex items-center text-white mx-16 py-3 px-8 text-center rounded-lg"
+      >
         <div className="">
           <Image
             src={"/toggle-episodes-icon.svg"}
@@ -35,6 +50,7 @@ function ContentBar() {
         </div>
         <div className="w-full font-semibold">Toggle Episode List</div>
       </div>
+      <NextVideoCard/>
     </div>
   );
 }

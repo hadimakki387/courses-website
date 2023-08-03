@@ -4,7 +4,13 @@ import SectionCard from "./SectionCard";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 
 function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
-  const [videos, PlayingVideo, sections, chosenVideo, SideBar] =
+  const [videos,
+    PlayingVideo,
+    sections,
+    chosenVideo,
+    SideBar,
+    showVideosBar,
+    setPlayingVideo] =
     useContext(FakeVideoContext);
 
   return (

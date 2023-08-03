@@ -24,7 +24,13 @@ function SectionCard({
     setEP(!EP);
   };
 
-  const [videos,PlayingVideo, sections, chosenVideo] = useContext(FakeVideoContext);
+  const [videos,
+    PlayingVideo,
+    sections,
+    chosenVideo,
+    SideBar,
+    showVideosBar,
+    setPlayingVideo] = useContext(FakeVideoContext);
 
 
 
@@ -55,7 +61,7 @@ function SectionCard({
           if (sectionID === vid.section_id) {
             return (
               <div
-                className={`flex items-center gap-4 hover:bg-[#151f32] p-2 rounded-md ${PlayingVideo===vid.url?"bg-[#101c2c]":""}`}
+                className={`flex items-center gap-4 hover:bg-[#151f32] p-2 rounded-md ${PlayingVideo.url===vid.url?"bg-[#101c2c]":""} transition-all duration-300`}
                 key={index}
                 onClick={() => chosenVideo(vid.video_id)} // Wrap chosenVideo call in an arrow function
               >

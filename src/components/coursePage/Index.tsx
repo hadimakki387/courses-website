@@ -1,41 +1,37 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../NavBar";
 import VideosBar from "./VideosBar";
 import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
-import Videos from "@/fake data/Videos"
+import Videos from "@/fake data/Videos";
+import Sections from "@/fake data/Sections";
 
 function Index() {
+  const videos = Videos;
+  const sections = Sections;
 
-  const videos = Videos
-  const sections = [
-    {
-      section_id: 1,
-      section_name: "Introduction To HTML",
-    },
-  ];
   const [SideBar, setSideBar] = useState(false);
-  const [PlayingVideo, setPlayingVideo] = useState("https://drive.google.com/file/d/1MnFN26OMJ8MzvAQctAbZGK9ohUNvs2rQ/preview");
-  const [IsVideosBar,setIsVideosBar] = useState(false)
+  const [PlayingVideo, setPlayingVideo] = useState(videos[0]);
+  const [IsVideosBar, setIsVideosBar] = useState(false);
 
   function chosenVideo(e: any) {
     const clickedVideo = videos.find((video) => video.video_id === e);
     if (clickedVideo) {
-      setPlayingVideo(clickedVideo.url);
+      setPlayingVideo(clickedVideo);
     }
-    setIsVideosBar(!IsVideosBar)
+    setIsVideosBar(!IsVideosBar);
   }
 
   const showSideBar = () => {
     setSideBar(!SideBar);
   };
 
-  const showVideosBar = ()=>{
-    setIsVideosBar(!IsVideosBar)
-  }
+  const showVideosBar = () => {
+    setIsVideosBar(!IsVideosBar);
+  };
 
   useEffect(() => {
     const isWindows = navigator.platform.includes("Win");
@@ -51,7 +47,9 @@ function Index() {
         document.body.classList.remove("pr-[17px]");
       }
     }
-  }, [ SideBar]);
+  }, [SideBar]);
+
+
 
   return (
     <div className="course-page-bg ">
@@ -65,11 +63,19 @@ function Index() {
         showSideBar={showSideBar}
       />
       <div className="flex">
-      
-        <SideBarDiv showSideBar={setSideBar} SideBar={SideBar}/>
-      
-      
-        <FakeVideoContext.Provider value={[videos,PlayingVideo, sections, chosenVideo,SideBar,showVideosBar]}>
+        <SideBarDiv showSideBar={setSideBar} SideBar={SideBar} />
+
+        <FakeVideoContext.Provider
+          value={[
+            videos,
+            PlayingVideo,
+            sections,
+            chosenVideo,
+            SideBar,
+            showVideosBar,
+            setPlayingVideo
+          ]}
+        >
           <VideosBar IsVideosBar={IsVideosBar} />
           <ContentBar />
         </FakeVideoContext.Provider>

@@ -40,6 +40,56 @@ const Videos = [
         secs : 54
       }
     },
+    {
+      video_id: 5,
+      title: "What is The HTML Boilerplate",
+      url: "https://drive.google.com/file/d/1dzklYz32xY3lxVUMh-Jf2a9mX1uOvY5M/preview",
+      section_id: 2,
+      duration:{
+        mins : 16,
+        secs : 54
+      }
+    },
+    {
+      video_id: 6,
+      title: "What is The HTML Boilerplate",
+      url: "https://drive.google.com/file/d/1dzklYz32xY3lxVUMh-Jf2a9mX1uOvY5M/preview",
+      section_id: 2,
+      duration:{
+        mins : 16,
+        secs : 54
+      }
+    },
+    {
+      video_id: 7,
+      title: "What is The HTML Boilerplate",
+      url: "https://drive.google.com/file/d/1dzklYz32xY3lxVUMh-Jf2a9mX1uOvY5M/preview",
+      section_id: 2,
+      duration:{
+        mins : 16,
+        secs : 54
+      }
+    },
+    {
+      video_id: 8,
+      title: "What is The HTML Boilerplate",
+      url: "https://drive.google.com/file/d/1dzklYz32xY3lxVUMh-Jf2a9mX1uOvY5M/preview",
+      section_id: 2,
+      duration:{
+        mins : 16,
+        secs : 54
+      }
+    },
+    {
+      video_id: 9,
+      title: "What is The HTML Boilerplate",
+      url: "https://drive.google.com/file/d/1dzklYz32xY3lxVUMh-Jf2a9mX1uOvY5M/preview",
+      section_id: 2,
+      duration:{
+        mins : 16,
+        secs : 54
+      }
+    },
   ];
 
  export default Videos

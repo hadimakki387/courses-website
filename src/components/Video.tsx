@@ -7,7 +7,7 @@ function Video() {
   
   return (
     <iframe
-      src={PlayingVideo}
+      src={PlayingVideo.url}
       allow="autoplay; encrypted-media"
       allowFullScreen
       style={{
