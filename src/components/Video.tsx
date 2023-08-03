@@ -1,22 +1,22 @@
 import { FakeVideoContext } from "@/context/FakeVideosContext";
-import React, { useContext,useEffect } from "react";
-
+import React, { useContext, useEffect } from "react";
 
 function Video() {
-  const [videos,PlayingVideo, sections, chosenVideo] =useContext(FakeVideoContext);
-  
+  const [videos, PlayingVideo, sections, chosenVideo] =
+    useContext(FakeVideoContext);
+
   return (
     <iframe
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    }}
       src={PlayingVideo.url}
-      allow="autoplay; encrypted-media"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; "
       allowFullScreen
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-      }}
     ></iframe>
   );
 }

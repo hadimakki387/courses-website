@@ -2,7 +2,7 @@ const Videos = [
     {
       video_id: 1,
       title: "Introduction to HTML",
-      url: "https://drive.google.com/file/d/1MnFN26OMJ8MzvAQctAbZGK9ohUNvs2rQ/preview",
+      url: "https://www.youtube.com/embed/Dw_tj65FGf0",
       section_id: 1,
       duration:{
         mins : 10,
