@@ -52,7 +52,7 @@ function Index() {
 
 
   return (
-    <div className="course-page-bg ">
+    <div className="course-lighter-bg-color max-[1000px]:h-full">
       <NavBar
         showSignIn={() => {
           console.log("hello");
@@ -62,7 +62,7 @@ function Index() {
         }}
         showSideBar={showSideBar}
       />
-      <div className="flex">
+      <div className="flex h-full">
         <SideBarDiv showSideBar={setSideBar} SideBar={SideBar} />
 
         <FakeVideoContext.Provider
