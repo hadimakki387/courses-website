@@ -1,5 +1,6 @@
+import { ProfileContext } from "@/context/ProfileContext";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 
 function ProfileAndName({
   name,
@@ -10,6 +11,8 @@ function ProfileAndName({
   time: number;
   img: string;
 }) {
+
+  const [ShowEditInfo] = useContext(ProfileContext)
   return (
     <div className="flex justify-start gap-4">
       <div className="flex flex-col gap-2 items-center justify-center ">
@@ -20,7 +23,7 @@ function ProfileAndName({
           src={`/${img}`}
           className="rounded-lg"
         />
-        <button className="py-1 px-2 text-xs course-lighter-bg-divs rounded-lg">
+        <button onClick={ShowEditInfo} className="py-1 px-2 text-xs bg-[#24395a] rounded-lg">
           edit
         </button>
       </div>
