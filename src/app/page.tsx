@@ -85,7 +85,7 @@ export default function Home() {
         <SignUp showSignUp={showSignUp} getSignUpData={getSignUpData}/>
       </div>
       
-        <SideBarDiv showSideBar={setSideBar} SideBar={SideBar}/>
+        <SideBarDiv setSideBar={setSideBar} SideBar={SideBar}/>
       
       {/* the signIn/Up windows */}
 

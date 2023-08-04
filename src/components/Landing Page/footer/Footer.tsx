@@ -10,7 +10,7 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <div className="footer-wrap mobile:text-lg snipcss-sxLRM w-full max-[1023px]:px-4">
+    <div className="footer-wrap mobile:text-lg snipcss-sxLRM w-full max-[1023px]:px-4 ">
       <Image
         className="lazy pointer-events-none absolute right-0 bottom-0 hidden mix-blend-luminosity lg:inline-block lazyloaded style-QlC34"
         width={1000}

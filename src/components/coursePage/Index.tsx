@@ -62,8 +62,8 @@ function Index() {
         }}
         showSideBar={showSideBar}
       />
-      <div className="flex h-full">
-        <SideBarDiv showSideBar={setSideBar} SideBar={SideBar} />
+      <div className="flex h-full ">
+        <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
 
         <FakeVideoContext.Provider
           value={[
@@ -73,7 +73,8 @@ function Index() {
             chosenVideo,
             SideBar,
             showVideosBar,
-            setPlayingVideo
+            setPlayingVideo,
+            showSideBar
           ]}
         >
           <VideosBar IsVideosBar={IsVideosBar} />
