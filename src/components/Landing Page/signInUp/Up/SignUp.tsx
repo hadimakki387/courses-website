@@ -3,6 +3,7 @@ import "./signUp.css";
 import CloseSvg from "../In/SVGs/CloseSvg";
 import Email from "../In/Inputs/Email";
 import PasswordInput from "../In/Inputs/PasswordInput";
+import NameInput from "./NameInput";
 
 
 function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
@@ -52,12 +53,16 @@ function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
 
                     {/* Here goes the form */}
                     <form onSubmit={handleSubmit} >
+                    <div className="control" data-js="password_field">
+                        <NameInput/>
+                      </div>
                       <div className="control" data-js="email_field">
                         <Email name="signUpEmail" handleInputChange={handleInputChange}/>
                       </div>
                       <div className="control" data-js="password_field">
                         <PasswordInput handleInputChange={handleInputChange}/>
                       </div>
+                      
                       <div className="mt-10 text-center">
                         <button
                           className="btn flex-center btn-blue w-full"

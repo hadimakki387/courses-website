@@ -9,4 +9,4 @@ const Sections = [
     },
   ];
 
-  export default Sections
+  export default Sections;

@@ -97,3 +97,27 @@ body{
 
 }
 
+.NavBar{
+  z-index: 20;
+  background: #18273f50;
+  backdrop-filter: blur(4px);
+}
+
+.profilePage{
+  background-image: url("/upper-gradient.svg");
+  background-repeat: no-repeat;
+}
+
+.experience-shadow{
+  border:1px solid rgba(14, 164, 233, 0.1) ;
+  --tw-border-opacity: 0;
+  box-shadow: rgb(14 165 233 / var(--tw-border-opacity)) 0px 2px 29px 0px;
+  filter: grayscale(100%);
+}
+.experience-shadow:hover{
+  --tw-border-opacity: 0.2;
+  border: rgb(14, 164, 233) ;
+  box-shadow: rgb(14 165 233 / var(--tw-border-opacity)) 0px 2px 29px 0px;
+  border:1px solid rgba(14, 164, 233, 0.3) ;
+  filter: grayscale(0);
+}
