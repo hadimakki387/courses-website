@@ -43,7 +43,7 @@ const Videos = [
     {
       video_id: 5,
       title: "What is The HTML Boilerplate",
-      url: "U1Cw6pf3yRM",
+      url: "HG2VQb61XQs",
       section_id: 2,
       duration:{
         mins : 16,
@@ -53,7 +53,7 @@ const Videos = [
     {
       video_id: 6,
       title: "What is The HTML Boilerplate",
-      url: "U1Cw6pf3yRM",
+      url: "HG2VQb61XQs",
       section_id: 2,
       duration:{
         mins : 16,
@@ -63,7 +63,7 @@ const Videos = [
     {
       video_id: 7,
       title: "What is The HTML Boilerplate",
-      url: "U1Cw6pf3yRM",
+      url: "HG2VQb61XQs",
       section_id: 2,
       duration:{
         mins : 16,
@@ -73,7 +73,7 @@ const Videos = [
     {
       video_id: 8,
       title: "What is The HTML Boilerplate",
-      url: "U1Cw6pf3yRM",
+      url: "HG2VQb61XQs",
       section_id: 2,
       duration:{
         mins : 16,
@@ -83,7 +83,7 @@ const Videos = [
     {
       video_id: 9,
       title: "What is The HTML Boilerplate",
-      url: "U1Cw6pf3yRM",
+      url: "HG2VQb61XQs",
       section_id: 2,
       duration:{
         mins : 16,

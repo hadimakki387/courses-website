@@ -22,7 +22,7 @@ function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
       } max-[1300px]:w-[100vw] max-[1300px]:h-screen `}
     >
       <TitleOfSideBar />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 ">
         {sections.map((section: any, index: any) => {
           return (
             <SectionCard

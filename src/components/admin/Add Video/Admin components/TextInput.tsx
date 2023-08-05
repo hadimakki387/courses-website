@@ -5,13 +5,15 @@ function TextInput({
   name,
   title,
   type,
-  handleChange
+  handleChange,
+
 }: {
   placeholder: string;
   name: string;
   title:string;
   type:string;
-  handleChange:any
+  handleChange:any;
+
 }) {
   return (
     <div>
