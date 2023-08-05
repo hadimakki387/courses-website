@@ -12,12 +12,20 @@ import { ProfileContext } from "@/context/ProfileContext";
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo,setIsEditInfo] = useState(false)
+  const [editPersonalInfo,seteditPersonalInfo] =useState({}) //this is the data for the editProfile
+  const [plan,setPlan] = useState({})//this is the data for the subscriptions
 
   const showSideBar = () => {
     setSideBar(!SideBar);
   };
   const ShowEditInfo = ()=>{
       setIsEditInfo(!IsEditInfo)
+  }
+  const editProfile = (e:object)=>{
+    seteditPersonalInfo(e)
+  }
+  const planSettings = (e:any)=>{
+      setPlan(e)
   }
 
   return (
@@ -33,7 +41,7 @@ function Index() {
         showSideBar={showSideBar}
       />
       <div className=" w-[60%] m-auto mb-4">
-        <ProfileContext.Provider value={[ShowEditInfo]}>
+        <ProfileContext.Provider value={[ShowEditInfo,editProfile,planSettings]}>
 
           <ProfileHeader />
 

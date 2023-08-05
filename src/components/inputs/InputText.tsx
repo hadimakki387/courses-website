@@ -6,11 +6,13 @@ function InputText({
   label,
   type,
   placeHolder,
+  handleChange,
 }: {
   name: string;
   label: string;
   type: string;
   placeHolder: string;
+  handleChange:any;
 }) {
   return (
     <>
@@ -29,6 +31,7 @@ function InputText({
           className="input is-minimal text-sm text-white bg-transparent focus:outline-none"
           autoComplete="username"
           placeholder={placeHolder}
+          onChange={handleChange}
         />
         <div className="absolute right-0 mx-auto -mt-px flex h-4 w-4 items-center justify-center rounded-full p-1 bg-gray-600">
           <CheckSvg />
