@@ -47,7 +47,8 @@ function Index() {
   return (
     <div className="course-lighter-bg-color text-white bg-red-700 profilePage ">
       <SideBarDiv SideBar={SideBar} setSideBar={setSideBar} />
-      <NavBar
+      <div className="mb-4">
+        <NavBar
         showSignIn={() => {
           console.log("hello");
         }}
@@ -56,7 +57,9 @@ function Index() {
         }}
         showSideBar={showSideBar}
       />
-      <div className=" w-[60%] m-auto mb-4">
+      </div>
+      
+      <div className=" w-[60vw] max-[1350px]:w-[85vw] m-auto mb-4">
         <ProfileContext.Provider value={[ShowEditInfo,editProfile,planSettings]}>
 
           <ProfileHeader />

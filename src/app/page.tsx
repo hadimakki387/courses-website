@@ -1,6 +1,7 @@
 "use client";
 import Header from "@/components/Landing Page/Header";
 import SideBarDiv from "@/components/Landing Page/SideBarDiv";
+import SignInUpNavs from "@/components/Landing Page/SignInUpNavs";
 import WebsiteCourses from "@/components/Landing Page/WebsiteCourses";
 import Footer from "@/components/Landing Page/footer/Footer";
 import Plans from "@/components/Landing Page/plans/Plans";
@@ -11,13 +12,12 @@ import { useState, useEffect } from "react";
 
 import ClickAwayListener from "react-click-away-listener";
 
-
 export default function Home() {
   const [signIn, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [SideBar, setSideBar] = useState(false);
-  const [signInData,setSignInData] = useState({})
-  const [signUpData,setSignUpData] = useState({})
+  const [signInData, setSignInData] = useState({});
+  const [signUpData, setSignUpData] = useState({});
 
   const showSignIn = () => {
     if (signUp) {
@@ -54,39 +54,27 @@ export default function Home() {
     }
   }, [signIn, signUp, SideBar]);
 
-  const getSignInData = (e:any)=>{
-    setSignInData(e)
-  }
-  const getSignUpData = (e:any)=>{
-    setSignUpData(e)
-  }
+  const getSignInData = (e: any) => {
+    setSignInData(e);
+  };
+  const getSignUpData = (e: any) => {
+    setSignUpData(e);
+  };
 
   return (
     <>
-    
       {/* the signIn/Up windows */}
-      <div
-        className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
-          signIn
-            ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]"
-            : "-translate-y-[-100%]"
-        } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
-      >
-        <SignIn showSignIn={showSignIn} getSignInData={getSignInData}/>
-      </div>
+      <SignInUpNavs
+        signIn={signIn}
+        signUp={signUp}
+        showSignIn={showSignIn}
+        showSignUp={showSignUp}
+        getSignInData={getSignInData}
+        getSignUpData={getSignUpData}
+      />
 
-      <div
-        className={`fixed top-1/2 left-1/2 transform -translate-x-1/2  text-white z-30 ${
-          signUp
-            ? "min-[500px]:-translate-y-[50%] max-[500px]:-translate-y-[0]"
-            : "-translate-y-[-100%]"
-        } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
-      >
-        <SignUp showSignUp={showSignUp} getSignUpData={getSignUpData}/>
-      </div>
-      
-        <SideBarDiv setSideBar={setSideBar} SideBar={SideBar}/>
-      
+      <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
+
       {/* the signIn/Up windows */}
 
       <div

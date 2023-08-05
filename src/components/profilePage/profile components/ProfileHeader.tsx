@@ -6,7 +6,7 @@ import { ProfileContext } from '@/context/ProfileContext'
 function ProfileHeader() {
     const [ShowEditInfo] = useContext(ProfileContext)
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex max-[920px]:flex-col max-[920px]:justify-center max-[920px]:gap-4 justify-between items-center">
           <ProfileAndName name="studentsxpertbot" time={6} img="user.png" />
 
           <div className="flex gap-4">

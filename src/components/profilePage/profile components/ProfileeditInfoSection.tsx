@@ -10,15 +10,15 @@ function ProfileeditInfoSection() {
   const active = "bg-[#24395a]";
 
   return (
-    <div className="w-full course-lighter-bg-divs p-8 rounded-lg my-8 flex justify-between items-start">
-      <div className="flex flex-col gap-4">
+    <div className="w-full course-lighter-bg-divs p-8 rounded-lg my-8 flex justify-between items-start gap-4 max-[660px]:flex-col max-[660px]:p-4">
+      <div className="flex min-[660px]:flex-col gap-4 max-[660px]:justify-center max-[660px]:items-center max-[660px]:w-full max-[660px]:text-sm">
         <div
           onClick={() => changeForm("personal")}
           className={`hover:bg-[#24395a] px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer ${
             form === "personal" && active
-          }`}
+          } `}
         >
-          Personal Information
+          Personal Info
         </div>
         <div
           onClick={() => changeForm("subscription")}
@@ -29,7 +29,7 @@ function ProfileeditInfoSection() {
           Subscription
         </div>
       </div>
-      <div className="w-[80%]">
+      <div className="w-[80%] max-[660px]:w-full">
         {form === "personal" ? <PersonalInfoForm /> : <SubscriptionFrom />}
       </div>
     </div>
