@@ -51,10 +51,14 @@ function VideoForm() {
     });
   };
 
-  const fetchData = ()=>{
+  const fetchNewVideo= ()=>{
     console.log(video)
   }
   
+  const fetchVideoUpdate= (e:any)=>{
+      console.log(e);
+
+  }
   
   return (
     <div  className="flex flex-col gap-8">
@@ -94,9 +98,9 @@ function VideoForm() {
           />
         </div>
       </div>
-      <SubmitButton fetchData={fetchData}/>
+      <SubmitButton fetchNewVideo={fetchNewVideo}/>
       </div>
-      <Index Videos={Videos}/>
+      <Index Videos={Videos} fetchVideoUpdate={fetchVideoUpdate}/>
     </div>
   );
 }

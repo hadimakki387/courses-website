@@ -20,8 +20,9 @@ function Page() {
     setMenu(!menu);
   }
 
+
   return (
-    <div className="w-full  flex bg-zinc-950 text-white ">
+    <div className={`w-full flex bg-zinc-950 text-white ${active!== "videos" && "h-full"}`} >
       
       <div className=" max-[990px]:hidden">
         <SidePanel handleSetActive={handleSetActive} active={active} showMenu={showMenu}/>

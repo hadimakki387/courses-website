@@ -39,7 +39,7 @@ function SectionCard({
     if (PlayingVideo.section_id === sectionID) {
       setEP(true);
     } 
-  }, [PlayingVideo.section_id]);
+  }, [PlayingVideo.section_id,sectionID]);
   
   
 
