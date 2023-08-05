@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import NavBar from "../NavBar";
 import Footer from "../Landing Page/footer/Footer";
@@ -27,9 +27,25 @@ function Index() {
   const planSettings = (e:any)=>{
       setPlan(e)
   }
+  useEffect(() => {
+    // Check if the user is on a Windows platform
+    const isWindows = navigator.platform.includes("Win");
+
+    if (SideBar) {
+      document.body.classList.add("overflow-hidden");
+      if (isWindows) {
+        document.body.classList.add("pr-[17px]");
+      }
+    } else {
+      document.body.classList.remove("overflow-hidden");
+      if (isWindows) {
+        document.body.classList.remove("pr-[17px]");
+      }
+    }
+  }, [ SideBar]);
 
   return (
-    <div className="course-lighter-bg-color text-white bg-red-700 profilePage">
+    <div className="course-lighter-bg-color text-white bg-red-700 profilePage ">
       <SideBarDiv SideBar={SideBar} setSideBar={setSideBar} />
       <NavBar
         showSignIn={() => {
@@ -61,7 +77,10 @@ function Index() {
           {/* This is the activity section */}
         </ProfileContext.Provider>
       </div>
-      <Footer />
+      <div>
+         <Footer />
+      </div>
+     
     </div>
   );
 }

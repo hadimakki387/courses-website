@@ -70,6 +70,7 @@ function SideBarDiv({
                     <Link
                       href={item.link}
                       className="hover:text-sky-600 flex flex-col "
+                      onClick={() => setSideBar(false)}
                     >
                       <span className="-mb-2">{item.text1}</span>
                       <span className="text-[10px] text-zinc-500  ">

@@ -5,7 +5,7 @@ import Index from "@/components/profilePage/Index";
 import React from "react";
 
 function page() {
-   return <Index/>
+   return <div className="h-full"><Index/></div>
 }
 
 export default page;
