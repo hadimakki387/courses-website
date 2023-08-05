@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import RunButton from "./RunButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -32,6 +32,16 @@ function SectionCard({
     showVideosBar,
     setPlayingVideo,
   ] = useContext(FakeVideoContext);
+
+ 
+
+  useEffect(() => {
+    if (PlayingVideo.section_id === sectionID) {
+      setEP(true);
+    } 
+  }, [PlayingVideo.section_id,sectionID]);
+  
+  
 
   return (
     <div className="flex flex-col gap-2 hover:cursor-pointer ">
