@@ -36,15 +36,17 @@ function SectionCard({
  
 
   useEffect(() => {
-    if (PlayingVideo.section_id === sectionID) {
+    if (PlayingVideo.section_ID === sectionID) {
       setEP(true);
     } 
-  }, [PlayingVideo.section_id,sectionID]);
-  
+  }, [PlayingVideo.id,sectionID]);
   
 
+
   return (
+    
     <div className="flex flex-col gap-2 hover:cursor-pointer ">
+      
       <div
         onClick={showEPs}
         className="course-lighter-bg-color flex justify-between text-sm py-3 px-6 rounded-md"
@@ -64,14 +66,14 @@ function SectionCard({
       </div>
       {EP &&
         video.map((vid: any, index: any) => {
-          if (sectionID === vid.section_id) {
+          if (sectionID === vid.sectionId) {
             return (
               <div
                 className={`flex items-center gap-4 hover:bg-[#151f32] p-2 rounded-md ${
-                  PlayingVideo.video_id === vid.video_id ? "bg-[#101c2c]" : ""
+                  PlayingVideo.id === vid.id ? "bg-[#101c2c]" : ""
                 } transition-all duration-300`}
                 key={index}
-                onClick={() => chosenVideo(vid.video_id)} // Wrap chosenVideo call in an arrow function
+                onClick={() => chosenVideo(vid.id)} // Wrap chosenVideo call in an arrow function
               >
                 <div>
                   <RunButton />
@@ -88,7 +90,7 @@ function SectionCard({
                   <div className="flex  items-center gap-2">
                     <div className="sm-text-c">Episode {index + 1}</div>
                     <div className="sm-text-c">
-                      {vid.duration.mins}m {vid.duration.secs}s
+                      {vid.mins}m {vid.secs}s
                     </div>{" "}
                     {/* Replace with the actual property holding video duration */}
                   </div>

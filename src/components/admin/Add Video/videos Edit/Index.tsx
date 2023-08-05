@@ -1,16 +1,20 @@
 "use client";
 
-import Sections from "@/fake data/Sections";
+
 import React, { useState } from "react";
 import Section from "./Section";
+import SectionsDB from "@/Queries/sectionsDB";
 
 function Index({
   Videos,
   fetchVideoUpdate,
+  Sections
 }: {
   Videos: any;
   fetchVideoUpdate: any;
+  Sections:any
 }) {
+  
   const [editMode, setEditMode] = useState(Array(Videos.length).fill(false));
   const [newData, setNewData] = useState(Array(Videos.length).fill({}));
 
@@ -62,7 +66,7 @@ function Index({
   return (
     <div className="flex flex-col gap-4 w-full">
       Available Videos
-      {Sections.map((section, index) => (
+      {Sections.map((section:any, index:number) => (
         <Section
           key={index}
           section={section}
