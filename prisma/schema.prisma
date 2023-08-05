@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(uuid())
+  username       String    @unique
+  email          String    @unique
+  password       String
+  created_At     DateTime  @default(now())
+  subscried_At   DateTime?
+  watched_videos Video[]
+  Xp             Float?
+}
+
+model Video {
+  id           Int     @id @default(autoincrement())
+  title        String
+  url          String
+  duration     String
+  section_ID   section @relation(fields: [sectionId], references: [id])
+  User_watched User[]
+  sectionId    String
+}
+
+model course {
+  id      String    @id @default(uuid())
+  name    String
+  section section[]
+}
+
+model section {
+  id        String  @id @default(uuid())
+  course_ID course  @relation(fields: [courseId], references: [id])
+  name      String
+  courseId  String
+  Video     Video[]
+}
