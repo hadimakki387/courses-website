@@ -27,8 +27,8 @@ model Video {
   url          String
   duration     String
   section_ID   section @relation(fields: [sectionId], references: [id])
-  User_watched User[]
   sectionId    String
+  User_watched User[]
 }
 
 model course {
@@ -39,8 +39,8 @@ model course {
 
 model section {
   id        String  @id @default(uuid())
-  course_ID course  @relation(fields: [courseId], references: [id])
   name      String
+  course_ID course  @relation(fields: [courseId], references: [id])
   courseId  String
   Video     Video[]
 }
