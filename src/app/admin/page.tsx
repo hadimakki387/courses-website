@@ -21,7 +21,7 @@ function Page() {
   }
 
   return (
-    <div className="w-full h-full  flex bg-zinc-950 text-white ">
+    <div className="w-full  flex bg-zinc-950 text-white ">
       
       <div className=" max-[990px]:hidden">
         <SidePanel handleSetActive={handleSetActive} active={active} showMenu={showMenu}/>
