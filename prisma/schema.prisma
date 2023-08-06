@@ -26,7 +26,8 @@ model Video {
   id           Int     @id @default(autoincrement())
   title        String
   url          String
-  duration     String
+  mins         Int
+  secs         Int
   section_ID   section @relation(fields: [sectionId], references: [id])
   sectionId    String
   User_watched User[]
