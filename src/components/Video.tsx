@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from "react";
 function Video() {
   const [videos, PlayingVideo, sections, chosenVideo] =
     useContext(FakeVideoContext);
-
+console.log(PlayingVideo.url)
   return (
     <iframe
     style={{

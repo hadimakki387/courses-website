@@ -6,23 +6,30 @@ import VideosBar from "./VideosBar";
 import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
-import Videos from "@/fake data/Videos";
-import Sections from "@/fake data/Sections";
+import VideosDB from "@/Queries/VideosDB";
+import sectionsDB from "@/Queries/sectionsDB";
 
 function Index() {
-  const videos = Videos;
-  const sections = Sections;
-
+  const videos = VideosDB();
+  const sections = sectionsDB();
   const [SideBar, setSideBar] = useState(false);
-  const [PlayingVideo, setPlayingVideo] = useState(videos[0]);
+  const [PlayingVideo, setPlayingVideo] = useState();
   const [IsVideosBar, setIsVideosBar] = useState(false);
 
-  function chosenVideo(e: any) {
-    const clickedVideo = videos.find((video) => video.video_id === e);
-    if (clickedVideo) {
-      setPlayingVideo(clickedVideo);
+  useEffect(() => {
+    if (videos !== "isLoading") {
+      setPlayingVideo(videos[0]);
     }
-    setIsVideosBar(!IsVideosBar);
+  }, [videos]);
+
+  function chosenVideo(e: any) {
+    if (videos !== "isLoading") {
+      const clickedVideo = videos.find((video: any) => video.id === e);
+      if (clickedVideo) {
+        setPlayingVideo(clickedVideo);
+      }
+      setIsVideosBar(!IsVideosBar);
+    }
   }
 
   const showSideBar = () => {
@@ -49,38 +56,42 @@ function Index() {
     }
   }, [SideBar]);
 
-
-
   return (
     <div className="course-lighter-bg-color max-[1000px]:h-full">
-      <NavBar
-        showSignIn={() => {
-          console.log("hello");
-        }}
-        showSignUp={() => {
-          console.log("hello");
-        }}
-        showSideBar={showSideBar}
-      />
-      <div className="flex h-full ">
-        <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
+      {videos !== "isLoading" || sections !== "isLoading" ? (
+        <>
+          <NavBar
+            showSignIn={() => {
+              console.log("hello");
+            }}
+            showSignUp={() => {
+              console.log("hello");
+            }}
+            showSideBar={showSideBar}
+          />
+          <div className="flex h-full ">
+            <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
 
-        <FakeVideoContext.Provider
-          value={[
-            videos,
-            PlayingVideo,
-            sections,
-            chosenVideo,
-            SideBar,
-            showVideosBar,
-            setPlayingVideo,
-            showSideBar
-          ]}
-        >
-          <VideosBar IsVideosBar={IsVideosBar} />
-          <ContentBar />
-        </FakeVideoContext.Provider>
-      </div>
+            <FakeVideoContext.Provider
+              value={[
+                videos,
+                PlayingVideo,
+                sections,
+                chosenVideo,
+                SideBar,
+                showVideosBar,
+                setPlayingVideo,
+                showSideBar,
+              ]}
+            >
+              <VideosBar IsVideosBar={IsVideosBar} />
+              <ContentBar />
+            </FakeVideoContext.Provider>
+          </div>
+        </>
+      ) : (
+        <div>isLoading</div>
+      )}
     </div>
   );
 }

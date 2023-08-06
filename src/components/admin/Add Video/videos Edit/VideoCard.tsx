@@ -41,7 +41,7 @@ function VideoCard({
             <div className="flex gap-4 items-center max-[860px]:flex-col max-[860px]:items-start max-[860px]:gap-2">
               <div className="w-[70%] ">{video.title}</div>
               <div className="w-[15%] ">
-                {video.duration.mins}s {video.duration.secs}m
+                {video.mins}s {video.secs}m
               </div>
               <div className="w-[15%] ">{video.url}</div>
             </div>

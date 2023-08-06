@@ -6,13 +6,16 @@ import React, { useContext } from "react";
 function TitleOfSideBar() {
   const [videos, PlayingVideo, sections, chosenVideo, SideBar, showVideosBar] =
     useContext(FakeVideoContext);
-
+  
   let totalMinutes = 0;
   let totalSeconds = 0;
 
   videos.forEach((vid: any) => {
-    totalMinutes += vid.duration.mins;
-    totalSeconds += vid.duration.secs;
+    
+      totalMinutes += vid.mins;
+    totalSeconds += vid.secs;
+    
+    
   });
 
   // Calculate total hours, minutes, and remaining seconds
