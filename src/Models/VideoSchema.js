@@ -8,6 +8,7 @@ const videoSchema = new Schema({
     secs: Number,
   },
   sectionID: String,
+  videoId:Number
 });
 const Video = models.Video || model("Video", videoSchema);
 

@@ -1,15 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CategorySelect from "./Admin components/CategorySelect";
 import TextInput from "./Admin components/TextInput";
 import SubmitButton from "./Admin components/SubmitButton";
 import Videos from "@/fake data/Videos";
 import Index from "./videos Edit/Index";
+import GetData from "@/Queries/GetData";
 
 function VideoForm() {
+  const Data: any = GetData("admin");
+
+
+
   const [video, setVideo] = useState({
-    course: "",
+    sectionID:"",
     title: "",
     url: "",
     duration: {
@@ -17,17 +22,19 @@ function VideoForm() {
       secs: 0,
     },
   });
-  const courseHandle = (e: any) => {
+
+  const sectionHandle = (e:any)=>{
     setVideo({
       ...video,
-      course: e.target.value,
+      sectionID: e.target.value,
     });
-  };
+  }
   const titleHandle = (e: any) => {
     setVideo({
       ...video,
       title: e.target.value,
     });
+    console.log(e)
   };
   const urlHandle = (e: any) => {
     setVideo({
@@ -52,63 +59,71 @@ function VideoForm() {
   };
 
   const fetchNewVideo = async () => {
-    
-    fetch("http://localhost:3000/api/text", {
-     headers: {
-       "Content-Type": "application/json",
-     },
-       method: "POST",
-       body: JSON.stringify(video),
-       
-     });
- 
-   };
-  
-  const fetchVideoUpdate= (e:any)=>{
-      console.log(e);
-  }
+    fetch("http://localhost:3000/api/admin", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(video),
+    });
+  };
+
+  const fetchVideoUpdate = (e: any) => {
+    console.log(e);
+  };
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4">
-        <CategorySelect handleChange={courseHandle} />
-        <TextInput
-          placeholder="Enter video Title..."
-          name="title"
-          title="video Title"
-          type="text"
-          handleChange={titleHandle}
-        />
-        <TextInput
-          placeholder="Enter video url..."
-          name="url"
-          title="video Url"
-          type="text"
-          handleChange={urlHandle}
-        />
-        <div className="flex gap-4 w-full">
-          <div className="w-1/2">
-            <TextInput
-              placeholder="minutes"
-              name="title"
-              title="Video mins length"
-              type="text"
-              handleChange={minsHandle}
+      {Data !== "isLoading" ? (
+        <>
+          <div className="flex flex-col gap-4">
+            <CategorySelect
+              title="select the section"
+              firstValue="Choose the section"
+              handleChange={sectionHandle}
+              sections={Data.sections}
             />
-          </div>
-          <div className="w-1/2">
             <TextInput
-              placeholder="seconds"
+              placeholder="Enter video Title..."
               name="title"
-              title="Video secs length"
+              title="video Title"
               type="text"
-              handleChange={secsHandle}
+              handleChange={titleHandle}
             />
+            <TextInput
+              placeholder="Enter video url..."
+              name="url"
+              title="video Url"
+              type="text"
+              handleChange={urlHandle}
+            />
+            <div className="flex gap-4 w-full">
+              <div className="w-1/2">
+                <TextInput
+                  placeholder="minutes"
+                  name="title"
+                  title="Video mins length"
+                  type="text"
+                  handleChange={minsHandle}
+                />
+              </div>
+              <div className="w-1/2">
+                <TextInput
+                  placeholder="seconds"
+                  name="title"
+                  title="Video secs length"
+                  type="text"
+                  handleChange={secsHandle}
+                />
+              </div>
+            </div>
+            <SubmitButton fetchNewVideo={fetchNewVideo} />
           </div>
-        </div>
-        <SubmitButton fetchNewVideo={fetchNewVideo} />
-      </div>
-      <Index Videos={Videos} fetchVideoUpdate={fetchVideoUpdate} />
+          <Index Videos={Videos} fetchVideoUpdate={fetchVideoUpdate} />
+        </>
+      ) : (
+        <div>loading</div>
+      )}
     </div>
   );
 }

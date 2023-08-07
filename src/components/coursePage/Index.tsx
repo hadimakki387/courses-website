@@ -8,10 +8,14 @@ import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import Videos from "@/fake data/Videos";
 import Sections from "@/fake data/Sections";
+import GetData from "@/Queries/GetData"
 
 function Index() {
   const videos = Videos;
   const sections = Sections;
+
+  const Data = GetData("MERN")
+  console.log(Data)
 
   const [SideBar, setSideBar] = useState(false);
   const [PlayingVideo, setPlayingVideo] = useState(videos[0]);

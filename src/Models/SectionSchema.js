@@ -6,6 +6,6 @@ const sectionSchema = new Schema({
     courseID: String,
   });
 
-  const Section = model("Section", sectionSchema);
+  const Section =models.Section || model("Section", sectionSchema);
 
   export default Section
