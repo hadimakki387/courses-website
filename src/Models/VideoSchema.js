@@ -7,7 +7,7 @@ const videoSchema = new Schema({
     mins: Number,
     secs: Number,
   },
-  sectionID: { type: Schema.Types.ObjectId, ref: "Section" },
+  sectionID: String,
 });
 const Video = models.Video || model("Video", videoSchema);
 
