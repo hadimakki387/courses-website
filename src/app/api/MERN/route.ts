@@ -1,8 +1,13 @@
-import { NextApiRequest } from "next";
+import Course from "@/Models/CourseSchema";
+import Section from "@/Models/SectionSchema";
+import Video from "@/Models/VideoSchema";
 
+export async function GET(res: any) {
+  const videos = await Video.find();
+  const sections = await Section.find();
+  const courses = await Course.find();
 
-export async function GET(res:any){
-
-    return new Response(JSON.stringify("hello"))
-}   
-
+  return new Response(
+    JSON.stringify({ videos: videos, sections: sections, courses: courses })
+  );
+}

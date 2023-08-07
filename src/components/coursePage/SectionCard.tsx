@@ -36,10 +36,10 @@ function SectionCard({
  
 
   useEffect(() => {
-    if (PlayingVideo.section_id === sectionID) {
+    if (PlayingVideo.sectionID === sectionID) {
       setEP(true);
     } 
-  }, [PlayingVideo.section_id,sectionID]);
+  }, [PlayingVideo.sectionID,sectionID]);
   
   
 
@@ -64,14 +64,14 @@ function SectionCard({
       </div>
       {EP &&
         video.map((vid: any, index: any) => {
-          if (sectionID === vid.section_id) {
+          if (sectionID === vid.sectionID) {
             return (
               <div
                 className={`flex items-center gap-4 hover:bg-[#151f32] p-2 rounded-md ${
-                  PlayingVideo.video_id === vid.video_id ? "bg-[#101c2c]" : ""
+                  PlayingVideo.videoId === vid.videoId ? "bg-[#101c2c]" : ""
                 } transition-all duration-300`}
                 key={index}
-                onClick={() => chosenVideo(vid.video_id)} // Wrap chosenVideo call in an arrow function
+                onClick={() => chosenVideo(vid.videoId)} // Wrap chosenVideo call in an arrow function
               >
                 <div>
                   <RunButton />

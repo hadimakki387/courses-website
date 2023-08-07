@@ -4,14 +4,13 @@ import React, { useEffect, useState } from "react";
 import CategorySelect from "./Admin components/CategorySelect";
 import TextInput from "./Admin components/TextInput";
 import SubmitButton from "./Admin components/SubmitButton";
-import Videos from "@/fake data/Videos";
 import Index from "./videos Edit/Index";
 import GetData from "@/Queries/GetData";
+import AddSection from "./addSection/AddSection";
 
 function VideoForm() {
+
   const Data: any = GetData("admin");
-
-
 
   const [video, setVideo] = useState({
     sectionID:"",
@@ -74,7 +73,7 @@ function VideoForm() {
 
   return (
     <div className="flex flex-col gap-8">
-      {Data !== "isLoading" ? (
+      {Data.videos && Data.sections ? (
         <>
           <div className="flex flex-col gap-4">
             <CategorySelect
@@ -119,7 +118,12 @@ function VideoForm() {
             </div>
             <SubmitButton fetchNewVideo={fetchNewVideo} />
           </div>
-          <Index Videos={Videos} fetchVideoUpdate={fetchVideoUpdate} />
+          <div>
+          <AddSection courses={Data.courses}/>
+                
+          </div>
+          <Index section={Data.sections} Videos={Data.videos} fetchVideoUpdate={fetchVideoUpdate} />
+          
         </>
       ) : (
         <div>loading</div>

@@ -27,8 +27,8 @@ function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
           return (
             <SectionCard
               video={videos}
-              sectionID={section.section_id}
-              sectionName={section.section_name}
+              sectionID={section.id}
+              sectionName={section.title}
               sectionNum={index}
               key={index}
             />

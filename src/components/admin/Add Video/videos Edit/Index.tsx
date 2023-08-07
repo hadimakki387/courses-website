@@ -1,14 +1,16 @@
 "use client";
 
-import Sections from "@/fake data/Sections";
+
 import React, { useState } from "react";
 import Section from "./Section";
 
 function Index({
   Videos,
+  section,
   fetchVideoUpdate,
 }: {
   Videos: any;
+  section:any;
   fetchVideoUpdate: any;
 }) {
   const [editMode, setEditMode] = useState(Array(Videos.length).fill(false));
@@ -62,13 +64,14 @@ function Index({
     console.log(newData)
   };
 
+
   return (
     <div className="flex flex-col gap-4 w-full">
       Available Videos
-      {Sections.map((section, index) => (
+      {section.map((sec:any, index:number) => (
         <Section
           key={index}
-          section={section}
+          section={sec}
           Videos={videos}
           editMode={editMode}
           handleDoubleClick={handleDoubleClick}

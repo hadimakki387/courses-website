@@ -3,11 +3,11 @@ import VideoCard from './VideoCard';
 
 function Section({ section, Videos, editMode, handleDoubleClick, handleChange, handleUpdate }:any) {
     return (
-      <div key={section.section_id}>
-        <div className="mb-1">{section.section_name}</div>
+      <div key={section.id}>
+        <div className="mb-1">{section.title}</div>
         <div className="flex flex-col gap-2">
           {Videos.map((video:any, index:any) => {
-            if (section.section_id === video.section_id) {
+            if (section.id === video.sectionID) {
               return (
                 <VideoCard
                   key={index}

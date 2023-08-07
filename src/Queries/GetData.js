@@ -19,7 +19,7 @@ function GetVideos(route) {
     fetchVideos();
   }, []);
 
-  return loading ? "isLoading" : sections;
+  return sections;
 }
 
 export default GetVideos;

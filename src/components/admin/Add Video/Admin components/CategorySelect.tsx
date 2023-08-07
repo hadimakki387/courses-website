@@ -11,7 +11,7 @@ function CategorySelect({
   firstValue: string;
   title: string;
 }) {
-  console.log(sections)
+ 
   return (
     <div>
       <label
@@ -29,6 +29,7 @@ function CategorySelect({
         <option defaultValue={firstValue}>{firstValue}</option>
         {sections.map((section: any, index: any) => {
           return (
+            
             <option value={section.id} key={index}>
               {section.title}
             </option>

@@ -11,22 +11,27 @@ import Sections from "@/fake data/Sections";
 import GetData from "@/Queries/GetData"
 
 function Index() {
-  const videos = Videos;
-  const sections = Sections;
-
-  const Data = GetData("MERN")
-  console.log(Data)
+ 
+  
+  const Data:any = GetData("MERN")
 
   const [SideBar, setSideBar] = useState(false);
-  const [PlayingVideo, setPlayingVideo] = useState(videos[0]);
+  const [PlayingVideo, setPlayingVideo] = useState([]);
   const [IsVideosBar, setIsVideosBar] = useState(false);
 
+  useEffect(()=>{
+    if(Data.videos){
+      setPlayingVideo(Data.videos[0])
+    }
+  },[Data])
+
   function chosenVideo(e: any) {
-    const clickedVideo = videos.find((video) => video.video_id === e);
+    const clickedVideo = Data.videos.find((video:any) => video.videoId === e);
     if (clickedVideo) {
       setPlayingVideo(clickedVideo);
     }
     setIsVideosBar(!IsVideosBar);
+    console.log(e)
   }
 
   const showSideBar = () => {
@@ -56,7 +61,9 @@ function Index() {
 
 
   return (
+    
     <div className="course-lighter-bg-color max-[1000px]:h-full">
+      {Data.videos && Data.sections ?<>
       <NavBar
         showSignIn={() => {
           console.log("hello");
@@ -71,9 +78,9 @@ function Index() {
 
         <FakeVideoContext.Provider
           value={[
-            videos,
+            Data.videos,
             PlayingVideo,
-            sections,
+            Data.sections,
             chosenVideo,
             SideBar,
             showVideosBar,
@@ -85,6 +92,8 @@ function Index() {
           <ContentBar />
         </FakeVideoContext.Provider>
       </div>
+      </>:<div>Loading</div>}
+      
     </div>
   );
 }

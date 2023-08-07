@@ -17,7 +17,6 @@ export async function GET(req: any, res: any) {
     courseID:"73382fd0-846b-4f95-80db-598abfdffbb2"
   })
  
- section.save()
  
   return new Response(
     JSON.stringify({ courses: courses, sections: sections, videos: videos })
@@ -31,16 +30,24 @@ export async function POST(req: any, res: any) {
   const videos = await Video.find();
   const messages = await req.json();
 
-  const videoToSave = {
+  if(messages.videoId){
+     const videoToSave = {
     ...messages,
     videoId: videos.length + 1,
   }
-
   console.log(videoToSave);
  
   const video = new Video(videoToSave);
   video.save()
-
-
   console.log(`saved: ${videoToSave}`);
+  }else if(messages.sectionName){
+    const section = new Section({
+      title:messages.sectionName,
+      id:uuidv4(),
+      courseID:messages.courseName,
+    })
+    section.save()
+    console.log("section Saved")
+  }
+  
 }
