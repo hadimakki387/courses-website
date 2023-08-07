@@ -13,9 +13,10 @@ function Index({
 }) {
   const [editMode, setEditMode] = useState(Array(Videos.length).fill(false));
   const [newData, setNewData] = useState(Array(Videos.length).fill({}));
+  const [videos,setVideos] = useState(Videos)
 
   const handleDoubleClick = (index: number) => {
-    const newEditMode = Array(Videos.length).fill(false);
+    const newEditMode = Array(videos.length).fill(false);
     newEditMode[index] = true;
     setEditMode(newEditMode);
   };
@@ -26,26 +27,27 @@ function Index({
     setEditMode(newEditMode);
 
     if (newData[index]) {
-      const videoIdToUpdate = Videos[index].video_id;
-      const updatedVideoIndex = Videos.findIndex(
+      const videoIdToUpdate = videos[index].video_id;
+      const updatedVideoIndex = videos.findIndex(
         (video: any) => video.video_id === videoIdToUpdate
       );
       if (updatedVideoIndex !== -1) {
         const updatedVideo = {
-          ...Videos[updatedVideoIndex],
-          title: newData[index].title || Videos[updatedVideoIndex].title,
+          ...videos[updatedVideoIndex],
+          title: newData[index].title || videos[updatedVideoIndex].title,
           duration: {
             mins:
-              newData[index].mins || Videos[updatedVideoIndex].duration.mins,
+              newData[index].mins || videos[updatedVideoIndex].duration.mins,
             secs:
-              newData[index].secs || Videos[updatedVideoIndex].duration.secs,
+              newData[index].secs || videos[updatedVideoIndex].duration.secs,
           },
-          url: newData[index].url || Videos[updatedVideoIndex].url,
+          url: newData[index].url || videos[updatedVideoIndex].url,
         };
 
         // Update the Videos state with the updated video
-        const newVideos = [...Videos];
+        const newVideos = [...videos];
         newVideos[updatedVideoIndex] = updatedVideo;
+        setVideos(newVideos);
 
         // Call fetchVideoUpdate with the updated video
         fetchVideoUpdate(updatedVideo);
@@ -57,6 +59,7 @@ function Index({
     const newDataCopy = [...newData];
     newDataCopy[index] = { ...newData[index], [field]: value };
     setNewData(newDataCopy);
+    console.log(newData)
   };
 
   return (
@@ -66,7 +69,7 @@ function Index({
         <Section
           key={index}
           section={section}
-          Videos={Videos}
+          Videos={videos}
           editMode={editMode}
           handleDoubleClick={handleDoubleClick}
           handleChange={handleChange}

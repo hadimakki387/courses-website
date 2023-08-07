@@ -52,18 +52,21 @@ function VideoForm() {
   };
 
   const fetchNewVideo = async () => {
-   fetch("http://localhost:3000/api/text", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-      method: "POST",
-      body: JSON.stringify(video),
-      
-    });
-
-  };
-
-  const fetchVideoUpdate = (e: any) => {};
+    
+    fetch("http://localhost:3000/api/text", {
+     headers: {
+       "Content-Type": "application/json",
+     },
+       method: "POST",
+       body: JSON.stringify(video),
+       
+     });
+ 
+   };
+  
+  const fetchVideoUpdate= (e:any)=>{
+      console.log(e);
+  }
 
   return (
     <div className="flex flex-col gap-8">

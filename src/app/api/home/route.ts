@@ -11,9 +11,9 @@ export async function GET() {
   return new Response(JSON.stringify(randomTexts));
 }
 
-export async function POST({ req }: { req: any; }) {
+export async function POST(req: any) {
     
-console.log(req)
+console.log(req);
     
     
  

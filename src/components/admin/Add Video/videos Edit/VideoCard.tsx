@@ -1,6 +1,6 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react'
+import React , {useEffect}from 'react'
 
 function VideoCard({
     video,
@@ -10,6 +10,22 @@ function VideoCard({
     handleChange,
     handleUpdate,
   }:any) {
+
+    useEffect(() => {
+      const handleKeyPress = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          handleUpdate(index);
+        }
+      };
+      
+      if (editMode) {
+        document.addEventListener('keypress', handleKeyPress);
+      }
+      return () => {
+        document.removeEventListener('keypress', handleKeyPress);
+      };
+    }, [editMode, handleUpdate, index]);
+
     return (
       <div key={index} className="bg-gray-600 p-4 rounded-md">
         <div onDoubleClick={() => handleDoubleClick(index)}>

@@ -6,25 +6,19 @@ import { request } from "http";
 
 
 
-const getRandomTexts = (count:number) => {
-    const texts = [];
-    for (let i = 0; i < count; i++) {
-      texts.push(`Random Text ${i + 1}`);
-    }
-    return texts;
-  };
-  
-  export async function GET() {
-    const randomTexts = getRandomTexts(10);
-    return new Response(JSON.stringify(randomTexts));
-  }
-  
+
 export async function POST(req:any) {
     
+  await MongoConnection()
+  console.log("connected")
+  const  messages  = await req.json()
+  console.log(messages)
 
-    
-    
- console.log(req)
+  const video = new Video(messages)
+  video.save()
+
+  console.log(`saved: ${messages}`)
+
     
 }
 
