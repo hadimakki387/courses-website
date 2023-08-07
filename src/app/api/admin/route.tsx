@@ -16,7 +16,11 @@ export async function GET(req: any, res: any) {
     title:"Introduction to HTML",
     courseID:"73382fd0-846b-4f95-80db-598abfdffbb2"
   })
- 
+ const course = new Course({
+  id:"73382fd0-846b-4f95-80db-598abfdffbb2",
+  title:"MERN"
+ })
+
  
   return new Response(
     JSON.stringify({ courses: courses, sections: sections, videos: videos })
@@ -25,21 +29,22 @@ export async function GET(req: any, res: any) {
 
 export async function POST(req: any, res: any) {
   await MongoConnection();
-  console.log("connected");
+
 
   const videos = await Video.find();
   const messages = await req.json();
 
-  if(messages.videoId){
+
+  if(messages.duration){
      const videoToSave = {
     ...messages,
     videoId: videos.length + 1,
   }
-  console.log(videoToSave);
+
  
   const video = new Video(videoToSave);
   video.save()
-  console.log(`saved: ${videoToSave}`);
+
   }else if(messages.sectionName){
     const section = new Section({
       title:messages.sectionName,

@@ -58,13 +58,18 @@ function VideoForm() {
   };
 
   const fetchNewVideo = async () => {
-    fetch("http://localhost:3000/api/admin", {
+    const hasEmptyValue = Object.values(video).some((value) => value === "");
+    if(!hasEmptyValue){
+      fetch("http://localhost:3000/api/admin", {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify(video),
     });
+    }
+    console.log("empty input")
+    
   };
 
   const fetchVideoUpdate = (e: any) => {
@@ -75,6 +80,10 @@ function VideoForm() {
     <div className="flex flex-col gap-8">
       {Data.videos && Data.sections ? (
         <>
+        <div>
+          <AddSection courses={Data.courses}/>
+                
+          </div>
           <div className="flex flex-col gap-4">
             <CategorySelect
               title="select the section"
@@ -118,10 +127,7 @@ function VideoForm() {
             </div>
             <SubmitButton fetchNewVideo={fetchNewVideo} />
           </div>
-          <div>
-          <AddSection courses={Data.courses}/>
-                
-          </div>
+          
           <Index section={Data.sections} Videos={Data.videos} fetchVideoUpdate={fetchVideoUpdate} />
           
         </>
