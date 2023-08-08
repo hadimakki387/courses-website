@@ -8,7 +8,8 @@ import Plans from "@/components/Landing Page/plans/Plans";
 import SignIn from "@/components/Landing Page/signInUp/In/SignIn";
 import SignUp from "@/components/Landing Page/signInUp/Up/SignUp";
 import NavBar from "@/components/NavBar";
-import { useState, useEffect } from "react";
+import { create } from "domain";
+import { useState, useEffect, HtmlHTMLAttributes } from "react";
 
 import ClickAwayListener from "react-click-away-listener";
 
@@ -18,6 +19,27 @@ export default function Home() {
   const [SideBar, setSideBar] = useState(false);
   const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({});
+
+  async function CreateUser(param: any) {
+    try {
+      const res = await fetch("http://localhost:3000/api/landingPage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ param }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const responseJson = await res.json();
+      console.log(responseJson);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  }
 
   const showSignIn = () => {
     if (signUp) {
@@ -59,6 +81,8 @@ export default function Home() {
   };
   const getSignUpData = (e: any) => {
     setSignUpData(e);
+    console.log(e);
+    CreateUser(e);
   };
 
   return (
