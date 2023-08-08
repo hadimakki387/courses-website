@@ -16,6 +16,7 @@ function AddSection({courses,setNum}:any) {
       courseName: e.target.value,
     });
     setNum(522464)
+    
   };
 
 

@@ -10,6 +10,7 @@ const videoSchema = new Schema({
   sectionID: String,
   videoId: Number,
 });
+
 const Video = models.Video || model("Video", videoSchema);
 
 export default Video;

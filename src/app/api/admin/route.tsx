@@ -3,6 +3,7 @@ import Video from "@/Models/VideoSchema";
 import Section from "@/Models/SectionSchema";
 import Course from "@/Models/CourseSchema";
 import { v4 as uuidv4 } from "uuid";
+import mongoose from "mongoose";
 
 export async function GET(req: any, res: any) {
   await MongoConnection();
@@ -11,14 +12,13 @@ export async function GET(req: any, res: any) {
   const videos = await Video.find();
 
   const section = new Section({
-    id: uuidv4(),
     title: "Introduction to HTML",
-    courseID: "73382fd0-846b-4f95-80db-598abfdffbb2",
+    courseID:'64d203059072d972ec4d71d8',
   });
   const course = new Course({
-    id: "73382fd0-846b-4f95-80db-598abfdffbb2",
     title: "MERN",
   });
+  
 
   return new Response(
     JSON.stringify({ courses: courses, sections: sections, videos: videos })
@@ -35,7 +35,6 @@ export async function POST(req: any, res: any) {
   if (messages.duration) {
     const videoToSave = {
       ...messages,
-      ID:uuidv4(),
       videoId: videos.length + 1,
     };
     
@@ -56,6 +55,5 @@ export async function POST(req: any, res: any) {
     
     await Video.findOneAndDelete({_id:messages.UUID})
     
-  
   }
 }
