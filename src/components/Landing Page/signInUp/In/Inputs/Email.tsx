@@ -4,9 +4,11 @@ import CheckSvg from "../SVGs/CheckSvg";
 function Email({
   name,
   handleInputChange,
+  setEmailValid
 }: {
   name: string;
   handleInputChange: any;
+  setEmailValid:any
 }) {
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(false);
@@ -21,6 +23,7 @@ function Email({
     setEmail(newEmail);
     setIsValid(validateEmail(newEmail));
     handleInputChange(e); // Pass the event to the parent handler if needed
+    setEmailValid(isValid)
   };
 
   console.log(isValid);

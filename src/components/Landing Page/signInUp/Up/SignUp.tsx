@@ -13,6 +13,8 @@ function SignUp({
   getSignUpData: any;
 }) {
   const [signInData, setSignInData] = useState({});
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ function SignUp({
     const { name, value } = e.target;
     setSignInData((prevData) => ({ ...prevData, [name]: value }));
   };
+
   return (
     <div
       className=" bg-panel-900  text-white relative md:rounded-2xl max-h-90 md:mx-auto w-full overflow-auto px-6 py-9 flex flex-col mt-auto lg:mt-0 snipcss-sMhwa style-o6bUK"
@@ -64,21 +67,29 @@ function SignUp({
                         <Email
                           name="signUpEmail"
                           handleInputChange={handleInputChange}
+                          setEmailValid={setEmailValid}
                         />
                       </div>
                       <div className="control" data-js="password_field">
-                        <PasswordInput handleInputChange={handleInputChange} />
+                        <PasswordInput
+                          setPasswordValid={setPasswordValid}
+                          handleInputChange={handleInputChange}
+                        />
                       </div>
 
                       <div className="mt-10 text-center">
                         <button
-                          className="btn flex-center btn-blue w-full"
+                          className={`btn flex-center btn-blue w-full ${
+                            !emailValid && !passwordValid ? "" : "hover:cursor-not-allowed"
+                          }`}
                           type="submit"
+                         
                         >
                           <span className="text-wrap inline-block flex-shrink-0">
                             Sign Up
                           </span>
                         </button>
+
                         <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline">
                           Login
                         </button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CheckSvg from "../In/SVGs/CheckSvg";
 
 function NameInput({
@@ -8,6 +8,17 @@ function NameInput({
   name: string;
   handleInputChange: any;
 }) {
+  const [valid,setValid]=useState(false)
+  const handleName=(e:any)=>{
+    if(e.target.value){
+      setValid(true)
+
+    }else{
+      setValid(false)
+    }
+    console.log(e.target.value)
+    handleInputChange(e)
+  }
   return (
     <div className="mb-4">
       <label
@@ -19,14 +30,14 @@ function NameInput({
       <div className="relative flex items-center border-b border-panel-700">
         <input
           type="text"
-          name={name}
+          name="name"
           className="input is-minimal text-sm text-white"
           autoComplete="current-password"
           placeholder="enter name"
-          onChange={handleInputChange}
+          onChange={handleName}
         />
 
-        <div className="absolute right-0 mx-auto -mt-px flex h-4 w-4 items-center justify-center rounded-full p-1 bg-gray-600">
+        <div className={`absolute right-0 mx-auto -mt-px flex h-4 w-4 items-center justify-center rounded-full p-1  ${valid?"bg-green-600":"bg-gray-600"}`}>
           <CheckSvg />
         </div>
       </div>

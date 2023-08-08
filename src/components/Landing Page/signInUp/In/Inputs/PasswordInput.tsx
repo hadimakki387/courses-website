@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import CheckSvg from "../SVGs/CheckSvg";
 
-function PasswordInput({handleInputChange}:{handleInputChange:any}) {
+function PasswordInput({
+  handleInputChange,
+  setPasswordValid,
+}: {
+  handleInputChange: any;
+  setPasswordValid: any;
+}) {
+  const [password, setPassword] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  const validatePassword = (input: string) => {
+    // Customize your password validation logic here
+    const minLength = 8;
+
+    return input.length >= minLength;
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setIsValid(validatePassword(newPassword));
+    handleInputChange(e); // Pass the event to the parent handler if needed
+    setPasswordValid(isValid)
+  };
+
   return (
     <>
       <label
-        className=" text-xs font-medium text-grey-600 block text-2xs text-grey-800 dark:text-grey-600"
+        className="text-xs font-medium text-grey-600 block text-2xs text-grey-800 dark:text-grey-600"
         htmlFor="password"
       >
         Password
@@ -17,7 +41,8 @@ function PasswordInput({handleInputChange}:{handleInputChange:any}) {
           className="input is-minimal text-sm text-white"
           autoComplete="current-password"
           placeholder="Enter Password"
-          onChange={handleInputChange}
+          value={password}
+          onChange={handlePasswordChange}
         />
         <button
           type="button"
@@ -26,10 +51,21 @@ function PasswordInput({handleInputChange}:{handleInputChange:any}) {
         >
           Show
         </button>
-        <div className="absolute right-0 mx-auto -mt-px flex h-4 w-4 items-center justify-center rounded-full p-1 bg-gray-600">
+        <div
+          className={`absolute right-0 mx-auto -mt-px flex h-4 w-4 items-center justify-center rounded-full p-1 ${
+            isValid ? "bg-green-500" : "bg-gray-600"
+          }`}
+        >
           <CheckSvg />
         </div>
       </div>
+      {!isValid && password ? (
+        <span className="text-xs text-red-700 ">
+          your need at least 8 characters
+        </span>
+      ) : (
+        ""
+      )}
     </>
   );
 }
