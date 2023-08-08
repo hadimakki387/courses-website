@@ -3,10 +3,7 @@ async function MongoConnection() {
   const mongoose = require('mongoose');
   try {
 
-    await mongoose.connect('mongodb+srv://HadiMakki:Idlsisfs7@cluster0.m1wv8gg.mongodb.net/courses', {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
+    await mongoose.connect('mongodb+srv://HadiMakki:Idlsisfs7@cluster0.m1wv8gg.mongodb.net/courses');
 
     console.log(`Connected successfully!`);
     
