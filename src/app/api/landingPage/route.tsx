@@ -1,6 +1,6 @@
 import MongoConnection from "@/utils/MongoConnection";
 import User from "@/Models/UserSchema";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
   await MongoConnection();

@@ -1,9 +1,9 @@
 import MongoConnection from "@/utils/MongoConnection";
 import Video from "@/Models/VideoSchema";
+import Admin from "@/Models/AdminSchema"
 import Section from "@/Models/SectionSchema";
 import Course from "@/Models/CourseSchema";
-import { v4 as uuidv4 } from "uuid";
-import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 export async function GET(req: any, res: any) {
   await MongoConnection();
@@ -48,6 +48,17 @@ export async function POST(req: any, res: any) {
   if (message.toDo === "deleteSection") {
    await DeleteSction(videos,message)
   }
+  if(message.adminEmail){
+    checkAdmin()
+  }
+  if(message.newAdmin){
+    const admin = new Admin({
+      email:message.newAdmin,
+      password:await bcrypt.hash(message.password, 10)
+    })
+    admin.save()
+
+  }
 }
 
 const AddVideo = (message:any,videos:any)=>{
@@ -80,4 +91,8 @@ const DeleteSction = async (videos:any,message:any)=>{
   } catch (error) {
     console.error("Error deleting section and associated videos:", error);
   }
+}
+
+const checkAdmin = ()=>{
+
 }
