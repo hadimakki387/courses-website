@@ -6,32 +6,38 @@ import VideosBar from "./VideosBar";
 import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
-import Videos from "@/fake data/Videos";
-import Sections from "@/fake data/Sections";
-import GetData from "@/Queries/GetData"
+import LoadingScreen from "../loading/LoadingScreen";
+import fetchData from "@/Queries/GetData";
 
 function Index() {
- 
-  
-  const Data:any = GetData("MERN")
-
+  const [Data, setData]: any = useState([]);
+  const [num, setNum] = useState(0);
   const [SideBar, setSideBar] = useState(false);
-  const [PlayingVideo, setPlayingVideo] = useState([]);
+  const [PlayingVideo, setPlayingVideo]: any = useState({
+    _id: { $oid: "64d17875da06a52d0b00c485" },
+    title: "1 Introduction to HTML",
+    url: "Dw_tj65FGf0",
+    duration: { mins: 10 , secs:54  },
+    sectionID: "a64c6d9b-108f-4de6-8130-5caf8b129ac5",
+    videoId: 1,
+    __v: { $numberInt: "0" },
+  });
+
   const [IsVideosBar, setIsVideosBar] = useState(false);
 
-  useEffect(()=>{
-    if(Data.videos){
-      setPlayingVideo(Data.videos[0])
-    }
-  },[Data])
+  useEffect(() => {
+    fetchData("admin", setData);
+  }, [num]);
+
+
 
   function chosenVideo(e: any) {
-    const clickedVideo = Data.videos.find((video:any) => video.videoId === e);
+    const clickedVideo = Data.videos.find((video: any) => video.videoId === e);
     if (clickedVideo) {
       setPlayingVideo(clickedVideo);
     }
     setIsVideosBar(!IsVideosBar);
-    console.log(e)
+    console.log(e);
   }
 
   const showSideBar = () => {
@@ -58,42 +64,48 @@ function Index() {
     }
   }, [SideBar]);
 
-
-
   return (
-    
-    <div className="course-lighter-bg-color max-[1000px]:h-full">
-      {Data.videos && Data.sections ?<>
-      <NavBar
-        showSignIn={() => {
-          console.log("hello");
-        }}
-        showSignUp={() => {
-          console.log("hello");
-        }}
-        showSideBar={showSideBar}
-      />
-      <div className="flex h-full ">
-        <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
+    <div
+      className={`course-lighter-bg-color max-[1000px]:h-full ${
+        Data.videos && Data.sections ? "" : "h-screen"
+      }`}
+    >
+      {Data.videos && Data.sections ? (
+        <>
+          <NavBar
+            showSignIn={() => {
+              console.log("hello");
+            }}
+            showSignUp={() => {
+              console.log("hello");
+            }}
+            showSideBar={showSideBar}
+          />
+          <div className="flex h-full ">
+            <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
 
-        <FakeVideoContext.Provider
-          value={[
-            Data.videos,
-            PlayingVideo,
-            Data.sections,
-            chosenVideo,
-            SideBar,
-            showVideosBar,
-            setPlayingVideo,
-            showSideBar
-          ]}
-        >
-          <VideosBar IsVideosBar={IsVideosBar} />
-          <ContentBar />
-        </FakeVideoContext.Provider>
-      </div>
-      </>:<div>Loading</div>}
-      
+            <FakeVideoContext.Provider
+              value={[
+                Data.videos,
+                PlayingVideo,
+                Data.sections,
+                chosenVideo,
+                SideBar,
+                showVideosBar,
+                setPlayingVideo,
+                showSideBar,
+              ]}
+            >
+              <VideosBar IsVideosBar={IsVideosBar} />
+              <ContentBar />
+            </FakeVideoContext.Provider>
+          </div>
+        </>
+      ) : (
+        <div className="grid place-items-center h-full ">
+          <LoadingScreen />
+        </div>
+      )}
     </div>
   );
 }

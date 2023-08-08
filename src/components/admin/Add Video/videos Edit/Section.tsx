@@ -1,7 +1,7 @@
 import React from 'react'
 import VideoCard from './VideoCard';
 
-function Section({ section, Videos, editMode, handleDoubleClick, handleChange, handleUpdate }:any) {
+function Section({ section, Videos, editMode, handleDoubleClick, handleChange, handleUpdate ,setNum}:any) {
     return (
       <div key={section.id}>
         <div className="mb-1">{section.title}</div>
@@ -17,6 +17,7 @@ function Section({ section, Videos, editMode, handleDoubleClick, handleChange, h
                   handleDoubleClick={handleDoubleClick}
                   handleChange={handleChange}
                   handleUpdate={handleUpdate}
+                  setNum={setNum}
                 />
               );
             }

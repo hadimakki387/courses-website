@@ -1,4 +1,4 @@
-import {Schema,model,models} from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const videoSchema = new Schema({
   title: String,
@@ -8,8 +8,8 @@ const videoSchema = new Schema({
     secs: Number,
   },
   sectionID: String,
-  videoId:Number
+  videoId: Number,
 });
 const Video = models.Video || model("Video", videoSchema);
 
-export default Video
+export default Video;

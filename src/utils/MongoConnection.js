@@ -8,7 +8,7 @@ async function MongoConnection() {
       useNewUrlParser: true,
     });
 
-    console.log(`Connected to ${databaseType} successfully!`);
+    console.log(`Connected successfully!`);
     
   } catch (error) {
     console.log(`MongoDB connection error: ${error}`);

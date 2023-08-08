@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextInput from "../Admin components/TextInput";
 import CategorySelect from "../Admin components/CategorySelect";
 
-function AddSection(courses:any) {
+function AddSection({courses,setNum}:any) {
   const [section, setSection] = useState({
     sectionName: "",
     courseName: "",
@@ -15,6 +15,7 @@ function AddSection(courses:any) {
       ...section,
       courseName: e.target.value,
     });
+    setNum(522464)
   };
 
 
@@ -28,6 +29,7 @@ function AddSection(courses:any) {
       body: JSON.stringify(section),
     }); 
     }
+    setNum(42345)
   };
   return (
     <div className="w-full flex flex-col  justify-center">
@@ -42,7 +44,7 @@ function AddSection(courses:any) {
         title="select the Course"
         firstValue="Choose the course"
         handleChange={courseHandle}
-        sections={courses.courses}
+        sections={courses}
       />
       <button
         onClick={fecthSection}

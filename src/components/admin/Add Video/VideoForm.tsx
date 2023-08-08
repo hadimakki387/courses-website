@@ -7,13 +7,21 @@ import SubmitButton from "./Admin components/SubmitButton";
 import Index from "./videos Edit/Index";
 import GetData from "@/Queries/GetData";
 import AddSection from "./addSection/AddSection";
+import LoadingScreen from "@/components/loading/LoadingScreen";
+import fetchData from "@/Queries/GetData";
 
 function VideoForm() {
+  const [Data, setData]: any = useState([]);
+  const [num,setNum] = useState(0)
 
-  const Data: any = GetData("admin");
+
+  useEffect(() => {
+    fetchData("admin",setData)
+  },[num]);
+
 
   const [video, setVideo] = useState({
-    sectionID:"",
+    sectionID: "",
     title: "",
     url: "",
     duration: {
@@ -22,18 +30,17 @@ function VideoForm() {
     },
   });
 
-  const sectionHandle = (e:any)=>{
+  const sectionHandle = (e: any) => {
     setVideo({
       ...video,
       sectionID: e.target.value,
     });
-  }
+  };
   const titleHandle = (e: any) => {
     setVideo({
       ...video,
       title: e.target.value,
     });
-    console.log(e)
   };
   const urlHandle = (e: any) => {
     setVideo({
@@ -59,17 +66,18 @@ function VideoForm() {
 
   const fetchNewVideo = async () => {
     const hasEmptyValue = Object.values(video).some((value) => value === "");
-    if(!hasEmptyValue){
+    if (!hasEmptyValue) {
       fetch("http://localhost:3000/api/admin", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(video),
-    });
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(video),
+      });
+      setNum(num+1)
     }
-    console.log("empty input")
-    
+   
+    console.log("empty input");
   };
 
   const fetchVideoUpdate = (e: any) => {
@@ -77,12 +85,15 @@ function VideoForm() {
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div
+      className={`flex flex-col gap-8 ${
+        !Data.videos && !Data.sections ? "h-screen" : ""
+      }  `}
+    >
       {Data.videos && Data.sections ? (
         <>
-        <div>
-          <AddSection courses={Data.courses}/>
-                
+          <div>
+            <AddSection courses={Data.courses} setNum={setNum}/>
           </div>
           <div className="flex flex-col gap-4">
             <CategorySelect
@@ -127,12 +138,17 @@ function VideoForm() {
             </div>
             <SubmitButton fetchNewVideo={fetchNewVideo} />
           </div>
-          
-          <Index section={Data.sections} Videos={Data.videos} fetchVideoUpdate={fetchVideoUpdate} />
-          
+
+          <Index
+            Data={Data}
+            fetchVideoUpdate={fetchVideoUpdate}
+            setNum={setNum}
+          />
         </>
       ) : (
-        <div>loading</div>
+        <div className="grid place-items-center h-full">
+          <LoadingScreen />
+        </div>
       )}
     </div>
   );

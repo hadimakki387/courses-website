@@ -5,17 +5,19 @@ import React, { useState } from "react";
 import Section from "./Section";
 
 function Index({
-  Videos,
-  section,
+  Data,
   fetchVideoUpdate,
+  setNum
 }: {
-  Videos: any;
-  section:any;
+  Data:any,
   fetchVideoUpdate: any;
+  setNum:any
 }) {
-  const [editMode, setEditMode] = useState(Array(Videos.length).fill(false));
-  const [newData, setNewData] = useState(Array(Videos.length).fill({}));
-  const [videos,setVideos] = useState(Videos)
+  console.log(Data)
+  const [editMode, setEditMode] = useState(Array(Data.videos.length).fill(false));
+  const [newData, setNewData] = useState(Array(Data.videos.length).fill({}));
+  const [videos,setVideos] = useState(Data.videos)
+
 
   const handleDoubleClick = (index: number) => {
     const newEditMode = Array(videos.length).fill(false);
@@ -50,7 +52,7 @@ function Index({
         const newVideos = [...videos];
         newVideos[updatedVideoIndex] = updatedVideo;
         setVideos(newVideos);
-
+      
         // Call fetchVideoUpdate with the updated video
         fetchVideoUpdate(updatedVideo);
       }
@@ -68,15 +70,16 @@ function Index({
   return (
     <div className="flex flex-col gap-4 w-full">
       Available Videos
-      {section.map((sec:any, index:number) => (
+      {Data.sections.map((sec:any, index:number) => (
         <Section
           key={index}
           section={sec}
-          Videos={videos}
+          Videos={Data.videos}
           editMode={editMode}
           handleDoubleClick={handleDoubleClick}
           handleChange={handleChange}
           handleUpdate={handleUpdate}
+          setNum={setNum}
         />
       ))}
     </div>
