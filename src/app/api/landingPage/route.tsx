@@ -1,6 +1,6 @@
 import MongoConnection from "@/utils/MongoConnection";
 import User from "@/Models/UserSchema";
-import * as bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
   await MongoConnection();
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       isVIP: false,
       watchedVideos: [],
     });
-    // console.log(await bcrypt.hash("nigga", 10));
+
     user.save();
     return new Response(JSON.stringify(user));
   } else {
