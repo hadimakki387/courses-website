@@ -1,28 +1,33 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./signIn.css";
 import CloseSvg from "./SVGs/CloseSvg";
 import CheckSvg from "./SVGs/CheckSvg";
 import Email from "./Inputs/Email";
 import PasswordInput from "./Inputs/PasswordInput";
 
-function SignIn({showSignIn,getSignInData}:{showSignIn:any,getSignInData:any}) {
-
+function SignIn({
+  showSignIn,
+  getSignInData,
+}: {
+  showSignIn: any;
+  getSignInData: any;
+}) {
   const [signInData, setSignInData] = useState({});
-
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    getSignInData(signInData)
-    console.log(signInData);
+    if(emailValid && passwordValid){
+      getSignInData(signInData);
+      console.log(signInData);
+    }
   };
 
- 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSignInData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-
 
   return (
     <div
@@ -52,18 +57,28 @@ function SignIn({showSignIn,getSignInData}:{showSignIn:any,getSignInData:any}) {
                     Log In
                   </h1>
                   <div className="mt-8">
-
                     {/* Here goes the form */}
                     <form onSubmit={handleSubmit}>
                       <div className="control" data-js="email_field">
-                        <Email name="signInEmail" handleInputChange={handleInputChange}/>
+                        <Email
+                          name="signInEmail"
+                          setEmailValid={setEmailValid}
+                          handleInputChange={handleInputChange}
+                        />
                       </div>
                       <div className="control" data-js="password_field">
-                        <PasswordInput handleInputChange={handleInputChange}/>
+                        <PasswordInput
+                          setPasswordValid={setPasswordValid}
+                          handleInputChange={handleInputChange}
+                        />
                       </div>
                       <div className="mt-10 text-center">
                         <button
-                          className="btn flex-center btn-blue w-full"
+                          className={`btn flex-center btn-blue w-full ${
+                            emailValid && passwordValid
+                              ? ""
+                              : "hover:cursor-not-allowed"
+                          }`}
                           type="submit"
                         >
                           <span className="text-wrap inline-block flex-shrink-0">
@@ -76,7 +91,6 @@ function SignIn({showSignIn,getSignInData}:{showSignIn:any,getSignInData:any}) {
                       </div>
                     </form>
                     {/* Here goes the form */}
-
                   </div>
                 </div>
               </div>

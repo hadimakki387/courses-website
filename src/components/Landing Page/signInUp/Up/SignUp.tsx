@@ -18,8 +18,11 @@ function SignUp({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    getSignUpData(signInData);
-    console.log(signInData);
+    if (emailValid && passwordValid) {
+      getSignUpData(signInData);
+      console.log(signInData);
+    }
+  
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,10 +83,11 @@ function SignUp({
                       <div className="mt-10 text-center">
                         <button
                           className={`btn flex-center btn-blue w-full ${
-                            !emailValid && !passwordValid ? "" : "hover:cursor-not-allowed"
+                            emailValid && passwordValid
+                              ? ""
+                              : "hover:cursor-not-allowed"
                           }`}
                           type="submit"
-                         
                         >
                           <span className="text-wrap inline-block flex-shrink-0">
                             Sign Up

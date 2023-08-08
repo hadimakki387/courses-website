@@ -23,7 +23,7 @@ function PasswordInput({
     setPassword(newPassword);
     setIsValid(validatePassword(newPassword));
     handleInputChange(e); // Pass the event to the parent handler if needed
-    setPasswordValid(isValid)
+    setPasswordValid(validatePassword(newPassword))
   };
 
   return (

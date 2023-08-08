@@ -21,6 +21,6 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(user));
   } else {
     // const user = await User.find();
-    // console.log(user);
+    console.log(body);
   }
 }

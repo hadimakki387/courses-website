@@ -23,7 +23,7 @@ function Email({
     setEmail(newEmail);
     setIsValid(validateEmail(newEmail));
     handleInputChange(e); // Pass the event to the parent handler if needed
-    setEmailValid(isValid)
+    setEmailValid(validateEmail(newEmail))
   };
 
   console.log(isValid);
