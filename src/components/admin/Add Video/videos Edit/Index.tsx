@@ -13,7 +13,7 @@ function Index({
   fetchVideoUpdate: any;
   setNum:any
 }) {
-  console.log(Data)
+
   const [editMode, setEditMode] = useState(Array(Data.videos.length).fill(false));
   const [newData, setNewData] = useState(Array(Data.videos.length).fill({}));
   const [videos,setVideos] = useState(Data.videos)
@@ -25,15 +25,13 @@ function Index({
     setEditMode(newEditMode);
   };
 
-  const handleUpdate = (index: number) => {
-    const newEditMode = [...editMode];
-    newEditMode[index] = false;
-    setEditMode(newEditMode);
-
+  const handleUpdate = (index: any) => {
+    disableEditMode(index)
+   
     if (newData[index]) {
-      const videoIdToUpdate = videos[index].video_id;
+      const videoIdToUpdate = videos[index]._id;
       const updatedVideoIndex = videos.findIndex(
-        (video: any) => video.video_id === videoIdToUpdate
+        (video: any) => video._id === videoIdToUpdate
       );
       if (updatedVideoIndex !== -1) {
         const updatedVideo = {
@@ -52,6 +50,7 @@ function Index({
         const newVideos = [...videos];
         newVideos[updatedVideoIndex] = updatedVideo;
         setVideos(newVideos);
+        
       
         // Call fetchVideoUpdate with the updated video
         fetchVideoUpdate(updatedVideo);
@@ -59,11 +58,17 @@ function Index({
     }
   };
 
+  const disableEditMode=(index:number)=>{
+    const newEditMode = [...editMode];
+    newEditMode[index] = false;
+    setEditMode(newEditMode);
+  }
+
   const handleChange = (index: number, field: string, value: string) => {
     const newDataCopy = [...newData];
     newDataCopy[index] = { ...newData[index], [field]: value };
     setNewData(newDataCopy);
-    console.log(newData)
+
   };
 
 
@@ -80,6 +85,7 @@ function Index({
           handleChange={handleChange}
           handleUpdate={handleUpdate}
           setNum={setNum}
+          disableEditMode={disableEditMode}
         />
       ))}
     </div>

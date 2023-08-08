@@ -13,12 +13,11 @@ export async function GET(req: any, res: any) {
 
   const section = new Section({
     title: "Introduction to HTML",
-    courseID:'64d203059072d972ec4d71d8',
+    courseID: "64d203059072d972ec4d71d8",
   });
   const course = new Course({
     title: "MERN",
   });
-  
 
   return new Response(
     JSON.stringify({ courses: courses, sections: sections, videos: videos })
@@ -29,31 +28,56 @@ export async function POST(req: any, res: any) {
   await MongoConnection();
 
   const videos = await Video.find();
-  const messages = await req.json();
-  console.log(messages.toDO);
+  const message = await req.json();
+  console.log(message);
 
-  if (messages.duration) {
-    const videoToSave = {
-      ...messages,
-      videoId: videos.length + 1,
-    };
+  if (message.duration) {
+    AddVideo(message,videos)
+  }
+  if (message.sectionName) {
+    AddSection(message)
+  }
+  if (message.toDO === "deleteVideo") {
+    await Video.findOneAndDelete({ _id: message.UUID });
+  }
+  if (message.toDo === "fetchVideoUpdate") {
+    await Video.findOneAndReplace({ _id: message.Data._id }, message.Data);
     
+    console.log("hl")
+  }
+  if (message.toDo === "deleteSection") {
+   await DeleteSction(videos,message)
+  }
+}
 
-    const video = new Video(videoToSave);
-    video.save();
-  }
-  if (messages.sectionName) {
-    const section = new Section({
-      title: messages.sectionName,
-      id: uuidv4(),
-      courseID: messages.courseName,
-    });
-    section.save();
-    console.log("section Saved");
-  }
-  if (messages.toDO === "deleteVideo") {
-    
-    await Video.findOneAndDelete({_id:messages.UUID})
-    
+const AddVideo = (message:any,videos:any)=>{
+  const videoToSave = {
+    ...message,
+    videoId: videos.length + 1,
+  };
+
+  const video = new Video(videoToSave);
+  video.save();
+}
+
+const AddSection=(message:any)=>{
+  const section = new Section({
+    title: message.sectionName,
+    courseID: message.courseName,
+  });
+  section.save();
+  console.log("section Saved");
+}
+
+const DeleteSction = async (videos:any,message:any)=>{
+  try {
+    for (const video of videos) {
+      if (video.sectionID === message._id) {
+        await Video.findByIdAndDelete(video._id);
+      }
+    }
+    await Section.findByIdAndDelete(message._id);
+  } catch (error) {
+    console.error("Error deleting section and associated videos:", error);
   }
 }

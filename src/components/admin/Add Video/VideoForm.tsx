@@ -12,13 +12,11 @@ import fetchData from "@/Queries/GetData";
 
 function VideoForm() {
   const [Data, setData]: any = useState([]);
-  const [num,setNum] = useState(0)
-
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
-    fetchData("admin",setData)
-  },[num]);
-
+    fetchData("admin", setData);
+  }, [num]);
 
   const [video, setVideo] = useState({
     sectionID: "",
@@ -74,14 +72,22 @@ function VideoForm() {
         method: "POST",
         body: JSON.stringify(video),
       });
-      setNum(num+1)
+      setNum(num + 1);
     }
-   
+
     console.log("empty input");
   };
 
   const fetchVideoUpdate = (e: any) => {
-    console.log(e);
+    fetch("http://localhost:3000/api/admin", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ Data:e, toDo: "fetchVideoUpdate" }),
+    });
+    setNum(num + 1);
+    console.log(e)
   };
 
   return (
@@ -93,7 +99,7 @@ function VideoForm() {
       {Data.videos && Data.sections ? (
         <>
           <div>
-            <AddSection courses={Data.courses} setNum={setNum}/>
+            <AddSection courses={Data.courses} setNum={setNum} />
           </div>
           <div className="flex flex-col gap-4">
             <CategorySelect

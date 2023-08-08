@@ -15,7 +15,7 @@ function AddSection({courses,setNum}:any) {
       ...section,
       courseName: e.target.value,
     });
-    setNum(522464)
+    
     
   };
 
@@ -30,7 +30,7 @@ function AddSection({courses,setNum}:any) {
       body: JSON.stringify(section),
     }); 
     }
-    setNum(42345)
+    setNum(Math.random)
   };
   return (
     <div className="w-full flex flex-col  justify-center">

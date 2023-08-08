@@ -1,6 +1,7 @@
 import { faCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 
 function VideoCard({
   video,
@@ -9,12 +10,13 @@ function VideoCard({
   handleDoubleClick,
   handleChange,
   handleUpdate,
-  setNum
+  setNum,
+  disableEditMode
 }: any) {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        handleUpdate(index);
+        alert()
       }
     };
 
@@ -32,7 +34,46 @@ function VideoCard({
       headers:{"Content-Type": "application/json"},
       body:JSON.stringify({UUID,toDO:"deleteVideo"})
     })
-    setNum(6546875)
+    setNum(Math.random)
+  }
+  const alert=()=>{
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success')
+        handleUpdate(index)
+      } else if (result.isDenied) {
+        disableEditMode(index)
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+  }
+
+  const confirm = (id:any)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteVideo(id)
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
   }
 
   return (
@@ -62,12 +103,12 @@ function VideoCard({
             />
             <FontAwesomeIcon
               icon={faCheck}
-              onClick={() => handleUpdate(index)}
+              onClick={()=>alert()}
             />
           </div>
         ) : (
           <div className="flex gap-4 items-center max-[860px]:flex-col max-[860px]:items-start max-[860px]:gap-2">
-            <div className="w-[70%] ">{video.title}</div>
+            <div className="w-[70%] ">{video.videoId}{" "}{video.title}</div>
             <div className="w-[15%] ">
               {video.duration.mins}s {video.duration.secs}m
             </div>
@@ -75,7 +116,7 @@ function VideoCard({
               {video.url}
               <FontAwesomeIcon
                 icon={faTrashCan}
-                onClick={() => deleteVideo(video._id)}
+                onClick={() => confirm(video._id)}
               />
             </div>
           </div>
