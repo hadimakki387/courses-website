@@ -1,23 +1,25 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./signUp.css";
 import CloseSvg from "../In/SVGs/CloseSvg";
 import Email from "../In/Inputs/Email";
 import PasswordInput from "../In/Inputs/PasswordInput";
 import NameInput from "./NameInput";
 
-
-function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
-
+function SignUp({
+  showSignUp,
+  getSignUpData,
+}: {
+  showSignUp: any;
+  getSignUpData: any;
+}) {
   const [signInData, setSignInData] = useState({});
-
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    getSignUpData(signInData)
+    getSignUpData(signInData);
     console.log(signInData);
   };
 
- 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSignInData((prevData) => ({ ...prevData, [name]: value }));
@@ -50,19 +52,24 @@ function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
                     Sign Up
                   </h1>
                   <div className="mt-8">
-
                     {/* Here goes the form */}
-                    <form onSubmit={handleSubmit} >
-                    <div className="control" data-js="password_field">
-                        <NameInput/>
+                    <form onSubmit={handleSubmit}>
+                      <div className="control" data-js="password_field">
+                        <NameInput
+                          name="userName"
+                          handleInputChange={handleInputChange}
+                        />
                       </div>
                       <div className="control" data-js="email_field">
-                        <Email name="signUpEmail" handleInputChange={handleInputChange}/>
+                        <Email
+                          name="signUpEmail"
+                          handleInputChange={handleInputChange}
+                        />
                       </div>
                       <div className="control" data-js="password_field">
-                        <PasswordInput handleInputChange={handleInputChange}/>
+                        <PasswordInput handleInputChange={handleInputChange} />
                       </div>
-                      
+
                       <div className="mt-10 text-center">
                         <button
                           className="btn flex-center btn-blue w-full"
@@ -78,7 +85,6 @@ function SignUp({showSignUp,getSignUpData}:{showSignUp:any,getSignUpData:any}) {
                       </div>
                     </form>
                     {/* Here goes the form */}
-
                   </div>
                 </div>
               </div>

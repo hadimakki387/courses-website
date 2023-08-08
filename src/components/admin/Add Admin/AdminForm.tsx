@@ -6,23 +6,28 @@ import SubmitButton from "../Add Video/Admin components/SubmitButton";
 
 function AdminForm() {
   const [Data, setData] = useState({
-    email: "",
+    newAdmin: "",
     password: "",
   });
 
   const getEmail = (e: any) => {
-    setData({ ...Data, email: e.target.value });
+    setData({ ...Data, newAdmin: e.target.value });
   };
 
   const getPassword = (e: any) => {
     setData({ ...Data, password: e.target.value });
   };
 
-  const fetchAdmin = ()=>{
-    console.log(Data)
-  }
+  const fetchAdmin = () => {
+    fetch("http://localhost:3000/api/admin", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(Data),
+    });
+  };
 
- 
   return (
     <div className="w-full">
       <form action="" method="post" className="w-full">
@@ -41,7 +46,7 @@ function AdminForm() {
           handleChange={getPassword}
         />
         <div className="w-full flex justify-center">
-          <SubmitButton fetchNewVideo={fetchAdmin}/>
+          <SubmitButton fetchNewVideo={fetchAdmin} />
         </div>
       </form>
     </div>

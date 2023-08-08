@@ -17,7 +17,7 @@ function NextVideoCard() {
 
   const nextVideo = () => {
     const currentIndex = videos.findIndex(
-      (video: any) => video.video_id === PlayingVideo.video_id
+      (video: any) => video.videoId === PlayingVideo.videoId
     );
     const nextIndex = (currentIndex + 1) % videos.length;
     setPlayingVideo(videos[nextIndex]);
@@ -25,7 +25,7 @@ function NextVideoCard() {
 
   const prevVideo = () => {
     const currentIndex = videos.findIndex(
-      (video: any) => video.video_id === PlayingVideo.video_id
+      (video: any) => video.videoId === PlayingVideo.videoId
     );
     const prevIndex = (currentIndex - 1 + videos.length) % videos.length;
     setPlayingVideo(videos[prevIndex]);
