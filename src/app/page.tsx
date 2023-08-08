@@ -82,7 +82,7 @@ export default function Home() {
   };
   const getSignUpData = (e: any) => {
     setSignUpData(e);
-    console.log(e);
+    console.log(e)
     CreateUser(e);
   };
 
