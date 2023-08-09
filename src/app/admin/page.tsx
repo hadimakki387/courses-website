@@ -3,6 +3,7 @@
 import AdminForm from "@/components/admin/Add Admin/AdminForm";
 import VideoForm from "@/components/admin/Add Video/VideoForm";
 import SidePanel from "@/components/admin/SidePanel";
+import ApprovePayments from "@/components/admin/approve payments/ApprovePayments";
 import React, { useState } from "react";
 
 
@@ -39,7 +40,7 @@ function Page() {
         <button className="mb-4 min-[990px]:hidden" onClick={showMenu}>
           Menu
         </button>
-        {active === "videos" ? <VideoForm /> : <AdminForm />}
+        {active === "videos" ? <VideoForm /> :active==="admins"? <AdminForm />:<ApprovePayments/>}
       </div>
     </div>
   );

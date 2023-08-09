@@ -33,6 +33,14 @@ function SidePanel({
         >
           Add Admins
         </div>
+        <div
+          onClick={() => handleSetActive("payments")}
+          className={`px-6 py-3 rounded-lg hover:cursor-pointer ${
+            active === "payments" ? "bg-red-900" : ""
+          }`}
+        >
+          See Payment Requests
+        </div>
       </div>
     </div>
   );

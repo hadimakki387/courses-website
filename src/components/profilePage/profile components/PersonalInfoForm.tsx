@@ -3,7 +3,7 @@ import { ProfileContext } from "@/context/ProfileContext";
 import React, { useContext, useState } from "react";
 
 function PersonalInfoForm() {
-  const [ShowEditInfo, editProfile] = useContext(ProfileContext);
+  const [ShowEditInfo, editProfile,planSettings,data] = useContext(ProfileContext);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,6 +22,7 @@ function PersonalInfoForm() {
 
   return (
     <div className="flex flex-col ">
+      
       <InputText
         name="UserName"
         type="text"

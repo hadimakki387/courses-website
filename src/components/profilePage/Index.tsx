@@ -8,12 +8,18 @@ import ProfileActivity from "./profile components/ProfileActivity";
 import ProfileHeader from "./profile components/ProfileHeader";
 import ProfileeditInfoSection from "./profile components/ProfileeditInfoSection";
 import { ProfileContext } from "@/context/ProfileContext";
+import fetchData from "@/Queries/GetData";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo,setIsEditInfo] = useState(false)
   const [editPersonalInfo,seteditPersonalInfo] =useState({}) //this is the data for the editProfile
-  const [plan,setPlan] = useState({})//this is the data for the subscriptions
+  const [data,setData] = useState()
+
+  useEffect(()=>{
+    fetchData("profile",setData)
+  },[])
+ 
 
   const showSideBar = () => {
     setSideBar(!SideBar);
@@ -25,7 +31,14 @@ function Index() {
     seteditPersonalInfo(e)
   }
   const planSettings = (e:any)=>{
-      setPlan(e)
+      fetch("http://localhost:3000/api/profile",{
+        method:"POST",
+        body:JSON.stringify(e),
+        headers:{
+          "Content-Type": "application/json",
+        }
+      })
+
   }
   useEffect(() => {
     // Check if the user is on a Windows platform
@@ -46,6 +59,7 @@ function Index() {
 
   return (
     <div className="course-lighter-bg-color text-white bg-red-700 profilePage ">
+      
       <SideBarDiv SideBar={SideBar} setSideBar={setSideBar} />
       <div className="mb-4">
         <NavBar
@@ -60,7 +74,7 @@ function Index() {
       </div>
       
       <div className=" w-[60vw] max-[1350px]:w-[85vw] m-auto mb-4">
-        <ProfileContext.Provider value={[ShowEditInfo,editProfile,planSettings]}>
+        <ProfileContext.Provider value={[ShowEditInfo,editProfile,planSettings,data]}>
 
           <ProfileHeader />
 
