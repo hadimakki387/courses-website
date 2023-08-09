@@ -4,7 +4,8 @@ import ProfileCard from './ProfileCard'
 import { ProfileContext } from '@/context/ProfileContext'
 
 function ProfileHeader() {
-    const [ShowEditInfo] = useContext(ProfileContext)
+    const [ShowEditInfo, editProfile, planSettings, data,user] = useContext(ProfileContext)
+  
   return (
     <div className="flex max-[920px]:flex-col max-[920px]:justify-center max-[920px]:gap-4 justify-between items-center">
           <ProfileAndName name="studentsxpertbot" time={6} img="user.png" />
@@ -12,12 +13,12 @@ function ProfileHeader() {
           <div className="flex gap-4">
             <ProfileCard
               text="Lessons completed"
-              number={100}
+              number={user.watchedVideos.length}
               img="xp-lesson.svg"
             />
             <ProfileCard
               text="Total experience"
-              number={1453}
+              number={user.watchedVideos.length*100}
               img="xp-level.svg"
             />
           </div>

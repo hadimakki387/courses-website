@@ -3,27 +3,20 @@ import "./loading.css";
 
 function LoadingScreen() {
   return (
-    <>
-      <div className="scene">
-        <div className="shadow"></div>
-        <div className="jumper">
-          <div className="spinner">
-            <div className="scaler">
-              <div className="loader">
-                <div className="cuboid">
-                  <div className="cuboid__side"></div>
-                  <div className="cuboid__side"></div>
-                  <div className="cuboid__side"></div>
-                  <div className="cuboid__side"></div>
-                  <div className="cuboid__side"></div>
-                  <div className="cuboid__side"></div>
-                </div>
-              </div>
+    <div className="spinner-box">
+      <div className="solar-system">
+        <div className="earth-orbit orbit">
+          <div className="planet earth"></div>
+          <div className="venus-orbit orbit">
+            <div className="planet venus"></div>
+            <div className="mercury-orbit orbit">
+              <div className="planet mercury"></div>
+              <div className="sun"></div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

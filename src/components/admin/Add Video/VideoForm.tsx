@@ -87,7 +87,6 @@ function VideoForm() {
       body: JSON.stringify({ Data:e, toDo: "fetchVideoUpdate" }),
     });
     setNum(num + 1);
-    console.log(e)
   };
 
   return (
@@ -152,7 +151,7 @@ function VideoForm() {
           />
         </>
       ) : (
-        <div className="grid place-items-center h-full">
+        <div className="grid place-items-center h-full w-full">
           <LoadingScreen />
         </div>
       )}

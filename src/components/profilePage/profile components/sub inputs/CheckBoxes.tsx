@@ -9,7 +9,7 @@ function CheckBoxes({ setPlan ,Plan}: { setPlan: any ,Plan:any}) {
 
   return (
     <>
-    {data.map((plan:any,index:number)=>{
+    {data.plans.map((plan:any,index:number)=>{
       return<div className="flex items-center mb-2" key={index}>
         <input
           onChange={() => setPlan(plan._id)}
