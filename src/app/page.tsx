@@ -78,11 +78,11 @@ export default function Home() {
 
   const getSignInData = (e: any) => {
     setSignInData(e);
-    // CreateUser(e);
+    CreateUser(e);
   };
   const getSignUpData = (e: any) => {
     setSignUpData(e);
-    console.log(e)
+    console.log(e);
     CreateUser(e);
   };
 
