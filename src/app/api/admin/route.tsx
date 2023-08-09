@@ -71,6 +71,30 @@ export async function POST(req: any, res: any) {
     });
     admin.save();
   }
+  if(message.toDo==="approveRequest"){
+    const {payment,plan} = message
+    try{
+      
+        await User.findByIdAndUpdate({_id:payment.payerID},{plan:plan._id})
+        await Payment.findOneAndDelete({_id:payment._id})
+        console.log("payment approved")
+    }catch(err){
+        console.log(`ERROR!: ${err}`)
+    }
+    
+    
+  }
+  if(message.toDo==="declineRequest"){
+    const {payment,plan} = message
+    try{
+        await Payment.findOneAndDelete({_id:payment._id})
+        console.log("payment declined")
+    }catch(err){
+        console.log(`ERROR!: ${err}`)
+    }
+    
+    
+  }
 }
 
 const AddVideo = (message: any, videos: any) => {

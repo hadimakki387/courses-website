@@ -41,7 +41,7 @@ function SectionCard({
     } 
   }, [PlayingVideo.sectionID,sectionID]);
   
-  
+console.log(videos)
 
   return (
     <div className="flex flex-col gap-2 hover:cursor-pointer ">

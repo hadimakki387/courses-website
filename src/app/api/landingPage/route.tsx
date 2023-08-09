@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   console.log(body);
   if (body.signUpEmail) {
     const user = new User({
-      name: body.userName,
+      name: body.name,
       email: body.signUpEmail,
       password: await bcrypt.hash(body.UserPassword, 10),
       image: "",

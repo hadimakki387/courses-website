@@ -1,4 +1,5 @@
 import fetchData from "@/Queries/GetData";
+import SendData from "@/Queries/SendData";
 import Plans from "@/components/Landing Page/plans/Plans";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
@@ -21,18 +22,19 @@ function ApprovePayments() {
     return data.plans.find((plan: any) => plan._id === planID);
   }
 
-  const approveRequest = (payment:any)=>{
-    console.log(payment)
-
+  const approveRequest = (payment:any,plan:any)=>{
+      SendData("admin",{payment:payment,plan:plan,toDo:"approveRequest"})
+      
   }
-  const declineRequest = (payment:any)=>{
-    console.log(payment)
+  const declineRequest = (payment:any,plan:any)=>{
+    SendData("admin",{payment:payment,plan:plan,toDo:"declineRequest"})
+    console.log(payment,plan)
   }
 
   return (
     <div className={`${!data && "h-full"}`}>
       {data ? (
-        <div>
+        <div className="flex flex-col gap-4">
           {data.payments.map((payment: any, index: number) => {
             const user = findUserByID(payment.payerID);
             const plan = findPlanByID(payment.planType);
@@ -46,7 +48,7 @@ function ApprovePayments() {
                   <Image
                     src={payment.img}
                     width={1000}
-                    height={1000}
+                    height={500}
                     alt="payment"
                     className="w-full"
                   />
@@ -60,10 +62,10 @@ function ApprovePayments() {
                     </div>
                   )}
                   <div className="flex gap-8">
-                    <button onClick={()=>{approveRequest(payment._id)}}>
+                    <button onClick={()=>{approveRequest(payment,plan)}}>
                       <FontAwesomeIcon icon={faCheck} />
                     </button>
-                    <button onClick={()=>{declineRequest(payment._id)}}>
+                    <button onClick={()=>{declineRequest(payment,plan)}}>
                       <FontAwesomeIcon icon={faX} />
                     </button>
                   </div>
