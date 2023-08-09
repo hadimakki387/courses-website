@@ -38,7 +38,7 @@ function SubscriptionFrom() {
       setImg(res.fileUrl);
     });
   }, [res]);
-  console.log(plan);
+  console.log(data.plan);
 
   return (
     <div className="flex flex-col gap-2">
@@ -77,7 +77,7 @@ function SubscriptionFrom() {
                     }}
                   />
                 </main>
-                {plan&&<p className="text-sm mt-1 text-green-600">
+                {img&&<p className="text-sm mt-1 text-green-600">
                   Your Image Is Uploaded <FontAwesomeIcon icon={faCheck} />
                 </p>}
                 

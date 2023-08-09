@@ -10,12 +10,32 @@ import ProfileeditInfoSection from "./profile components/ProfileeditInfoSection"
 import { ProfileContext } from "@/context/ProfileContext";
 import fetchData from "@/Queries/GetData";
 import LoadingScreen from "../loading/LoadingScreen";
+import SendData from "@/Queries/SendData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo, setIsEditInfo] = useState(false);
   const [editPersonalInfo, seteditPersonalInfo] = useState({}); //this is the data for the editProfile
   const [data, setData]: any = useState();
+  const [subRes, setSubRes]: any = useState();
+  const user = {
+    _id: "64d3641bc74b7da3a052a77c",
+    name: "hadi mk",
+    email: "hmakki389@gmail.com",
+    password: "$2b$10$KPnz9WWzqmoOpJWPYI8tfOxWm0f8x9jQeoTtaWpIE/I/XCFsezSyy",
+    image: "",
+    watchedVideos: [
+      "64d39556c74b7da3a052a813",
+      "64d39556c74b7da3a052a813",
+      "64d39556c74b7da3a052a813",
+      "64d39556c74b7da3a052a813",
+    ],
+    created_at: "1691575323046",
+    plan: "64d2ab1aa9498003e74b1d2e",
+    __v: { $numberInt: "0" },
+  };
 
   useEffect(() => {
     fetchData("profile", setData);
@@ -30,15 +50,23 @@ function Index() {
   const editProfile = (e: object) => {
     seteditPersonalInfo(e);
   };
-  const planSettings = (e: any) => {
-    fetch("http://localhost:3000/api/profile", {
-      method: "POST",
-      body: JSON.stringify(e),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const planSettings = async (e: any) => {
+    const data = {
+      ...e,
+      payerID: user._id,
+    };
+    SendData("profile", data, setSubRes);
   };
+
+  useEffect(() => {
+    if (subRes === "saved") {
+      setIsEditInfo(false);
+      setTimeout(()=>{
+        setSubRes("")
+      },5000)
+    }
+  }, [subRes]);
+
   useEffect(() => {
     // Check if the user is on a Windows platform
     const isWindows = navigator.platform.includes("Win");
@@ -55,20 +83,9 @@ function Index() {
       }
     }
   }, [SideBar]);
-  const user = {
-    _id: "64d3641bc74b7da3a052a77c",
-    name: "hadi mk",
-    email: "hmakki389@gmail.com",
-    password: "$2b$10$KPnz9WWzqmoOpJWPYI8tfOxWm0f8x9jQeoTtaWpIE/I/XCFsezSyy",
-    image: "",
-    watchedVideos: ["64d39556c74b7da3a052a813"],
-    created_at: "1691575323046",
-    __v: { $numberInt: "0" },
-  };
 
-  console.log(data);
   return (
-    <div >
+    <div>
       {data ? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
@@ -92,11 +109,28 @@ function Index() {
 
           <div className=" w-[60vw] max-[1350px]:w-[85vw] m-auto mb-4">
             <ProfileContext.Provider
-              value={[ShowEditInfo, editProfile, planSettings, data,user]}
+              value={[ShowEditInfo, editProfile, planSettings, data, user]}
             >
-              <ProfileHeader  />
+              <ProfileHeader />
 
               {IsEditInfo && <ProfileeditInfoSection />}
+              {subRes === "saved" ? (
+                <div className="w-full bg-green-700  p-4 flex justify-center items-center gap-4 rounded-md mt-4">
+                  Your Request Has Been Recieved{" "}
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="border border-white p-2 rounded-full"
+                  />
+                </div>
+              ) : subRes === "error" ? (
+                <div className="w-full bg-red-800  p-4 flex justify-center items-center gap-4 rounded-md mt-4">
+                  Your Request Has Been Declined Please Try Again Later{" "}
+                  <FontAwesomeIcon
+                    icon={faX}
+                    className="border border-white p-2 rounded-full"
+                  />
+                </div>
+              ) : null}
 
               {/* This is the activity section */}
               {data ? (
@@ -130,7 +164,11 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ):<div className="w-screen h-screen grid place-items-center"><LoadingScreen/></div>}
+      ) : (
+        <div className="w-screen h-screen grid place-items-center">
+          <LoadingScreen />
+        </div>
+      )}
     </div>
   );
 }

@@ -35,9 +35,17 @@ function SideBarDiv({
     {
       text1: "Logout",
       text2: "but... why?",
+      text3:"signOut",
       link:""
     },
   ];
+
+  const handleClick = (index:any)=>{
+    setSideBar(false)
+    if(index.text3){
+      console.log(index)
+    }
+  }
   return (
     <div
       className={`fixed top-0 right-0 z-40  ${
@@ -70,7 +78,7 @@ function SideBarDiv({
                     <Link
                       href={item.link}
                       className="hover:text-sky-600 flex flex-col "
-                      onClick={() => setSideBar(false)}
+                      onClick={() => handleClick(item)}
                     >
                       <span className="-mb-2">{item.text1}</span>
                       <span className="text-[10px] text-zinc-500  ">

@@ -1,13 +1,14 @@
 
-function SendData (route,data){
-    fetch(`http://localhost:3000/api/${route}`,{
-        method:"POST",
-        body:JSON.stringify(data),
-        headers:{
-          "Content-Type": "application/json",
-        }
-      })
-      console.log("hello")
+async function SendData (route,data,setRes){
+  const s = await fetch(`http://localhost:3000/api/${route}`,{
+    method:"POST",
+    body:JSON.stringify(data),
+    headers:{
+      "Content-Type": "application/json",
+    }
+  })
+  const r = await s.json()
+  setRes(r)
 }
 
 export default SendData
