@@ -4,10 +4,10 @@ import { env } from "process";
 async function MongoConnection() {
   const mongoose = require('mongoose');
   try {
-    const environment = 'production'
+    const environment = 'local'
     const URI = environment==='local'?process.env.MONGO_URI_LOCAL:process.env.MONGO_URI
-
-    await mongoose.connect(URI);
+    console.log(URI)
+    await mongoose.connect(URI);  
 
     console.log(`Connected successfully!`);
     

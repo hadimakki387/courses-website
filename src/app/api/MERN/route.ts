@@ -1,6 +1,6 @@
-import Course from "@/Models/CourseSchema";
-import Section from "@/Models/SectionSchema";
-import Video from "@/Models/VideoSchema";
+import Course from "../../../Models/CourseSchema";
+import Section from "../../../Models/SectionSchema";
+import Video from "../../../Models/VideoSchema";
 import MongoConnection from "@/utils/MongoConnection";
 
 export async function GET(res: any) {

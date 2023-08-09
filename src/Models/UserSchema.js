@@ -7,7 +7,8 @@ const userSchema = new Schema({
   image: String,
   created_at: { type: Date, default: Date.now },
   watchedVideos: [String],
-  plan:String
+  plan:String,
+  subscribed_at:Date
 });
 
 const User = models.User || model("User", userSchema);

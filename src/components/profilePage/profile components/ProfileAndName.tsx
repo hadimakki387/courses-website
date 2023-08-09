@@ -14,11 +14,17 @@ function ProfileAndName({
   const [ShowEditInfo, editProfile, planSettings, data, user] =
     useContext(ProfileContext);
   const date = new Date(Number(user.created_at));
-
-  const options:any = { year: "numeric", month: "long", day: "numeric" };
+  const options: any = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString(undefined, options);
 
- 
+  const sub = data.plans?.find((plan: any) => {
+    return plan._id === user.plan;
+  });
+
+  const showSubInfo = ()=>{
+    ShowEditInfo()
+  }
+
   return (
     <div className="flex justify-start gap-4">
       <div className="flex flex-col gap-2 items-center justify-center ">
@@ -31,14 +37,20 @@ function ProfileAndName({
         />
         <button
           onClick={ShowEditInfo}
-          className="py-1 px-2 text-xs bg-[#24395a] rounded-lg"
+          className="py-1 px-2 text-xs bg-[#24395a] rounded-lg text-sky-600 tracking-wide"
         >
-          edit
+          EDIT
         </button>
       </div>
       <div className="flex flex-col">
-        <div className="text-lg font-medium">{user.name}</div>
+        <div className="text-lg font-medium ">{user.name}</div>
         <div className="text-sm">member since {formattedDate}</div>
+        <div className="text-sm mt-1 " onClick={showSubInfo}>
+          currently plan{" "}
+          <span className="bg-[#24395a] px-2 py-1 rounded-md text-sky-600 hover:cursor-pointer">
+            {user.plan?sub.name:"Free"}
+          </span>
+        </div>
       </div>
     </div>
   );

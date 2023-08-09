@@ -17,7 +17,6 @@ import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo, setIsEditInfo] = useState(false);
-  const [editPersonalInfo, seteditPersonalInfo] = useState({}); //this is the data for the editProfile
   const [data, setData]: any = useState();
   const [subRes, setSubRes]: any = useState();
   const user = {
@@ -33,7 +32,7 @@ function Index() {
       "64d39556c74b7da3a052a813",
     ],
     created_at: "1691575323046",
-    plan: "64d2ab1aa9498003e74b1d2e",
+    plan: "",
     __v: { $numberInt: "0" },
   };
 
@@ -48,13 +47,14 @@ function Index() {
     setIsEditInfo(!IsEditInfo);
   };
   const editProfile = (e: object) => {
-    seteditPersonalInfo(e);
+    console.log(e)
   };
   const planSettings = async (e: any) => {
     const data = {
       ...e,
       payerID: user._id,
     };
+    console.log(data)
     SendData("profile", data, setSubRes);
   };
 

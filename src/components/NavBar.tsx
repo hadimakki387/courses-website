@@ -11,7 +11,7 @@ function NavBar({
   showSignUp: any;
   showSideBar: any;
 }) {
-  const isAuth = true;
+  const isAuth = false;
   return (
     <div className="flex justify-between items-center z-30  py-3 m-auto w-[98%] ">
       <Link href={"/"} className="text-white">

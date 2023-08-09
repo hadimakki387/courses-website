@@ -9,10 +9,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function SubscriptionFrom() {
-  const [ShowEditInfo, editProfile, planSettings, data] =
+  const [ShowEditInfo, editProfile, planSettings, data,user] =
     useContext(ProfileContext);
   const [plan, setPlan] = useState("");
-  const [img, setImg]: any = useState("");
+  const [img, setImg]: any = useState({
+    imgURL:"",
+    imgID:""
+  });
   const [password, setPassword] = useState("");
   const [res, setRes] = useState<
     {
@@ -34,23 +37,24 @@ function SubscriptionFrom() {
   };
   useEffect(() => {
     res.forEach((res) => {
-      console.log(res.fileUrl);
-      setImg(res.fileUrl);
+      console.log(res);
+      setImg({imgURL:res.fileUrl,imgID:res.fileKey});
     });
   }, [res]);
-  console.log(data.plan);
 
+  const sub = data.plans.find((plan:any) => plan._id===user.plan)
+  
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2`}>
       {data ? (
         <>
           <div className="flex items-center gap-2">
             <p>Current Subscription:</p>
             <p className="text-sm sm-text-c bg-[#24395a] px-2 py-1 rounded-lg">
-              Monthly
+              {sub?sub.name:"Free"}
             </p>
           </div>
-          <div className="flex flex-col gap-2">
+          {!user.plan&&<div className="flex flex-col gap-2">
             <div>Want to upgrade your subscription?</div>
             <div className="flex flex-col gap-4">
               <div>
@@ -77,7 +81,7 @@ function SubscriptionFrom() {
                     }}
                   />
                 </main>
-                {img&&<p className="text-sm mt-1 text-green-600">
+                {img.imgURL && img.imgID &&<p className="text-sm mt-1 text-green-600">
                   Your Image Is Uploaded <FontAwesomeIcon icon={faCheck} />
                 </p>}
                 
@@ -107,7 +111,8 @@ function SubscriptionFrom() {
                 </button>
               </div>
             </div>
-          </div>
+          </div>}
+          
         </>
       ) : (
         <>

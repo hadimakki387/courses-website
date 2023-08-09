@@ -9,6 +9,7 @@ import GetData from "@/Queries/GetData";
 import AddSection from "./addSection/AddSection";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import fetchData from "@/Queries/GetData";
+import AddCourse from "./Add Course/AddCourse";
 
 function VideoForm() {
   const [Data, setData]: any = useState([]);
@@ -97,6 +98,9 @@ function VideoForm() {
     >
       {Data.videos && Data.sections ? (
         <>
+        <div>
+          <AddCourse/>
+        </div>
           <div>
             <AddSection courses={Data.courses} setNum={setNum} />
           </div>

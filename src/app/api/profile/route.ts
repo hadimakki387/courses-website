@@ -1,7 +1,7 @@
-import Plan from "@/Models/PlansSchema";
+import Plan from "../../../Models/PlansSchema";
 import MongoConnection from "@/utils/MongoConnection";
-import Payment from "@/Models/PaymentsSchema";
-import Video from "@/Models/VideoSchema";
+import Payment from "../../../Models/PaymentsSchema";
+import Video from "../../../Models/VideoSchema";
 
 export async function GET(req: any, res: any) {
   await MongoConnection();
@@ -18,7 +18,8 @@ export async function POST(req: any, res: any) {
   await MongoConnection();
   try {
     const payment = new Payment({
-      img: body.billingImg,
+      imgURL: body.billingImg.imgURL,
+      imgID: body.billingImg.imgID,
       planType: body.plan,
       payerID: body.payerID,
     });
