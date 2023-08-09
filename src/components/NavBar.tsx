@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 function NavBar({
   showSignIn,
@@ -11,7 +12,9 @@ function NavBar({
   showSignUp: any;
   showSideBar: any;
 }) {
-  const isAuth = false;
+  const session = useSession();
+  const isAuth = session.status === "authenticated" ? true : false;
+  console.log(session.status);
   return (
     <div className="flex justify-between items-center z-30  py-3 m-auto w-[98%]">
       <Link href={"/"} className="text-white">

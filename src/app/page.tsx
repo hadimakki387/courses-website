@@ -10,11 +10,12 @@ import SignUp from "@/components/Landing Page/signInUp/Up/SignUp";
 import NavBar from "@/components/NavBar";
 import { create } from "domain";
 import { useState, useEffect, HtmlHTMLAttributes } from "react";
+import { signIn } from "next-auth/react";
 
 import ClickAwayListener from "react-click-away-listener";
 
 export default function Home() {
-  const [signIn, setSignIn] = useState(false);
+  const [signIn1, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [SideBar, setSideBar] = useState(false);
   const [signInData, setSignInData] = useState({});
@@ -49,7 +50,7 @@ export default function Home() {
   };
 
   const showSignUp = () => {
-    if (signIn) {
+    if (signIn1) {
       setSignIn(false);
     }
     setSignUp((prevSignUp) => !prevSignUp);
@@ -63,7 +64,7 @@ export default function Home() {
     // Check if the user is on a Windows platform
     const isWindows = navigator.platform.includes("Win");
 
-    if (signIn || signUp || SideBar) {
+    if (signIn1 || signUp || SideBar) {
       document.body.classList.add("overflow-hidden");
       if (isWindows) {
         document.body.classList.add("pr-[17px]");
@@ -74,11 +75,16 @@ export default function Home() {
         document.body.classList.remove("pr-[17px]");
       }
     }
-  }, [signIn, signUp, SideBar]);
+  }, [signIn1, signUp, SideBar]);
 
-  const getSignInData = (e: any) => {
+  const getSignInData = async (e: any) => {
     setSignInData(e);
-    CreateUser(e);
+    // CreateUser(e);
+
+    await signIn("credentials", {
+      signInEmail: e.signInEmail,
+      UserPassword: e.UserPassword,
+    });
   };
   const getSignUpData = (e: any) => {
     setSignUpData(e);
@@ -90,7 +96,7 @@ export default function Home() {
     <>
       {/* the signIn/Up windows */}
       <SignInUpNavs
-        signIn={signIn}
+        signIn={signIn1}
         signUp={signUp}
         showSignIn={showSignIn}
         showSignUp={showSignUp}
@@ -104,7 +110,7 @@ export default function Home() {
 
       <div
         className={`relative main ${
-          signIn || signUp || SideBar ? "brightness-50 " : ""
+          signIn1 || signUp || SideBar ? "brightness-50 " : ""
         } transition-all duration-300`}
       >
         <NavBar

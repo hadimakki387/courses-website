@@ -11,20 +11,20 @@ const handler = NextAuth({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        email: { label: "email", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
+      credentials: {},
       async authorize(credentials, req) {
+        console.log(credentials);
+
         const res = await fetch("http://localhost:3000/api/landingPage", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            signInEmail: credentials?.email,
-            UserPassword: credentials?.password,
-          }),
+          body: JSON.stringify(
+            // signInEmail: credentials?.email,
+            // UserPassword: credentials?.password,
+            credentials
+          ),
         });
 
         if (!res.ok) {
