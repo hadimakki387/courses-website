@@ -15,14 +15,17 @@ function SignUp({
   const [signInData, setSignInData] = useState({});
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+  const [nameValid,setNameValid] = useState(false)
+  console.log("name is",nameValid)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailValid && passwordValid) {
+    if (emailValid && passwordValid && nameValid) {
+      console.log("fetch sent")
       getSignUpData(signInData);
       console.log(signInData);
     }
-  
+  console.log("not sent ")
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +67,7 @@ function SignUp({
                         <NameInput
                           name="userName"
                           handleInputChange={handleInputChange}
+                          setNameValid={setNameValid}
                         />
                       </div>
                       <div className="control" data-js="email_field">
@@ -83,7 +87,7 @@ function SignUp({
                       <div className="mt-10 text-center">
                         <button
                           className={`btn flex-center btn-blue w-full ${
-                            emailValid && passwordValid
+                            emailValid && passwordValid && nameValid
                               ? ""
                               : "hover:cursor-not-allowed"
                           }`}

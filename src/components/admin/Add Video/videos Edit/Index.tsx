@@ -74,7 +74,7 @@ function Index({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      Available Videos
+      Available Sections and Videos
       {Data.sections.map((sec:any, index:number) => (
         <Section
           key={index}

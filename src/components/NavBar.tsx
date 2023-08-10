@@ -15,7 +15,7 @@ function NavBar({
   return (
     <div className="flex justify-between items-center z-30  py-3 m-auto w-[98%] ">
       <Link href={"/"} className="text-white">
-        BrandName
+        <Image width={100} height={100} src={"/logo-white.png"} alt="WebStream" className="w-44"/>
       </Link>
       <div className="text-white flex justify-center items-center gap-4 ">
         {isAuth ? (

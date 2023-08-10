@@ -55,34 +55,34 @@ export async function POST(req: any, res: any) {
   console.log(message);
 
   if (message.duration) {
-    AddVideo(message, videos);
+    return AddVideo(message, videos);
   }
   if (message.sectionName) {
-    AddSection(message);
+    return AddSection(message);
   }
   if (message.toDO === "deleteVideo") {
-    await Video.findOneAndDelete({ _id: message.UUID });
+    return await Video.findOneAndDelete({ _id: message.UUID });
   }
   if (message.toDo === "fetchVideoUpdate") {
-    await Video.findOneAndReplace({ _id: message.Data._id }, message.Data);
+    return await Video.findOneAndReplace({ _id: message.Data._id }, message.Data);
   }
   if (message.toDo === "deleteSection") {
-    await DeleteSction(videos, message);
+    return await DeleteSction(videos, message);
   }
   if (message.adminEmail) {
-    checkAdmin();
+    return checkAdmin();
   }
   if (message.newAdmin) {
-    await NewAdmin(message);
+    return await NewAdmin(message);
   }
   if (message.toDo === "approveRequest") {
-    await approveRequest(message);
+    return await approveRequest(message);
   }
   if (message.toDo === "declineRequest") {
-    await DeclineRequest(message);
+    return await DeclineRequest(message);
   }
   if (message.toDo === "AddNewCourse") {
-    AddNewCourse(message);
+    return AddNewCourse(message);
   }
 }
 

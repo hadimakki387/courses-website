@@ -12,7 +12,7 @@ export const AddVideo = (message: any, videos: any) => {
     ...message,
     videoId: videos.length + 1,
   };
-
+  console.log(message)
   const video = new Video(videoToSave);
   video.save();
 };
@@ -53,7 +53,7 @@ export const approveRequest = async(message:any)=>{
     try {
       await User.findByIdAndUpdate(
         { _id: payment.payerID },
-        { plan: plan._id, subscribed_at: Date.now }
+        { plan: plan._id, subscribed_at: new Date() }
       );
       await Payment.findOneAndDelete({ _id: payment._id });
       await utapi.deleteFiles(payment.imgID);

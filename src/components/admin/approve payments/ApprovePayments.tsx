@@ -1,4 +1,4 @@
-import fetchData from "@/Queries/GetData";
+import GetData from "@/Queries/GetData";
 import SendData from "@/Queries/SendData";
 import Plans from "@/components/Landing Page/plans/Plans";
 import LoadingScreen from "@/components/loading/LoadingScreen";
@@ -12,10 +12,10 @@ function ApprovePayments() {
   const [num, setNum]: any = useState(0);
 
   useEffect(()=>{
-    fetchData("admin", setData);
+    GetData("admin", setData);
   },[])
   useEffect(() => {
-    fetchData("admin", setData);
+    GetData("admin", setData);
   }, [num]);
 
   function findUserByID(userID: string) {

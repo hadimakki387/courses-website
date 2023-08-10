@@ -8,7 +8,7 @@ import ProfileActivity from "./profile components/ProfileActivity";
 import ProfileHeader from "./profile components/ProfileHeader";
 import ProfileeditInfoSection from "./profile components/ProfileeditInfoSection";
 import { ProfileContext } from "@/context/ProfileContext";
-import fetchData from "@/Queries/GetData";
+import GetData from "@/Queries/GetData";
 import LoadingScreen from "../loading/LoadingScreen";
 import SendData from "@/Queries/SendData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,10 +26,10 @@ function Index() {
     password: "$2b$10$KPnz9WWzqmoOpJWPYI8tfOxWm0f8x9jQeoTtaWpIE/I/XCFsezSyy",
     image: "",
     watchedVideos: [
-      "64d39556c74b7da3a052a813",
-      "64d39556c74b7da3a052a813",
-      "64d39556c74b7da3a052a813",
-      "64d39556c74b7da3a052a813",
+      "64d48bb83f6a2c064f164942",
+      "64d48bb83f6a2c064f164942",
+      "64d48bb83f6a2c064f164942",
+      "64d48bb83f6a2c064f164942",
     ],
     created_at: "1691575323046",
     plan: "",
@@ -37,7 +37,7 @@ function Index() {
   };
 
   useEffect(() => {
-    fetchData("profile", setData);
+    GetData("profile", setData);
   }, []);
 
   const showSideBar = () => {

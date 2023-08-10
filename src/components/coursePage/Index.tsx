@@ -7,29 +7,65 @@ import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import LoadingScreen from "../loading/LoadingScreen";
-import fetchData from "@/Queries/GetData";
+import GetData from "@/Queries/GetData";
+import SendData from "@/Queries/SendData";
 
 function Index() {
   const [Data, setData]: any = useState([]);
   const [num, setNum] = useState(0);
   const [SideBar, setSideBar] = useState(false);
   const [PlayingVideo, setPlayingVideo]: any = useState({
-    _id: { $oid: "64d17875da06a52d0b00c485" },
-    title: "1 Introduction to HTML",
-    url: "Dw_tj65FGf0",
-    duration: { mins: 10 , secs:54  },
-    sectionID: "a64c6d9b-108f-4de6-8130-5caf8b129ac5",
+    _id: "",
+    title: "",
+    url: "",
+    duration: { mins: 0, secs: 0 },
+    sectionID: "",
     videoId: 1,
     __v: { $numberInt: "0" },
   });
-
   const [IsVideosBar, setIsVideosBar] = useState(false);
+  const user = {
+    _id: "64d3f9de67e40d586b1b1626",
+    name: "hadi mk",
+    email: "hmakki389@gmail.com",
+    password: "$2b$10$KPnz9WWzqmoOpJWPYI8tfOxWm0f8x9jQeoTtaWpIE/I/XCFsezSyy",
+    image: "",
+    watchedVideos: [
+      "64d48bb83f6a2c064f164942",
+      "64d48bb83f6a2c064f164942",
+      "64d48bb83f6a2c064f164942",
+      "64d48bb83f6a2c064f164942",
+    ],
+    created_at: "1691575323046",
+    plan: "",
+    __v: { $numberInt: "0" },
+  };
 
   useEffect(() => {
-    fetchData("admin", setData);
+    if (PlayingVideo._id) {
+      SendData(
+        "MERN",
+        {
+          PlayingVideo: PlayingVideo,
+          user: user,
+          toDo: "AddWatchedVideos",
+        },
+        (res: any) => {}
+      );
+      console.log(PlayingVideo);
+    }
+  }, [PlayingVideo]);
+
+  useEffect(() => {
+    GetData("admin", setData);
   }, [num]);
 
-
+  useEffect(() => {
+    if (Data.videos && Data.videos.length > 0) {
+      setPlayingVideo(Data.videos[0]);
+    }
+    console.log("data fetced");
+  }, [Data]);
 
   function chosenVideo(e: any) {
     const clickedVideo = Data.videos.find((video: any) => video.videoId === e);
