@@ -20,8 +20,8 @@ export default function Home() {
   const [SideBar, setSideBar] = useState(false);
   const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({});
-  const [userexict, setUserexict] = useState(Boolean);
-
+  // const [userexict, setUserexict] = useState(Boolean);
+  let userexict: any;
   async function CreateUser(param: any) {
     try {
       const res = await fetch("http://localhost:3000/api/landingPage", {
@@ -37,9 +37,11 @@ export default function Home() {
       }
 
       const data = await res.json();
-      console.log(data);
-      console.log(userexict);
-      setUserexict(data);
+      // console.log(data);
+
+      // setUserexict(data);
+      // console.log(userexict);
+      userexict = data;
       console.log(userexict);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -96,15 +98,14 @@ export default function Home() {
     await CreateUser(e);
 
     console.log(userexict);
-    // if (userexict === false) {
-    //   await signIn("credentials", {
-    //     signInEmail: e.signUpEmail,
-    //     UserPassword: e.UserPassword,
-    //   });
-    // } else {
-    //   setUserexict(false);
-    //   alert("user exict");
-    // }
+    if (userexict === false) {
+      await signIn("credentials", {
+        signInEmail: e.signUpEmail,
+        UserPassword: e.UserPassword,
+      });
+    } else {
+      alert("user exict");
+    }
   };
 
   return (
