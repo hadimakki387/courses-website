@@ -61,4 +61,10 @@ export async function POST(req: any, res: any) {
       return new Response(JSON.stringify(err));
     }
   }
+
+  if (body.toDo === "getUser"){
+    const user = await User.findOne({_id:body.id})
+    console.log(user)
+    return new Response(JSON.stringify(user))
+  }
 }
