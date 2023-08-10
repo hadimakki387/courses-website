@@ -8,14 +8,13 @@ import Index from "./videos Edit/Index";
 import GetData from "@/Queries/GetData";
 import AddSection from "./addSection/AddSection";
 import LoadingScreen from "@/components/loading/LoadingScreen";
-import fetchData from "@/Queries/GetData";
 
 function VideoForm() {
   const [Data, setData]: any = useState([]);
   const [num, setNum] = useState(0);
 
   useEffect(() => {
-    fetchData("admin", setData);
+    GetData("admin", setData);
   }, [num]);
 
   const [video, setVideo] = useState({
@@ -84,10 +83,10 @@ function VideoForm() {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ Data:e, toDo: "fetchVideoUpdate" }),
+      body: JSON.stringify({ Data: e, toDo: "fetchVideoUpdate" }),
     });
     setNum(num + 1);
-    console.log(e)
+    console.log(e);
   };
 
   return (

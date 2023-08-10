@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { Token } from "typescript";
 
 const handler = NextAuth({
   // Configure one or more authentication providers
@@ -38,7 +39,7 @@ const handler = NextAuth({
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
-          console.log(user._doc);
+          console.log(user._doc._id);
 
           return user._doc;
         } else {
@@ -52,18 +53,21 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    jwt: async ({ user, token }: any) => {
+      if (user) {
+        token.uid = user._id;
+        console.log(user);
+      }
+      return token;
+    },
     session: async ({ session, token }) => {
       if (session?.user) {
         // // Add the 'id' property to the session user object
         // session.user.id = token.uid || null;
+        session.user.id = token.uid || null;
+        console.log(token);
       }
       return session;
-    },
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.uid = user.id || null;
-      }
-      return token;
     },
   },
   session: {

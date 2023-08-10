@@ -10,7 +10,7 @@ import SignUp from "@/components/Landing Page/signInUp/Up/SignUp";
 import NavBar from "@/components/NavBar";
 import { create } from "domain";
 import { useState, useEffect, HtmlHTMLAttributes } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import ClickAwayListener from "react-click-away-listener";
 
@@ -20,6 +20,7 @@ export default function Home() {
   const [SideBar, setSideBar] = useState(false);
   const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({});
+  const [userexict, setUserexict] = useState(Boolean);
 
   async function CreateUser(param: any) {
     try {
@@ -35,8 +36,11 @@ export default function Home() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
-      const responseJson = await res.json();
-      console.log(responseJson);
+      const data = await res.json();
+      console.log(data);
+      console.log(userexict);
+      setUserexict(data);
+      console.log(userexict);
     } catch (error) {
       console.error("Fetch error:", error);
     }
@@ -86,10 +90,21 @@ export default function Home() {
       UserPassword: e.UserPassword,
     });
   };
-  const getSignUpData = (e: any) => {
+  const getSignUpData = async (e: any) => {
     setSignUpData(e);
     console.log(e);
-    CreateUser(e);
+    await CreateUser(e);
+
+    console.log(userexict);
+    // if (userexict === false) {
+    //   await signIn("credentials", {
+    //     signInEmail: e.signUpEmail,
+    //     UserPassword: e.UserPassword,
+    //   });
+    // } else {
+    //   setUserexict(false);
+    //   alert("user exict");
+    // }
   };
 
   return (

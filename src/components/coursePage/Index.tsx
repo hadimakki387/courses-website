@@ -7,7 +7,7 @@ import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import LoadingScreen from "../loading/LoadingScreen";
-import fetchData from "@/Queries/GetData";
+import GetData from "@/Queries/GetData";
 
 function Index() {
   const [Data, setData]: any = useState([]);
@@ -17,7 +17,7 @@ function Index() {
     _id: { $oid: "64d17875da06a52d0b00c485" },
     title: "1 Introduction to HTML",
     url: "Dw_tj65FGf0",
-    duration: { mins: 10 , secs:54  },
+    duration: { mins: 10, secs: 54 },
     sectionID: "a64c6d9b-108f-4de6-8130-5caf8b129ac5",
     videoId: 1,
     __v: { $numberInt: "0" },
@@ -26,10 +26,8 @@ function Index() {
   const [IsVideosBar, setIsVideosBar] = useState(false);
 
   useEffect(() => {
-    fetchData("admin", setData);
+    GetData("admin", setData);
   }, [num]);
-
-
 
   function chosenVideo(e: any) {
     const clickedVideo = Data.videos.find((video: any) => video.videoId === e);
