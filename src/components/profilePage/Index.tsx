@@ -19,27 +19,19 @@ function Index() {
   const [IsEditInfo, setIsEditInfo] = useState(false);
   const [data, setData]: any = useState();
   const [subRes, setSubRes]: any = useState();
-  const user = {
+  const authUser = {
     _id: "64d3f9de67e40d586b1b1626",
-    name: "hadi mk",
-    email: "hmakki389@gmail.com",
-    password: "$2b$10$KPnz9WWzqmoOpJWPYI8tfOxWm0f8x9jQeoTtaWpIE/I/XCFsezSyy",
-    image: "",
-    watchedVideos: [
-      "64d48bb83f6a2c064f164942",
-      "64d48bb83f6a2c064f164942",
-      "64d48bb83f6a2c064f164942",
-      "64d48bb83f6a2c064f164942",
-    ],
-    created_at: "1691575323046",
-    plan: "",
-    __v: { $numberInt: "0" },
-  };
+  }
+  const [user,setUser] = useState({
+    _id:"",
+    watchedVideos:[]
+  });
 
   useEffect(() => {
     GetData("profile", setData);
+    SendData("profile",{id:authUser,toDo:"getUser"},setUser)
   }, []);
-
+console.log(user)
   const showSideBar = () => {
     setSideBar(!SideBar);
   };
@@ -55,7 +47,7 @@ function Index() {
       payerID: user._id,
     };
     console.log(data)
-    SendData("profile", data, setSubRes);
+    SendData("profile", {data:data,toDo:"sendPayment"}, setSubRes);
   };
 
   useEffect(() => {
@@ -86,7 +78,7 @@ function Index() {
 
   return (
     <div>
-      {data ? (
+      {data && user._id? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos.length < 2

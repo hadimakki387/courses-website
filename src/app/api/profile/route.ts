@@ -2,6 +2,7 @@ import Plan from "../../../Models/PlansSchema";
 import MongoConnection from "@/utils/MongoConnection";
 import Payment from "../../../Models/PaymentsSchema";
 import Video from "../../../Models/VideoSchema";
+import User from "@/Models/UserSchema";
 
 export async function GET(req: any, res: any) {
   await MongoConnection();
@@ -16,12 +17,14 @@ export async function POST(req: any, res: any) {
   const body = await req.json();
   console.log(body);
   await MongoConnection();
-  try {
+
+  if(body.toDo==="sendPayment"){
+   try {
     const payment = new Payment({
-      imgURL: body.billingImg.imgURL,
-      imgID: body.billingImg.imgID,
-      planType: body.plan,
-      payerID: body.payerID,
+      imgURL: body.data.billingImg.imgURL,
+      imgID: body.data.billingImg.imgID,
+      planType: body.data.plan,
+      payerID: body.data.payerID,
     });
     payment.save();
     return new Response(JSON.stringify("saved"));
@@ -30,5 +33,13 @@ export async function POST(req: any, res: any) {
       console.log(err);
       return new Response(JSON.stringify("error"));
     }
+  } 
   }
+
+  if(body.toDo==="getUser"){
+    const user = await User.findById(body.id._id)
+    
+    return new Response(JSON.stringify(user))
+  }
+  
 }
