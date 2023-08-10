@@ -10,16 +10,18 @@ import SignUp from "@/components/Landing Page/signInUp/Up/SignUp";
 import NavBar from "@/components/NavBar";
 import { create } from "domain";
 import { useState, useEffect, HtmlHTMLAttributes } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 import ClickAwayListener from "react-click-away-listener";
 
 export default function Home() {
-  const [signIn, setSignIn] = useState(false);
+  const [signIn1, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [SideBar, setSideBar] = useState(false);
   const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({});
-
+  // const [userexict, setUserexict] = useState(Boolean);
+  let userexict: any;
   async function CreateUser(param: any) {
     try {
       const res = await fetch("http://localhost:3000/api/landingPage", {
@@ -34,8 +36,13 @@ export default function Home() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
-      const responseJson = await res.json();
-      console.log(responseJson);
+      const data = await res.json();
+      // console.log(data);
+
+      // setUserexict(data);
+      // console.log(userexict);
+      userexict = data;
+      console.log(userexict);
     } catch (error) {
       console.error("Fetch error:", error);
     }
@@ -49,7 +56,7 @@ export default function Home() {
   };
 
   const showSignUp = () => {
-    if (signIn) {
+    if (signIn1) {
       setSignIn(false);
     }
     setSignUp((prevSignUp) => !prevSignUp);
@@ -63,7 +70,7 @@ export default function Home() {
     // Check if the user is on a Windows platform
     const isWindows = navigator.platform.includes("Win");
 
-    if (signIn || signUp || SideBar) {
+    if (signIn1 || signUp || SideBar) {
       document.body.classList.add("overflow-hidden");
       if (isWindows) {
         document.body.classList.add("pr-[17px]");
@@ -74,23 +81,38 @@ export default function Home() {
         document.body.classList.remove("pr-[17px]");
       }
     }
-  }, [signIn, signUp, SideBar]);
+  }, [signIn1, signUp, SideBar]);
 
-  const getSignInData = (e: any) => {
+  const getSignInData = async (e: any) => {
     setSignInData(e);
     // CreateUser(e);
+
+    await signIn("credentials", {
+      signInEmail: e.signInEmail,
+      UserPassword: e.UserPassword,
+    });
   };
-  const getSignUpData = (e: any) => {
+  const getSignUpData = async (e: any) => {
     setSignUpData(e);
-    console.log(e)
-    CreateUser(e);
+    console.log(e);
+    await CreateUser(e);
+
+    console.log(userexict);
+    if (userexict === false) {
+      await signIn("credentials", {
+        signInEmail: e.signUpEmail,
+        UserPassword: e.UserPassword,
+      });
+    } else {
+      alert("user exict");
+    }
   };
 
   return (
     <>
       {/* the signIn/Up windows */}
       <SignInUpNavs
-        signIn={signIn}
+        signIn={signIn1}
         signUp={signUp}
         showSignIn={showSignIn}
         showSignUp={showSignUp}
@@ -104,7 +126,7 @@ export default function Home() {
 
       <div
         className={`relative main ${
-          signIn || signUp || SideBar ? "brightness-50 " : ""
+          signIn1 || signUp || SideBar ? "brightness-50 " : ""
         } transition-all duration-300`}
       >
         <NavBar

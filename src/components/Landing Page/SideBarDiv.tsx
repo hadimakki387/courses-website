@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -5,47 +6,47 @@ import ClickAwayListener from "react-click-away-listener";
 
 function SideBarDiv({
   SideBar,
-  setSideBar
+  setSideBar,
 }: {
-
   SideBar: Boolean;
-  setSideBar:any
+  setSideBar: any;
 }) {
   const items = [
     {
       text1: "Home",
       text2: "Home Sweet Home",
-      link:"/"
+      link: "/",
     },
     {
       text1: "Course",
       text2: "Start Studying",
-      link:"MERN-course"
+      link: "MERN-course",
     },
     {
       text1: "Profile",
       text2: "Check Your Profile",
-      link:"profile"
+      link: "profile",
     },
     {
       text1: "Settings",
       text2: "Make a tweek",
-      link:""
+      link: "",
     },
     {
       text1: "Logout",
       text2: "but... why?",
-      text3:"signOut",
-      link:""
+      text3: "signout",
+      link: "",
     },
   ];
-
-  const handleClick = (index:any)=>{
-    setSideBar(false)
-    if(index.text3){
-      console.log(index)
+  const handleClick = (index: any) => {
+    setSideBar(false);
+    if (index.text3) {
+      signOut();
+      console.log(index);
     }
-  }
+  };
+
   return (
     <div
       className={`fixed top-0 right-0 z-40  ${
