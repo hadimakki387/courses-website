@@ -22,13 +22,13 @@ function NavBar({
           height={25}
           src={"/logo-white.png"}
           alt="WebStream"
-          className="w-44"
+          className="w-44 max-[460px]:w-32"
         />
       </Link>
       {isAuth && (
         <Link
           href={"/MERN-course"}
-          className="text-white text-lg bg-[#203352] px-6 py-2 rounded-md hover:text-sky-500 hover:bg-[#203352] transition-all duration-300"
+          className="text-white text-lg bg-[#203352] px-6 py-2 rounded-md hover:text-sky-500 hover:bg-[#203352] transition-all duration-300 max-[800px]:hidden"
         >
           Check The Course
         </Link>
