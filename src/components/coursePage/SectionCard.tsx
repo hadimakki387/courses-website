@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import SendData from "@/Queries/SendData";
+import { useSession } from "next-auth/react";
 
 // ... (imports and other code)
 
@@ -45,24 +46,26 @@ function SectionCard({
   }, [PlayingVideo.sectionID, sectionID]);
 
   const isAuth = false;
-  const authUser = {
-    _id:"64d3f9de67e40d586b1b1626"
-  }
+  const session = useSession();
+
+
+  const authUser = session.data?.user
 
   const [user,setUser] = useState({
     plan:""
   })
 
   useEffect(()=>{
-    SendData("MERN",{id:authUser._id,toDo:"getUser"} , setUser)
+    SendData("MERN",{id:authUser?.id,toDo:"getUser"} , setUser)
   },[])
- 
+
 
   const checkIfFreeAndChoose = (id: any, isFree: any) => {
     if (user.plan || isFree) {
       chosenVideo(id);
     }
   };
+
 
   return (
     <div className="flex flex-col gap-2  ">
@@ -89,7 +92,7 @@ function SectionCard({
             return (
               <div
                 className={`flex items-center gap-4 hover:bg-[#151f32] p-2 rounded-md ${
-                  PlayingVideo.videoId === vid.videoId ? "bg-[#101c2c]" : ""
+                  PlayingVideo.videoId === vid.videoId ? "bg-[#101c2c] " : ""
                 }${
                   !user.plan && !vid.isFree
                     ? "hover:cursor-not-allowed bg-[#243650]"

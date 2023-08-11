@@ -14,12 +14,26 @@ function NavBar({
 }) {
   const session = useSession();
   const isAuth = session.status === "authenticated" ? true : false;
-  console.log(session.status);
   return (
     <div className="flex justify-between items-center z-30  py-3 m-auto w-[98%] ">
       <Link href={"/"} className="text-white">
-        <Image width={100} height={100} src={"/logo-white.png"} alt="WebStream" className="w-44"/>
+        <Image
+          width={100}
+          height={25}
+          src={"/logo-white.png"}
+          alt="WebStream"
+          className="w-44"
+        />
       </Link>
+      {isAuth && (
+        <Link
+          href={"/MERN-course"}
+          className="text-white text-lg bg-[#203352] px-6 py-2 rounded-md hover:text-sky-500 hover:bg-[#203352] transition-all duration-300"
+        >
+          Check The Course
+        </Link>
+      )}
+
       <div className="text-white flex justify-center items-center gap-4 ">
         {isAuth ? (
           <Image

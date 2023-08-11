@@ -20,7 +20,6 @@ function NameInput({
       setNameValid(false)
       setValid(false)
     }
-    console.log(e.target.value)
     handleInputChange(e)
   }
   return (

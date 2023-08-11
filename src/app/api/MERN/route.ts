@@ -22,8 +22,8 @@ export async function POST(req: any, res: any) {
   const body = await req.json();
 
   if (body.toDo === "AddWatchedVideos") {
-    const user = await User.findById(body.user._id);
-
+    const user = await User.findById(body.user);
+    console.log(user);
     // check if he watched this video before
     const isFound = user.watchedVideos.find(
       (video: any) => video === body.PlayingVideo._id
@@ -35,36 +35,41 @@ export async function POST(req: any, res: any) {
       if (user.watchedVideos.length !== 0) {
         // if he didnt watch save the playing video
         if (!isFound) {
-
           const watchedVideos = [...user.watchedVideos, body.PlayingVideo._id];
           const AddWatchedVideos = await User.findOneAndUpdate(
-            { _id: user._id },
+            { _id: user },
             { watchedVideos: watchedVideos }
           );
           console.log("not found");
+          return new Response(JSON.stringify("saved"));
         }
 
         return new Response(JSON.stringify("user watched this video"));
       } else {
-
+        console.log("no videos");
         const watchedVideos = [body.PlayingVideo._id];
         console.log(watchedVideos);
         const AddWatchedVideos = await User.findOneAndUpdate(
-          { _id: user._id },
+          { _id: user },
           { watchedVideos: watchedVideos }
         );
         console.log("updated");
-        return new Response(JSON.stringify("user watched this video"));
-        
+        return new Response(
+          JSON.stringify({ message: "user watched this video" })
+        );
       }
     } catch (err) {
       return new Response(JSON.stringify(err));
     }
   }
 
-  if (body.toDo === "getUser"){
-    const user = await User.findOne({_id:body.id})
-    console.log(user)
-    return new Response(JSON.stringify(user))
+  if (body.toDo === "getUser") {
+    try {
+      const user = await User.findOne({ _id: body.id });
+      return new Response(JSON.stringify(user));
+    } catch (e) {
+      console.log(e);
+      return new Response(JSON.stringify(e));
+    }
   }
 }

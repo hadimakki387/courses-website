@@ -108,7 +108,7 @@ function VideoCard({
               <div>{video.isFree ? "Free" : "Paid"}</div>{" "}
             </div>
             <div className="w-[15%] ">
-              {video.duration.mins}s {video.duration.secs}m
+              {video.duration.mins}m {video.duration.secs}s
             </div>
             <div className="w-[15%] flex justify-between items-center">
               {video.url}

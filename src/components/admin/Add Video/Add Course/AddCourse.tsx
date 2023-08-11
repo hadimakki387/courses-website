@@ -10,7 +10,7 @@ function AddCourse() {
   };
   const fetchNewCourse = () => {
     SendData("admin", { data: course, toDo: "AddNewCourse" }, (e: any) => {
-      console.log(e);
+
     });
     console.log(course);
   };

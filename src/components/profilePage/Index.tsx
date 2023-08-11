@@ -13,25 +13,32 @@ import LoadingScreen from "../loading/LoadingScreen";
 import SendData from "@/Queries/SendData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { useSession } from "next-auth/react";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo, setIsEditInfo] = useState(false);
   const [data, setData]: any = useState();
   const [subRes, setSubRes]: any = useState();
-  const authUser = {
-    _id: "64d3f9de67e40d586b1b1626",
-  }
+  const session = useSession();
+
+
+  const authUser = session.data?.user
+ 
   const [user,setUser] = useState({
     _id:"",
     watchedVideos:[]
   });
 
-  useEffect(() => {
-    GetData("profile", setData);
-    SendData("profile",{id:authUser,toDo:"getUser"},setUser)
-  }, []);
-console.log(user)
+
+
+  useEffect(()=>{
+    if(authUser){
+      GetData("profile", setData);
+      SendData("profile",{id:authUser?.id,toDo:"getUser"},setUser)
+    }
+  },[authUser])
+
   const showSideBar = () => {
     setSideBar(!SideBar);
   };
@@ -39,14 +46,14 @@ console.log(user)
     setIsEditInfo(!IsEditInfo);
   };
   const editProfile = (e: object) => {
-    console.log(e)
+    
   };
   const planSettings = async (e: any) => {
     const data = {
       ...e,
       payerID: user._id,
     };
-    console.log(data)
+
     SendData("profile", {data:data,toDo:"sendPayment"}, setSubRes);
   };
 
@@ -78,7 +85,7 @@ console.log(user)
 
   return (
     <div>
-      {data && user._id? (
+      {data && user && user._id? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos.length < 2
@@ -90,10 +97,10 @@ console.log(user)
           <div className="mb-4">
             <NavBar
               showSignIn={() => {
-                console.log("hello");
+             
               }}
               showSignUp={() => {
-                console.log("hello");
+               
               }}
               showSideBar={showSideBar}
             />

@@ -1,7 +1,7 @@
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import ClickAwayListener from "react-click-away-listener";
 
 function SideBarDiv({
@@ -43,9 +43,12 @@ function SideBarDiv({
     setSideBar(false);
     if (index.text3) {
       signOut();
-      console.log(index);
+  
     }
   };
+  const session = useSession();
+
+
 
   return (
     <div
@@ -68,7 +71,7 @@ function SideBarDiv({
                   />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm">Name</p>
+                  <p className="text-sm">{session.data?.user.name}</p>
                   <p className="text-xs">plan</p>
                 </div>
               </div>

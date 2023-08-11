@@ -37,8 +37,9 @@ export async function POST(req: any, res: any) {
   }
 
   if(body.toDo==="getUser"){
-    const user = await User.findById(body.id._id)
-    
+   console.log(body)
+    const user = await User.findById(body.id)
+    console.log(user)
     return new Response(JSON.stringify(user))
   }
   

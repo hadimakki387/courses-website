@@ -23,7 +23,6 @@ export async function POST(req: Request) {
         isVIP: false,
         watchedVideos: [],
       });
-      // console.log(user);
       user.save();
       return new Response(JSON.stringify(false));
     }

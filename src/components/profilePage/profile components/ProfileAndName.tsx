@@ -13,7 +13,7 @@ function ProfileAndName({
 }) {
   const [ShowEditInfo, editProfile, planSettings, data, user] =
     useContext(ProfileContext);
-  const date = new Date(Number(user.created_at));
+  const date = new Date(user.created_at);
   const options: any = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString(undefined, options);
 
@@ -21,9 +21,9 @@ function ProfileAndName({
     return plan._id === user.plan;
   });
 
-  const showSubInfo = ()=>{
-    ShowEditInfo()
-  }
+  const showSubInfo = () => {
+    ShowEditInfo();
+  };
 
   return (
     <div className="flex justify-start gap-4">
@@ -37,20 +37,28 @@ function ProfileAndName({
         />
         <button
           onClick={ShowEditInfo}
-          className="py-1 px-2 text-xs bg-[#24395a] rounded-lg text-sky-600 tracking-wide"
+          className="py-1 px-2 text-xs bg-[#24395a] rounded-lg text-sky-500 tracking-wide"
         >
           EDIT
         </button>
       </div>
-      <div className="flex flex-col">
-        <div className="text-lg font-medium ">{user.name}</div>
-        <div className="text-sm">member since {formattedDate}</div>
-        <div className="text-sm mt-1 " onClick={showSubInfo}>
-          currently plan{" "}
-          <span className="bg-[#24395a] px-2 py-1 rounded-md text-sky-600 hover:cursor-pointer">
-            {user.plan?sub.name:"Free"}
-          </span>
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-col">
+          <div className="text-lg font-medium ">{user.name}</div>
+          <div className="text-sm">member since {formattedDate}</div>
+          <div className="text-sm mt-1 " onClick={showSubInfo}>
+            currently plan:{" "}
+            <span className=" px-2 py-1 rounded-md  hover:cursor-pointer">
+              {user.plan ? sub.name : "Free"}
+            </span>
+          </div>
         </div>
+        <button
+          onClick={showSubInfo}
+          className="text-center px-4 py-2 bg-[#24395a] rounded-md hover:bg-[#324b74] hover:text-sky-500 transition-all duration-300"
+        >
+          Edit Plan Info
+        </button>
       </div>
     </div>
   );

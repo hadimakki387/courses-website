@@ -9,6 +9,8 @@ import { FakeVideoContext } from "@/context/FakeVideosContext";
 import LoadingScreen from "../loading/LoadingScreen";
 import GetData from "@/Queries/GetData";
 import SendData from "@/Queries/SendData";
+import { useSession } from "next-auth/react";
+import { Session } from "inspector";
 
 function Index() {
   const [Data, setData]: any = useState([]);
@@ -24,37 +26,24 @@ function Index() {
     __v: { $numberInt: "0" },
   });
   const [IsVideosBar, setIsVideosBar] = useState(false);
-  const user = {
-    _id: "64d3f9de67e40d586b1b1626",
-    name: "hadi mk",
-    email: "hmakki389@gmail.com",
-    password: "$2b$10$KPnz9WWzqmoOpJWPYI8tfOxWm0f8x9jQeoTtaWpIE/I/XCFsezSyy",
-    image: "",
-    watchedVideos: [
-      "64d48bb83f6a2c064f164942",
-      "64d48bb83f6a2c064f164942",
-      "64d48bb83f6a2c064f164942",
-      "64d48bb83f6a2c064f164942",
-    ],
-    created_at: "1691575323046",
-    plan: "",
-    __v: { $numberInt: "0" },
-  };
+  const [res,setRes] = useState()
+  const session = useSession()
+  const user = session.data?.user;
 
   useEffect(() => {
-    if (PlayingVideo._id) {
+    if (PlayingVideo._id && user) {
       SendData(
         "MERN",
         {
           PlayingVideo: PlayingVideo,
-          user: user,
+          user: user?.id,
           toDo: "AddWatchedVideos",
         },
         (res: any) => {}
       );
-      console.log(PlayingVideo);
     }
-  }, [PlayingVideo]);
+  }, [PlayingVideo,user]);
+
 
   useEffect(() => {
     GetData("admin", setData);
@@ -64,7 +53,6 @@ function Index() {
     if (Data.videos && Data.videos.length > 0) {
       setPlayingVideo(Data.videos[0]);
     }
-    console.log("data fetced");
   }, [Data]);
 
   function chosenVideo(e: any) {
@@ -73,7 +61,7 @@ function Index() {
       setPlayingVideo(clickedVideo);
     }
     setIsVideosBar(!IsVideosBar);
-    console.log(e);
+
   }
 
   const showSideBar = () => {
@@ -110,10 +98,10 @@ function Index() {
         <>
           <NavBar
             showSignIn={() => {
-              console.log("hello");
+  
             }}
             showSignUp={() => {
-              console.log("hello");
+  
             }}
             showSideBar={showSideBar}
           />

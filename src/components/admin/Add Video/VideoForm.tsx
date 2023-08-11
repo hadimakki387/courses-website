@@ -83,7 +83,7 @@ function VideoForm() {
       setNum(num + 1);
     }
 
-    console.log("empty input");
+
   };
 
   const fetchVideoUpdate = (e: any) => {
@@ -94,6 +94,7 @@ function VideoForm() {
       method: "POST",
       body: JSON.stringify({ Data: e, toDo: "fetchVideoUpdate" }),
     });
+
     setNum(num + 1);
   };
 

@@ -20,8 +20,9 @@ export default function Home() {
   const [SideBar, setSideBar] = useState(false);
   const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({});
-  // const [userexict, setUserexict] = useState(Boolean);
-  let userexict: any;
+  let userExist: any;
+  const [flash, setFlash] = useState("");
+
   async function CreateUser(param: any) {
     try {
       const res = await fetch("http://localhost:3000/api/landingPage", {
@@ -37,12 +38,8 @@ export default function Home() {
       }
 
       const data = await res.json();
-      // console.log(data);
 
-      // setUserexict(data);
-      // console.log(userexict);
-      userexict = data;
-      console.log(userexict);
+      userExist = data;
     } catch (error) {
       console.error("Fetch error:", error);
     }
@@ -94,11 +91,8 @@ export default function Home() {
   };
   const getSignUpData = async (e: any) => {
     setSignUpData(e);
-    console.log(e);
     await CreateUser(e);
-
-    console.log(userexict);
-    if (userexict === false) {
+    if (userExist === false) {
       await signIn("credentials", {
         signInEmail: e.signUpEmail,
         UserPassword: e.UserPassword,
@@ -107,6 +101,12 @@ export default function Home() {
       alert("user exict");
     }
   };
+
+
+
+
+
+ 
 
   return (
     <>
@@ -129,6 +129,13 @@ export default function Home() {
           signIn1 || signUp || SideBar ? "brightness-50 " : ""
         } transition-all duration-300`}
       >
+        <div
+          className={`fixed bottom-4 right-4 bg-sky-600 text-white p-4 ${
+            flash === "LoggedIn" ? "translate-y-0" : "translate-y-[200%]"
+          }`}
+        >
+          Your Logged In!
+        </div>
         <NavBar
           showSignIn={showSignIn}
           showSignUp={showSignUp}

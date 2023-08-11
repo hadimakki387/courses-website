@@ -13,7 +13,6 @@ function FileInput(getImg: any) {
   >([]);
   const getRes = ()=>{
     res.forEach(res => {
-      console.log(res.fileUrl)
       getImg(res.fileUrl)
     });
    

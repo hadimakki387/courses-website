@@ -29,6 +29,7 @@ function Index({
     disableEditMode(index)
    
     if (newData[index]) {
+      console.log(videos[index])
       const videoIdToUpdate = videos[index]._id;
       const updatedVideoIndex = videos.findIndex(
         (video: any) => video._id === videoIdToUpdate

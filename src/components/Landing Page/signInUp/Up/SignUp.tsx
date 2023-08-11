@@ -16,7 +16,7 @@ function SignUp({
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [nameValid,setNameValid] = useState(false)
-  console.log("name is",nameValid)
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
