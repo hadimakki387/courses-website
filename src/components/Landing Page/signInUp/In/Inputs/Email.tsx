@@ -26,7 +26,7 @@ function Email({
     setEmailValid(validateEmail(newEmail))
   };
 
-  console.log(isValid);
+
 
   return (
     <>

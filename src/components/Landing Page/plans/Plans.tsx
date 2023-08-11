@@ -26,7 +26,7 @@ function Plans() {
         <PlanCard
           price={399}
           title="Forever Plan"
-          description="Permanently uplink to our mainframe. Pay once, and access Laracasts forever."
+          description="Permanently uplink to our mainframe. Pay once, and access WebStreams forever."
           img="sub-monthly"
           isMonthly={false}
           isTeam={false}

@@ -1,43 +1,55 @@
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import ClickAwayListener from "react-click-away-listener";
 
 function SideBarDiv({
   SideBar,
-  setSideBar
+  setSideBar,
 }: {
-
   SideBar: Boolean;
-  setSideBar:any
+  setSideBar: any;
 }) {
   const items = [
     {
       text1: "Home",
       text2: "Home Sweet Home",
-      link:"/"
+      link: "/",
     },
     {
       text1: "Course",
       text2: "Start Studying",
-      link:"MERN-course"
+      link: "MERN-course",
     },
     {
       text1: "Profile",
       text2: "Check Your Profile",
-      link:"profile"
+      link: "profile",
     },
     {
       text1: "Settings",
       text2: "Make a tweek",
-      link:""
+      link: "",
     },
     {
       text1: "Logout",
       text2: "but... why?",
-      link:""
+      text3: "signout",
+      link: "",
     },
   ];
+  const handleClick = (index: any) => {
+    setSideBar(false);
+    if (index.text3) {
+      signOut();
+  
+    }
+  };
+  const session = useSession();
+
+
+
   return (
     <div
       className={`fixed top-0 right-0 z-40  ${
@@ -59,7 +71,7 @@ function SideBarDiv({
                   />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm">Name</p>
+                  <p className="text-sm">{session.data?.user.name}</p>
                   <p className="text-xs">plan</p>
                 </div>
               </div>
@@ -70,7 +82,7 @@ function SideBarDiv({
                     <Link
                       href={item.link}
                       className="hover:text-sky-600 flex flex-col "
-                      onClick={() => setSideBar(false)}
+                      onClick={() => handleClick(item)}
                     >
                       <span className="-mb-2">{item.text1}</span>
                       <span className="text-[10px] text-zinc-500  ">

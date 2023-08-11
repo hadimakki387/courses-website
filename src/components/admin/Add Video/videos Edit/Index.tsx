@@ -29,6 +29,7 @@ function Index({
     disableEditMode(index)
    
     if (newData[index]) {
+      console.log(videos[index])
       const videoIdToUpdate = videos[index]._id;
       const updatedVideoIndex = videos.findIndex(
         (video: any) => video._id === videoIdToUpdate
@@ -74,7 +75,7 @@ function Index({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      Available Videos
+      Available Sections and Videos
       {Data.sections.map((sec:any, index:number) => (
         <Section
           key={index}

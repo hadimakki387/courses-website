@@ -13,6 +13,7 @@ function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
     setPlayingVideo] =
     useContext(FakeVideoContext);
 
+
   return (
     <div
       className={`flex flex-col gap-4 w-[25vw]  text-white p-4 ${
@@ -27,7 +28,7 @@ function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
           return (
             <SectionCard
               video={videos}
-              sectionID={section.id}
+              sectionID={section._id}
               sectionName={section.title}
               sectionNum={index}
               key={index}

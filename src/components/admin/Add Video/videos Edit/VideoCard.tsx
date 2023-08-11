@@ -11,12 +11,12 @@ function VideoCard({
   handleChange,
   handleUpdate,
   setNum,
-  disableEditMode
+  disableEditMode,
 }: any) {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        alert()
+        alert();
       }
     };
 
@@ -28,53 +28,49 @@ function VideoCard({
     };
   }, [editMode, handleUpdate, index]);
 
-  const deleteVideo = (UUID:any)=>{
-    fetch("http://localhost:3000/api/admin",{
-      method:"POST",
-      headers:{"Content-Type": "application/json"},
-      body:JSON.stringify({UUID,toDO:"deleteVideo"})
-    })
-    setNum(Math.random)
-  }
-  const alert=()=>{
+  const deleteVideo = (UUID: any) => {
+    fetch("https://mern-course.netlify.app/api/admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ UUID, toDO: "deleteVideo" }),
+    });
+    setNum(Math.random);
+  };
+  const alert = () => {
     Swal.fire({
-      title: 'Do you want to save the changes?',
+      title: "Do you want to save the changes?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Save',
+      confirmButtonText: "Save",
       denyButtonText: `Don't save`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Saved!', '', 'success')
-        handleUpdate(index)
+        Swal.fire("Saved!", "", "success");
+        handleUpdate(index);
       } else if (result.isDenied) {
-        disableEditMode(index)
-        Swal.fire('Changes are not saved', '', 'info')
+        disableEditMode(index);
+        Swal.fire("Changes are not saved", "", "info");
       }
-    })
-  }
+    });
+  };
 
-  const confirm = (id:any)=>{
+  const confirm = (id: any) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteVideo(id)
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        deleteVideo(id);
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
-    })
-  }
+    });
+  };
 
   return (
     <div key={index} className="bg-gray-600 p-4 rounded-md">
@@ -101,16 +97,18 @@ function VideoCard({
               className="bg-gray-700 p-2 rounded-md w-[20%] max-[860px]:w-full"
               onChange={(e) => handleChange(index, "url", e.target.value)}
             />
-            <FontAwesomeIcon
-              icon={faCheck}
-              onClick={()=>alert()}
-            />
+            <FontAwesomeIcon icon={faCheck} onClick={() => alert()} />
           </div>
         ) : (
           <div className="flex gap-4 items-center max-[860px]:flex-col max-[860px]:items-start max-[860px]:gap-2">
-            <div className="w-[70%] ">{video.videoId}{" "}{video.title}</div>
+            <div className="w-[70%] flex items-center gap-4">
+              <div>
+                {video.videoId} {video.title}
+              </div>
+              <div>{video.isFree ? "Free" : "Paid"}</div>{" "}
+            </div>
             <div className="w-[15%] ">
-              {video.duration.mins}s {video.duration.secs}m
+              {video.duration.mins}m {video.duration.secs}s
             </div>
             <div className="w-[15%] flex justify-between items-center">
               {video.url}

@@ -1,15 +1,31 @@
 import MongoConnection from "@/utils/MongoConnection";
-import Video from "@/Models/VideoSchema";
-import Admin from "@/Models/AdminSchema"
-import Section from "@/Models/SectionSchema";
-import Course from "@/Models/CourseSchema";
+import Video from "../../../Models/VideoSchema";
+import Admin from "../../../Models/AdminSchema";
+import Section from "../../../Models/SectionSchema";
+import Plan from "../../../Models/PlansSchema";
+import Course from "../../../Models/CourseSchema";
 import bcrypt from "bcrypt";
+import Payment from "../../../Models/PaymentsSchema";
+import User from "../../../Models/UserSchema";
+import { utapi } from "uploadthing/server";
+import {
+  AddNewCourse,
+  AddSection,
+  AddVideo,
+  DeclineRequest,
+  DeleteSction,
+  NewAdmin,
+  approveRequest,
+} from "@/controller/admin";
 
 export async function GET(req: any, res: any) {
   await MongoConnection();
   const courses = await Course.find();
   const sections = await Section.find();
   const videos = await Video.find();
+  const payments = await Payment.find();
+  const users = await User.find();
+  const plans = await Plan.find();
 
   const section = new Section({
     title: "Introduction to HTML",
@@ -20,7 +36,14 @@ export async function GET(req: any, res: any) {
   });
 
   return new Response(
-    JSON.stringify({ courses: courses, sections: sections, videos: videos })
+    JSON.stringify({
+      courses: courses,
+      sections: sections,
+      videos: videos,
+      payments: payments,
+      users: users,
+      plans: plans,
+    })
   );
 }
 
@@ -32,67 +55,46 @@ export async function POST(req: any, res: any) {
   console.log(message);
 
   if (message.duration) {
-    AddVideo(message,videos)
+    return AddVideo(message, videos);
   }
   if (message.sectionName) {
-    AddSection(message)
+    return AddSection(message);
   }
   if (message.toDO === "deleteVideo") {
-    await Video.findOneAndDelete({ _id: message.UUID });
+    return await Video.findOneAndDelete({ _id: message.UUID });
   }
   if (message.toDo === "fetchVideoUpdate") {
-    await Video.findOneAndReplace({ _id: message.Data._id }, message.Data);
-    
-    console.log("hl")
+    return await Video.findOneAndReplace(
+      { _id: message.Data._id },
+      message.Data
+    );
   }
   if (message.toDo === "deleteSection") {
-   await DeleteSction(videos,message)
+    return await DeleteSction(videos, message);
   }
-  if(message.adminEmail){
-    checkAdmin()
+  if (message.adminEmail) {
+    return checkAdmin();
   }
-  if(message.newAdmin){
-    const admin = new Admin({
-      email:message.newAdmin,
-      password:await bcrypt.hash(message.password, 10)
-    })
-    admin.save()
-
+  if (message.newAdmin) {
+    return await NewAdmin(message);
   }
-}
-
-const AddVideo = (message:any,videos:any)=>{
-  const videoToSave = {
-    ...message,
-    videoId: videos.length + 1,
-  };
-
-  const video = new Video(videoToSave);
-  video.save();
-}
-
-const AddSection=(message:any)=>{
-  const section = new Section({
-    title: message.sectionName,
-    courseID: message.courseName,
-  });
-  section.save();
-  console.log("section Saved");
-}
-
-const DeleteSction = async (videos:any,message:any)=>{
-  try {
-    for (const video of videos) {
-      if (video.sectionID === message._id) {
-        await Video.findByIdAndDelete(video._id);
-      }
+  if (message.toDo === "approveRequest") {
+    return await approveRequest(message);
+  }
+  if (message.toDo === "declineRequest") {
+    return await DeclineRequest(message);
+  }
+  if (message.toDo === "AddNewCourse") {
+    return AddNewCourse(message);
+  }
+  if (message.toDo === "getAdmin") {
+    try {
+      const user = await User.findById(message.id);
+      return new Response(JSON.stringify(user));
+    } catch (err) {
+      return new Response(JSON.stringify(err));
     }
-    await Section.findByIdAndDelete(message._id);
-  } catch (error) {
-    console.error("Error deleting section and associated videos:", error);
   }
 }
 
-const checkAdmin = ()=>{
-
-}
+const checkAdmin = () => {};

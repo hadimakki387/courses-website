@@ -32,7 +32,7 @@ function Footer() {
           <div className="mx-auto text-center md:w-4/5 lg:w-1/2">
             <div>
               <h2 className="mb-8 text-2xl tracking-tight text-white md:text-3xl">
-                Want us to email you occasionally with Laracasts news?
+                Want us to email you occasionally with WebStream news?
               </h2>
             </div>
             <div>

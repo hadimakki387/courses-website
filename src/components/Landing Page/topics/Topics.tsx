@@ -12,7 +12,7 @@ function Topics() {
             Check the topics you will learn with us!
           </p>
           <p className="text-base sm-text-c max-[570px]:text-sm max-[400px]:text-xs">
-            If you already know what you&apos;re looking for, Laracasts is
+            If you already know what you&apos;re looking for, WebStream is
             divided into various topics ranging from frameworks to packages to
             tools.
           </p>

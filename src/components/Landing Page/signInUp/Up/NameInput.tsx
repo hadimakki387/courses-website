@@ -4,19 +4,22 @@ import CheckSvg from "../In/SVGs/CheckSvg";
 function NameInput({
   name,
   handleInputChange,
+  setNameValid
 }: {
   name: string;
   handleInputChange: any;
+  setNameValid:any
 }) {
   const [valid,setValid]=useState(false)
   const handleName=(e:any)=>{
     if(e.target.value){
+      setNameValid(true)
       setValid(true)
 
     }else{
+      setNameValid(false)
       setValid(false)
     }
-    console.log(e.target.value)
     handleInputChange(e)
   }
   return (

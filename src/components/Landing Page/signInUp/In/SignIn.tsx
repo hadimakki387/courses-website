@@ -20,7 +20,7 @@ function SignIn({
     e.preventDefault();
     if(emailValid && passwordValid){
       getSignInData(signInData);
-      console.log(signInData);
+
     }
   };
 
