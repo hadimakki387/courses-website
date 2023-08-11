@@ -2,6 +2,7 @@ import React from "react";
 import VideoCard from "./VideoCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import SendData from "@/Queries/SendData";
 
 function Section({
   section,
@@ -14,13 +15,7 @@ function Section({
   disableEditMode
 }: any) {
   const deleteSection = (ID:any) =>{
-    fetch("http://localhost:3000/api/admin",{
-      headers:{
-        "Content-Type": "application/json",
-      },
-      method:"POST",
-      body:JSON.stringify({_id:ID,toDo:"deleteSection"})
-    })
+    SendData("admin",{_id:ID,toDo:"deleteSection"},(res:any)=>{})
     setTimeout(()=>{
       setNum(Math.random)
     },100*Videos.length)

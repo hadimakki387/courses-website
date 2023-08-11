@@ -1,3 +1,4 @@
+import SendData from "@/Queries/SendData";
 import { faCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
@@ -29,11 +30,7 @@ function VideoCard({
   }, [editMode, handleUpdate, index]);
 
   const deleteVideo = (UUID: any) => {
-    fetch("http://localhost:3000/api/admin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ UUID, toDO: "deleteVideo" }),
-    });
+    SendData("admin",{ UUID, toDO: "deleteVideo" },(res:any)=>{})
     setNum(Math.random);
   };
   const alert = () => {

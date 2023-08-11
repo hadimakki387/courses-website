@@ -10,6 +10,7 @@ import AddSection from "./addSection/AddSection";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 
 import AddCourse from "./Add Course/AddCourse";
+import SendData from "@/Queries/SendData";
 
 function VideoForm() {
   const [Data, setData]: any = useState([]);
@@ -73,13 +74,7 @@ function VideoForm() {
   const fetchNewVideo = async () => {
     const hasEmptyValue = Object.values(video).some((value) => value === "");
     if (!hasEmptyValue) {
-      fetch("http://localhost:3000/api/admin", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(video),
-      });
+      await SendData("admin",video,(res:any)=>{})
       setNum(num + 1);
     }
 
@@ -87,14 +82,7 @@ function VideoForm() {
   };
 
   const fetchVideoUpdate = (e: any) => {
-    fetch("http://localhost:3000/api/admin", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ Data: e, toDo: "fetchVideoUpdate" }),
-    });
-
+    SendData("admin",{ Data: e, toDo: "fetchVideoUpdate" },(res:any)=>{})
     setNum(num + 1);
   };
 

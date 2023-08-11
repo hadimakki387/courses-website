@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextInput from "../Admin components/TextInput";
 import CategorySelect from "../Admin components/CategorySelect";
+import SendData from "@/Queries/SendData";
 
 function AddSection({courses,setNum}:any) {
   const [section, setSection] = useState({
@@ -22,13 +23,7 @@ function AddSection({courses,setNum}:any) {
 
   const fecthSection = () => {
     if(section.courseName && section.sectionName){
-       fetch("http://localhost:3000/api/admin", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(section),
-    }); 
+       SendData("admin",section,(res:any)=>{})
     }
     setNum(Math.random)
   };

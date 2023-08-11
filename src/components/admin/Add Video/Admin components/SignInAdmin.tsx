@@ -1,5 +1,6 @@
 'use client'
 
+import SendData from "@/Queries/SendData";
 import TextInput from "@/components/admin/Add Video/Admin components/TextInput";
 import React, { useState } from "react";
 
@@ -16,13 +17,7 @@ function SignInAdmin() {
     setAdmin({ ...admin, password: e.target.value });
   };
   const fetchAdmin = ()=>{
-    fetch("http://localhost:3000/api/admin", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(admin),
-    })
+    SendData("admin",admin,(res:any)=>{})
     console.log(admin)
   }
  

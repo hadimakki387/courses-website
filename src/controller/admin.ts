@@ -15,6 +15,7 @@ export const AddVideo = (message: any, videos: any) => {
   console.log(message)
   const video = new Video(videoToSave);
   video.save();
+  return new Response(JSON.stringify("video added"))
 };
 
 export const AddSection = (message: any) => {
@@ -24,6 +25,7 @@ export const AddSection = (message: any) => {
   });
   section.save();
   console.log("section Saved");
+  return new Response(JSON.stringify("section added"))
 };
 
 export const DeleteSction = async (videos: any, message: any) => {
@@ -34,7 +36,9 @@ export const DeleteSction = async (videos: any, message: any) => {
       }
     }
     await Section.findByIdAndDelete(message._id);
+    return new Response(JSON.stringify("section Deleted"))
   } catch (error) {
+    return new Response(JSON.stringify(error))
     console.error("Error deleting section and associated videos:", error);
   }
 };
@@ -46,6 +50,7 @@ export const NewAdmin =async (message:any)=>{
         password: await bcrypt.hash(message.password, 10),
       });
       admin.save();
+      return new Response(JSON.stringify("admin saved"))
 }
 
 export const approveRequest = async(message:any)=>{

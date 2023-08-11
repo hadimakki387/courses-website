@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import TextInput from "../Add Video/Admin components/TextInput";
 import SubmitButton from "../Add Video/Admin components/SubmitButton";
+import SendData from "@/Queries/SendData";
 
 function AdminForm() {
   const [Data, setData] = useState({
@@ -19,13 +20,7 @@ function AdminForm() {
   };
 
   const fetchAdmin = () => {
-    fetch("http://localhost:3000/api/admin", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(Data),
-    });
+    SendData("admin",Data,(res:any)=>{})
   };
 
   return (
