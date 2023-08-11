@@ -22,7 +22,7 @@ function AddSection({courses,setNum}:any) {
 
   const fecthSection = () => {
     if(section.courseName && section.sectionName){
-       fetch("http://localhost:3000/api/admin", {
+       fetch("https://mern-course.netlify.app/api/admin", {
       headers: {
         "Content-Type": "application/json",
       },

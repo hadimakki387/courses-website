@@ -16,7 +16,7 @@ function SignInAdmin() {
     setAdmin({ ...admin, password: e.target.value });
   };
   const fetchAdmin = ()=>{
-    fetch("http://localhost:3000/api/admin", {
+    fetch("https://mern-course.netlify.app/api/admin", {
         headers: {
           "Content-Type": "application/json",
         },

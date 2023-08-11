@@ -73,7 +73,7 @@ function VideoForm() {
   const fetchNewVideo = async () => {
     const hasEmptyValue = Object.values(video).some((value) => value === "");
     if (!hasEmptyValue) {
-      fetch("http://localhost:3000/api/admin", {
+      fetch("https://mern-course.netlify.app/api/admin", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -87,7 +87,7 @@ function VideoForm() {
   };
 
   const fetchVideoUpdate = (e: any) => {
-    fetch("http://localhost:3000/api/admin", {
+    fetch("https://mern-course.netlify.app/api/admin", {
       headers: {
         "Content-Type": "application/json",
       },

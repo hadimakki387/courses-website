@@ -14,7 +14,7 @@ function Section({
   disableEditMode
 }: any) {
   const deleteSection = (ID:any) =>{
-    fetch("http://localhost:3000/api/admin",{
+    fetch("https://mern-course.netlify.app/api/admin",{
       headers:{
         "Content-Type": "application/json",
       },
