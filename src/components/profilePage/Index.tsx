@@ -14,6 +14,7 @@ import SendData from "@/Queries/SendData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
+import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
@@ -22,22 +23,20 @@ function Index() {
   const [subRes, setSubRes]: any = useState();
   const session = useSession();
 
+  const isAuth = session.status === "authenticated" ? true : false;
+  const authUser = session.data?.user;
 
-  const authUser = session.data?.user
- 
-  const [user,setUser] = useState({
-    _id:"",
-    watchedVideos:[]
+  const [user, setUser]:any = useState({
+    _id: "",
+    watchedVideos: [],
   });
 
-
-
-  useEffect(()=>{
-    if(authUser){
+  useEffect(() => {
+    if (authUser) {
       GetData("profile", setData);
-      SendData("profile",{id:authUser?.id,toDo:"getUser"},setUser)
+      SendData("profile", { id: authUser?.id, toDo: "getUser" }, setUser);
     }
-  },[authUser])
+  }, [authUser]);
 
   const showSideBar = () => {
     setSideBar(!SideBar);
@@ -45,24 +44,22 @@ function Index() {
   const ShowEditInfo = () => {
     setIsEditInfo(!IsEditInfo);
   };
-  const editProfile = (e: object) => {
-    
-  };
+  const editProfile = (e: object) => {};
   const planSettings = async (e: any) => {
     const data = {
       ...e,
       payerID: user._id,
     };
 
-    SendData("profile", {data:data,toDo:"sendPayment"}, setSubRes);
+    SendData("profile", { data: data, toDo: "sendPayment" }, setSubRes);
   };
 
   useEffect(() => {
     if (subRes === "saved") {
       setIsEditInfo(false);
-      setTimeout(()=>{
-        setSubRes("")
-      },5000)
+      setTimeout(() => {
+        setSubRes("");
+      }, 5000);
     }
   }, [subRes]);
 
@@ -85,7 +82,7 @@ function Index() {
 
   return (
     <div>
-      {data && user && user._id? (
+      {data && user && user._id && isAuth ? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos.length < 2
@@ -96,12 +93,8 @@ function Index() {
           <SideBarDiv SideBar={SideBar} setSideBar={setSideBar} />
           <div className="mb-4">
             <NavBar
-              showSignIn={() => {
-             
-              }}
-              showSignUp={() => {
-               
-              }}
+              showSignIn={() => {}}
+              showSignUp={() => {}}
               showSideBar={showSideBar}
             />
           </div>
@@ -140,7 +133,7 @@ function Index() {
 
                   {data.videos.map((video: any, index: any) => {
                     const watchedVideoActivities = user.watchedVideos.map(
-                      (item, index) => {
+                      (item:any, index:any) => {
                         if (video._id === item) {
                           return (
                             <ProfileActivity title={video.title} key={index} />
@@ -163,10 +156,12 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ) : (
+      ) : !data && !user && !user._id && isAuth ? (
         <div className="w-screen h-screen grid place-items-center">
           <LoadingScreen />
         </div>
+      ) : (
+        <UnauthorizedPage />
       )}
     </div>
   );

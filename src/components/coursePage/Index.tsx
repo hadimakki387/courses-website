@@ -11,6 +11,8 @@ import GetData from "@/Queries/GetData";
 import SendData from "@/Queries/SendData";
 import { useSession } from "next-auth/react";
 import { Session } from "inspector";
+import Link from "next/link";
+import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
 
 function Index() {
   const [Data, setData]: any = useState([]);
@@ -26,9 +28,10 @@ function Index() {
     __v: { $numberInt: "0" },
   });
   const [IsVideosBar, setIsVideosBar] = useState(false);
-  const [res,setRes] = useState()
-  const session = useSession()
+  const [res, setRes] = useState();
+  const session = useSession();
   const user = session.data?.user;
+  const isAuth = session.status === "authenticated" ? true : false;
 
   useEffect(() => {
     if (PlayingVideo._id && user) {
@@ -42,8 +45,7 @@ function Index() {
         (res: any) => {}
       );
     }
-  }, [PlayingVideo,user]);
-
+  }, [PlayingVideo, user]);
 
   useEffect(() => {
     GetData("admin", setData);
@@ -61,7 +63,6 @@ function Index() {
       setPlayingVideo(clickedVideo);
     }
     setIsVideosBar(!IsVideosBar);
-
   }
 
   const showSideBar = () => {
@@ -94,15 +95,11 @@ function Index() {
         Data.videos && Data.sections ? "" : "h-screen"
       }`}
     >
-      {Data.videos && Data.sections ? (
+      {Data.videos && Data.sections && isAuth ? (
         <>
           <NavBar
-            showSignIn={() => {
-  
-            }}
-            showSignUp={() => {
-  
-            }}
+            showSignIn={() => {}}
+            showSignUp={() => {}}
             showSideBar={showSideBar}
           />
           <div className="flex h-full ">
@@ -125,10 +122,12 @@ function Index() {
             </FakeVideoContext.Provider>
           </div>
         </>
-      ) : (
+      ) : isAuth && !Data.videos && !Data.sections ? (
         <div className="grid place-items-center h-full ">
           <LoadingScreen />
         </div>
+      ) : (
+        <UnauthorizedPage/>
       )}
     </div>
   );

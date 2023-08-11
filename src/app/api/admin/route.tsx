@@ -64,7 +64,10 @@ export async function POST(req: any, res: any) {
     return await Video.findOneAndDelete({ _id: message.UUID });
   }
   if (message.toDo === "fetchVideoUpdate") {
-    return await Video.findOneAndReplace({ _id: message.Data._id }, message.Data);
+    return await Video.findOneAndReplace(
+      { _id: message.Data._id },
+      message.Data
+    );
   }
   if (message.toDo === "deleteSection") {
     return await DeleteSction(videos, message);
@@ -83,6 +86,14 @@ export async function POST(req: any, res: any) {
   }
   if (message.toDo === "AddNewCourse") {
     return AddNewCourse(message);
+  }
+  if (message.toDo === "getAdmin") {
+    try {
+      const user = await User.findById(message.id);
+      return new Response(JSON.stringify(user));
+    } catch (err) {
+      return new Response(JSON.stringify(err));
+    }
   }
 }
 
