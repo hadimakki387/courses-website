@@ -1,14 +1,14 @@
 import { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema({
-  id: String,
   name: String,
   email: String,
   password: String,
   image: String,
   created_at: { type: Date, default: Date.now },
   watchedVideos: [String],
-  isVIP: Boolean,
+  plan:String,
+  subscribed_at:Date
 });
 
 const User = models.User || model("User", userSchema);

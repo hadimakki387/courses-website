@@ -8,14 +8,15 @@ import Index from "./videos Edit/Index";
 import GetData from "@/Queries/GetData";
 import AddSection from "./addSection/AddSection";
 import LoadingScreen from "@/components/loading/LoadingScreen";
-import fetchData from "@/Queries/GetData";
+
+import AddCourse from "./Add Course/AddCourse";
 
 function VideoForm() {
   const [Data, setData]: any = useState([]);
   const [num, setNum] = useState(0);
 
   useEffect(() => {
-    fetchData("admin", setData);
+    GetData("admin", setData);
   }, [num]);
 
   const [video, setVideo] = useState({
@@ -26,6 +27,7 @@ function VideoForm() {
       mins: 0,
       secs: 0,
     },
+    isFree: false,
   });
 
   const sectionHandle = (e: any) => {
@@ -44,6 +46,12 @@ function VideoForm() {
     setVideo({
       ...video,
       url: e.target.value,
+    });
+  };
+  const isFreeHandle = (e: any) => {
+    setVideo({
+      ...video,
+      isFree: e.target.checked,
     });
   };
   const minsHandle = (e: any) => {
@@ -75,7 +83,7 @@ function VideoForm() {
       setNum(num + 1);
     }
 
-    console.log("empty input");
+
   };
 
   const fetchVideoUpdate = (e: any) => {
@@ -84,10 +92,10 @@ function VideoForm() {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ Data:e, toDo: "fetchVideoUpdate" }),
+      body: JSON.stringify({ Data: e, toDo: "fetchVideoUpdate" }),
     });
+
     setNum(num + 1);
-    console.log(e)
   };
 
   return (
@@ -98,6 +106,9 @@ function VideoForm() {
     >
       {Data.videos && Data.sections ? (
         <>
+          <div>
+            <AddCourse />
+          </div>
           <div>
             <AddSection courses={Data.courses} setNum={setNum} />
           </div>
@@ -141,7 +152,23 @@ function VideoForm() {
                   handleChange={secsHandle}
                 />
               </div>
+              
             </div>
+            <div className="flex items-center mb-4">
+                <input
+                  id="default-checkbox"
+                  type="checkbox"
+                  value=""
+                  onChange={isFreeHandle}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  htmlFor="default-checkbox"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  IS FREE?
+                </label>
+              </div>
             <SubmitButton fetchNewVideo={fetchNewVideo} />
           </div>
 
@@ -152,7 +179,7 @@ function VideoForm() {
           />
         </>
       ) : (
-        <div className="grid place-items-center h-full">
+        <div className="grid place-items-center h-full w-full">
           <LoadingScreen />
         </div>
       )}
