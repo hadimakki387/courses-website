@@ -4,15 +4,16 @@ import * as bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
   await MongoConnection();
-  console.log("connected");
+
   const body = await req.json();
-  console.log(body);
+
   if (body.signUpEmail) {
     const user = await User.findOne({
       email: body.signUpEmail,
     });
+
     if (user) {
-      console.log(user);
+
       return new Response(JSON.stringify(true));
     } else {
       const user = new User({

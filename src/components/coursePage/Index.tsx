@@ -32,6 +32,7 @@ function Index() {
   const session = useSession();
   const user = session.data?.user;
   const isAuth = session.status === "authenticated" ? true : false;
+  const [ loading ,setLoading ] = useState(true)
 
   useEffect(() => {
     if (PlayingVideo._id && user) {
@@ -89,13 +90,26 @@ function Index() {
     }
   }, [SideBar]);
 
+  useEffect(()=>{
+    if(Data.videos && Data.sections && user && isAuth ){
+      setLoading(false)
+    }
+  },[Data,user,isAuth])
+  useEffect(()=>{
+    setTimeout(()=>{
+      if(!loading){
+        setLoading(false)
+      }
+    },60000)
+  },[])
+
   return (
     <div
       className={`course-lighter-bg-color max-[1000px]:h-full ${
         Data.videos && Data.sections ? "" : "h-screen"
       }`}
     >
-      {Data.videos && Data.sections && isAuth ? (
+      {!loading? (
         <>
           <NavBar
             showSignIn={() => {}}
@@ -122,13 +136,13 @@ function Index() {
             </FakeVideoContext.Provider>
           </div>
         </>
-      ) : isAuth && !Data.videos && !Data.sections ? (
+      ) : loading? (
         <div className="grid place-items-center h-full ">
           <LoadingScreen />
         </div>
-      ) : (
+      ) : !loading && !isAuth?(
         <UnauthorizedPage/>
-      )}
+      ):null}
     </div>
   );
 }

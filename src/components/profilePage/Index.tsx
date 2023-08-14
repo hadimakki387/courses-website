@@ -26,6 +26,9 @@ function Index() {
   const isAuth = session.status === "authenticated" ? true : false;
   const authUser = session.data?.user;
 
+  const [ loading ,setLoading ] = useState(true)
+
+
   const [user, setUser]:any = useState({
     _id: "",
     watchedVideos: [],
@@ -80,9 +83,22 @@ function Index() {
     }
   }, [SideBar]);
 
+  useEffect(()=>{
+    if(data && user && isAuth ){
+      setLoading(false)
+    }
+  },[data,user,isAuth,authUser])
+  useEffect(()=>{
+    setTimeout(()=>{
+      if(!loading){
+        setLoading(false)
+      }
+    },60000)
+  },[])
+
   return (
     <div>
-      {data && user && user._id && isAuth ? (
+      {!loading? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos.length < 2
@@ -156,13 +172,13 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ) : !data && !user && !user._id && isAuth ? (
+      ) : loading ? (
         <div className="w-screen h-screen grid place-items-center">
           <LoadingScreen />
         </div>
-      ) : (
+      ) : !loading && !isAuth?(
         <UnauthorizedPage />
-      )}
+      ):null}
     </div>
   );
 }
