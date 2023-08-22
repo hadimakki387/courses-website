@@ -101,7 +101,7 @@ function Index() {
       {!loading? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
-            data && data.videos.length < 2
+            data && data.videos?.length < 2
               ? "flex flex-col justify-between h-full"
               : ""
           } `}
@@ -147,7 +147,7 @@ function Index() {
                     My Activity
                   </h2>
 
-                  {data.videos.map((video: any, index: any) => {
+                  {data.videos?.map((video: any, index: any) => {
                     const watchedVideoActivities = user.watchedVideos.map(
                       (item:any, index:any) => {
                         if (video._id === item) {

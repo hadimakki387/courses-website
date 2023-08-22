@@ -53,12 +53,7 @@ function ProfileAndName({
             </span>
           </div>
         </div>
-        <button
-          onClick={showSubInfo}
-          className="text-center px-4 py-2 bg-[#24395a] rounded-md hover:bg-[#324b74] hover:text-sky-500 transition-all duration-300"
-        >
-          Edit Plan Info
-        </button>
+        
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 async function SendData (route,data,setRes){
   try {
-    const s = await fetch(`https://mern-course.netlify.app/api/${route}`,{
+    const s = await fetch(`http://localhost:3000/api/${route}`,{
       method:"POST",
       body:JSON.stringify(data),
       headers:{

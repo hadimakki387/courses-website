@@ -74,6 +74,9 @@ function Index() {
     setIsVideosBar(!IsVideosBar);
   };
 
+
+
+
   useEffect(() => {
     const isWindows = navigator.platform.includes("Win");
 
@@ -103,6 +106,12 @@ function Index() {
     },60000)
   },[])
 
+  const isVip = Data.users?.find((use: any) => use._id === user?.id).plan?true:false;
+
+ 
+
+ 
+
   return (
     <div
       className={`course-lighter-bg-color max-[1000px]:h-full ${
@@ -129,6 +138,7 @@ function Index() {
                 showVideosBar,
                 setPlayingVideo,
                 showSideBar,
+                isVip
               ]}
             >
               <VideosBar IsVideosBar={IsVideosBar} />

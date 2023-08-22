@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import VideoCard from "./VideoCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faAngleUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import SendData from "@/Queries/SendData";
 
 function Section({
@@ -21,12 +21,25 @@ function Section({
     },100*Videos.length)
     
   }
+
+  const [show,setShow] = useState(false)
+  console.log(show)
+
   return (
-    <div key={section.id}>
-      <div className="mb-1 flex items-center gap-4">
-        {section.title} <FontAwesomeIcon icon={faTrashCan} onClick={()=>deleteSection(section._id)}/>
+    <div key={section.id} className="flex flex-col gap-3">
+      <div className=" flex justify-between items-center gap-4 bg-gray-600 p-4 rounded-md ">
+        <div className="flex items-center gap-4 ">
+          <button onClick={()=>setShow(!show)}>{section.title}</button> <FontAwesomeIcon icon={faTrashCan} onClick={()=>deleteSection(section._id)}/>
+        </div>
+        <button onClick={()=>setShow(!show)}>
+        {show ? (
+            <FontAwesomeIcon icon={faAngleUp} />
+          ) : (
+            <FontAwesomeIcon icon={faAngleDown} />
+          )}
+        </button>
       </div>
-      <div className="flex flex-col gap-2">
+      {show&&<div className="flex flex-col gap-2">
         {Videos.map((video: any, index: any) => {
           if (section._id === video.sectionID) {
             return (
@@ -44,7 +57,8 @@ function Section({
             );
           }
         })}
-      </div>
+      </div>}
+      
     </div>
   );
 }
