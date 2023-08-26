@@ -17,7 +17,6 @@ import {
 } from "@/api/apiSlice";
 
 function Index() {
-  const [num, setNum] = useState(0);
   const [SideBar, setSideBar] = useState(false);
   const [PlayingVideo, setPlayingVideo]: any = useState({
     _id: "",
@@ -32,7 +31,6 @@ function Index() {
   const session = useSession();
   const user = session.data?.user;
   const isAuth = session.status === "authenticated" ? true : false;
-  const [loading, setLoading] = useState(true);
   const {
     data: Data,
     isLoading: getLoading,
@@ -54,9 +52,7 @@ function Index() {
     }
   }, [PlayingVideo, user]);
 
-  useEffect(() => {
-    refetch();
-  }, [num]);
+
 
   useEffect(() => {
     if (Data?.videos && Data?.videos.length > 0) {
@@ -96,18 +92,7 @@ function Index() {
     }
   }, [SideBar]);
 
-  useEffect(() => {
-    if (Data?.videos && Data?.sections && user && isAuth) {
-      setLoading(false);
-    }
-  }, [Data, user, isAuth]);
-  useEffect(() => {
-    setTimeout(() => {
-      if (!loading) {
-        setLoading(false);
-      }
-    }, 60000);
-  }, []);
+
 
   const isVip = Data?.users.find((use: any) => use._id === user?.id).plan
     ? true
