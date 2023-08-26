@@ -1,5 +1,8 @@
+"use client"
+
+import { MernApi } from "@/api/apiSlice";
 import Index from "@/components/coursePage/Index";
-import { useSession } from "next-auth/react";
+import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import React ,{ useState } from "react";
 
 
@@ -8,7 +11,10 @@ function page() {
 
 
   return (
-    <Index/>
+    <ApiProvider api={MernApi}>
+      <Index/>
+    </ApiProvider>
+    
   );
 }
 

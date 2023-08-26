@@ -19,9 +19,19 @@ export const MernApi = createApi({
           body: data,
         }),
       }),
+    mernQuery: builder.mutation({
+        query: (data) => ({
+          url: `MERN`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: data,
+        }),
+      }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAdminDataQuery,useAdminQueryMutation } = MernApi
+export const { useGetAdminDataQuery,useAdminQueryMutation,useMernQueryMutation } = MernApi
