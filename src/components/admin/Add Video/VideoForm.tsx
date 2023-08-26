@@ -5,19 +5,23 @@ import CategorySelect from "./Admin components/CategorySelect";
 import TextInput from "./Admin components/TextInput";
 import SubmitButton from "./Admin components/SubmitButton";
 import Index from "./videos Edit/Index";
-import GetData from "@/Queries/GetData";
+
 import AddSection from "./addSection/AddSection";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 
 import AddCourse from "./Add Course/AddCourse";
 import SendData from "@/Queries/SendData";
+import { useGetAdminDataQuery } from "@/api/apiSlice";
+
 
 function VideoForm() {
-  const [Data, setData]: any = useState([]);
+
   const [num, setNum] = useState(0);
+  const {isLoading,isSuccess,data:Data,refetch,error,isError} = useGetAdminDataQuery({})
+  console.log(Data)
 
   useEffect(() => {
-    GetData("admin", setData);
+    refetch()
   }, [num]);
 
   const [video, setVideo] = useState({
@@ -89,10 +93,10 @@ function VideoForm() {
   return (
     <div
       className={`flex flex-col gap-8 ${
-        !Data.videos && !Data.sections ? "h-screen" : ""
+        isLoading  ? "h-screen" : ""
       }  `}
     >
-      {Data.videos && Data.sections ? (
+      {isSuccess ? (
         <>
           <div>
             <AddCourse />
@@ -166,11 +170,11 @@ function VideoForm() {
             setNum={setNum}
           />
         </>
-      ) : (
+      ) :isLoading? (
         <div className="grid place-items-center h-full w-full">
           <LoadingScreen />
         </div>
-      )}
+      ):null}
     </div>
   );
 }

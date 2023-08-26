@@ -1,6 +1,7 @@
 "use client";
 
-import SendData from "@/Queries/SendData";
+
+import { useAdminQueryMutation } from "@/api/apiSlice";
 import AdminForm from "@/components/admin/Add Admin/AdminForm";
 import VideoForm from "@/components/admin/Add Video/VideoForm";
 import SidePanel from "@/components/admin/SidePanel";
@@ -12,8 +13,8 @@ import React, { useEffect, useState } from "react";
 function AdminIndex() {
   const [active, setActive] = useState("videos");
   const [menu, setMenu] = useState(false);
-  const [admin, setAdmin]:any = useState(false);
-  
+
+  const [getAuth,{isLoading,isSuccess,data:admin,error}] = useAdminQueryMutation()
 
   function handleSetActive(section: string) {
     setActive(section);
@@ -30,11 +31,10 @@ function AdminIndex() {
 
   useEffect(()=>{
     if(user?.id){
-      SendData("admin",{id:user?.id , toDo:"getAdmin"},setAdmin)
+      getAuth({id:user?.id , toDo:"getAdmin"})
     }
   },[session,user])
 
- 
 
   return (
     <div
@@ -42,7 +42,7 @@ function AdminIndex() {
         active !== "videos" && active !== "payments" && "h-full"
       }`}
     >
-      {isAuth && admin.isAdmin===true ? (
+      {isAuth && admin?.isAdmin===true ? (
         <>
           <div className=" max-[990px]:hidden">
             <SidePanel

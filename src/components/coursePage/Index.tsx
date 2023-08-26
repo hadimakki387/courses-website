@@ -13,9 +13,9 @@ import { useSession } from "next-auth/react";
 import { Session } from "inspector";
 import Link from "next/link";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
+import { useAdminQueryMutation, useGetAdminDataQuery } from "@/api/apiSlice";
 
 function Index() {
-  const [Data, setData]: any = useState([]);
   const [num, setNum] = useState(0);
   const [SideBar, setSideBar] = useState(false);
   const [PlayingVideo, setPlayingVideo]: any = useState({
@@ -28,11 +28,20 @@ function Index() {
     __v: { $numberInt: "0" },
   });
   const [IsVideosBar, setIsVideosBar] = useState(false);
-  const [res, setRes] = useState();
   const session = useSession();
   const user = session.data?.user;
   const isAuth = session.status === "authenticated" ? true : false;
   const [ loading ,setLoading ] = useState(true)
+  const {
+    data:Data,
+    isLoading: getLoading,
+    isSuccess: getSuccess,
+    isError: getIsError,
+    error: getError,
+    refetch,
+  } = useGetAdminDataQuery({});
+  const [adminQuery, { data: postData, isSuccess, isError, isLoading, error }] =
+    useAdminQueryMutation();
 
   useEffect(() => {
     if (PlayingVideo._id && user) {
@@ -49,7 +58,7 @@ function Index() {
   }, [PlayingVideo, user]);
 
   useEffect(() => {
-    GetData("admin", setData);
+    refetch()
   }, [num]);
 
   useEffect(() => {
