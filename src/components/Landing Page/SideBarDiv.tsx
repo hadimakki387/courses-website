@@ -48,13 +48,12 @@ function SideBarDiv({
       document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
 
-    alert('All cookies deleted!');
   };
 
   const handleClick = (index: any) => {
     setSideBar(false);
     if (index.text3) {
-      signOut();
+      signOut({redirect:false});
       handleDeleteCookies()
     }
   };
