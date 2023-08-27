@@ -25,7 +25,7 @@ export default function Home() {
 
   async function CreateUser(param: any) {
     try {
-      const res = await fetch("https://mern-course.netlify.app/landingPage", {
+      const res = await fetch("https://mern-course.netlify.app/api/landingPage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

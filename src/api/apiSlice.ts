@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const production = "https://mern-course.netlify.app/"
+const production = "https://mern-course.netlify.app/api/"
 const local = "http://localhost:3000/api/"
 
 // Define a service using a base URL and expected endpoints
