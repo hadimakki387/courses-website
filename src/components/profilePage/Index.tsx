@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
-import { useGetProfileDataQuery, useProfileQueryMutation } from "@/api/apiSlice";
+import { useGetProfileDataQuery, useProfileQueryMutation, useSendPaymentMutation } from "@/api/apiSlice";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
@@ -24,24 +24,19 @@ function Index() {
 
   const isAuth = session.status === "authenticated" ? true : false;
   const authUser = session.data?.user;
-
-
-  const [user, setUser]:any = useState({
-    _id: "",
-    watchedVideos: [],
-  });
- 
-
+  let flash:any
   const {data,isSuccess,isLoading,isError,error,refetch} = useGetProfileDataQuery({})
   const [profileQuery,{data:PostData,isSuccess:PostSuccess,error:PostError}] = useProfileQueryMutation()
+  const [sendPayment,{data:PaymentRes,isSuccess:paymentSucces,error:PaymentError}] = useSendPaymentMutation()
+
+  
+
 
   useEffect(() => {
     if (authUser) {
       profileQuery({ id: authUser?.id, toDo: "getUser" })
     }
   }, [authUser]);
-
-  console.log("profileData ",PostData)
 
   const showSideBar = () => {
     setSideBar(!SideBar);
@@ -56,8 +51,12 @@ function Index() {
       payerID: PostData._id,
     };
 
-    profileQuery({ data: data, toDo: "sendPayment" })
+    sendPayment({ data: data, toDo: "sendPayment" })
   };
+
+  useEffect(()=>{
+    setSubRes(PaymentRes)
+  },[PaymentRes])
 
   useEffect(() => {
     if (subRes === "saved") {
@@ -84,14 +83,10 @@ function Index() {
       }
     }
   }, [SideBar]);
-
  
-  
-
-
   return (
     <div>
-      {isSuccess && isAuth && PostData? (
+      {isSuccess && isAuth && PostData ? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos?.length < 2
@@ -110,7 +105,7 @@ function Index() {
 
           <div className=" w-[60vw] max-[1350px]:w-[85vw] m-auto mb-4">
             <ProfileContext.Provider
-              value={[ShowEditInfo, editProfile, planSettings, data, user]}
+              value={[ShowEditInfo, editProfile, planSettings, data, PostData ,PaymentError]}
             >
               <ProfileHeader />
 
@@ -134,7 +129,7 @@ function Index() {
               ) : null}
 
               {/* This is the activity section */}
-              {data ? (
+              {data.videos ? (
                 <div className="w-full flex flex-col gap-2">
                   <h2 className="text-2xl text-center leading-loose ">
                     My Activity
@@ -144,7 +139,7 @@ function Index() {
                     
                     const watchedVideoActivities = PostData.watchedVideos.map(
                       (item:any, index:any) => {
-                        console.log("item is", video)
+    
                         if (video._id === item) {
                           
                           return (
@@ -168,7 +163,7 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ) : isLoading && !isAuth ? (
+      ) : isLoading && !isAuth && !data? (
         <div className="w-screen h-screen grid place-items-center">
           <LoadingScreen />
         </div>

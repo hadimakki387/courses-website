@@ -105,12 +105,15 @@ function Index() {
     >
       {!getLoading ? (
         <>
+        <div className="fixed z-30 w-full course-lighter-bg-color">
           <NavBar
             showSignIn={() => {}}
             showSignUp={() => {}}
             showSideBar={showSideBar}
           />
-          <div className="flex h-full ">
+        </div>
+          
+          <div className="flex h-full pt-16 ">
             <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
 
             <FakeVideoContext.Provider

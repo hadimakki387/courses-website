@@ -13,6 +13,7 @@ function ProfileAndName({
 }) {
   const [ShowEditInfo, editProfile, planSettings, data, user] =
     useContext(ProfileContext);
+
   const date = new Date(user.created_at);
   const options: any = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = date.toLocaleDateString(undefined, options);
@@ -20,6 +21,9 @@ function ProfileAndName({
   const sub = data.plans?.find((plan: any) => {
     return plan._id === user.plan;
   });
+  console.log("the plans are " , data.plans)
+  console.log("the user is ",user)
+  console.log( "the sub is" , sub)
 
   const showSubInfo = () => {
     ShowEditInfo();

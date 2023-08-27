@@ -6,11 +6,15 @@ import Email from "./Inputs/Email";
 import PasswordInput from "./Inputs/PasswordInput";
 
 function SignIn({
+  showSignUp,
   showSignIn,
   getSignInData,
+  flash
 }: {
-  showSignIn: any;
+  showSignUp: any;
   getSignInData: any;
+  showSignIn:any
+  flash:string
 }) {
   const [signInData, setSignInData] = useState({});
   const [emailValid, setEmailValid] = useState(false);
@@ -72,6 +76,8 @@ function SignIn({
                           handleInputChange={handleInputChange}
                         />
                       </div>
+                      
+                      
                       <div className="mt-10 text-center">
                         <button
                           className={`btn flex-center btn-blue w-full ${
@@ -81,11 +87,11 @@ function SignIn({
                           }`}
                           type="submit"
                         >
-                          <span className="text-wrap inline-block flex-shrink-0">
+                          <span className="text-wrap inline-block flex-shrink-0" >
                             Log In
                           </span>
                         </button>
-                        <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline">
+                        <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline" onClick={showSignUp}>
                           Sign Up
                         </button>
                       </div>

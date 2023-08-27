@@ -13,6 +13,7 @@ import { useState, useEffect, HtmlHTMLAttributes } from "react";
 import { signIn, useSession } from "next-auth/react";
 
 import ClickAwayListener from "react-click-away-listener";
+import { useSignInMutation } from "@/api/apiSlice";
 
 export default function Home() {
   const [signIn1, setSignIn] = useState(false);
@@ -44,6 +45,7 @@ export default function Home() {
       console.error("Fetch error:", error);
     }
   }
+
 
   const showSignIn = () => {
     if (signUp) {
@@ -82,13 +84,15 @@ export default function Home() {
 
   const getSignInData = async (e: any) => {
     setSignInData(e);
-    // CreateUser(e);
 
     await signIn("credentials", {
       signInEmail: e.signInEmail,
       UserPassword: e.UserPassword,
     });
   };
+
+
+
   const getSignUpData = async (e: any) => {
     setSignUpData(e);
     await CreateUser(e);
@@ -98,11 +102,11 @@ export default function Home() {
         UserPassword: e.UserPassword,
       });
     } else {
-      alert("user exict");
+      setFlash("user Exist")
     }
   };
 
-
+console.log(flash)
 
 
 
@@ -118,6 +122,7 @@ export default function Home() {
         showSignUp={showSignUp}
         getSignInData={getSignInData}
         getSignUpData={getSignUpData}
+        flash = {flash}
       />
 
       <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
@@ -129,13 +134,7 @@ export default function Home() {
           signIn1 || signUp || SideBar ? "brightness-50 " : ""
         } transition-all duration-300`}
       >
-        <div
-          className={`fixed bottom-4 right-4 bg-sky-600 text-white p-4 ${
-            flash === "LoggedIn" ? "translate-y-0" : "translate-y-[200%]"
-          }`}
-        >
-          Your Logged In!
-        </div>
+        
         <NavBar
           showSignIn={showSignIn}
           showSignUp={showSignUp}

@@ -140,7 +140,7 @@ function SectionCard({
             })}
         </>
       ) : (
-        <div>loading</div>
+        <div>loading...</div>
       )}
     </div>
   );

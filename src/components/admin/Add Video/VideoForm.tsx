@@ -31,8 +31,11 @@ function VideoForm() {
   ] = useAdminQueryMutation();
 
   useEffect(() => {
-    refetch();
-  }, [num,refetch]);
+    setTimeout(()=>{
+      refetch()
+    },1000)
+  }, [num]);
+  console.log(num)
 
   const [video, setVideo] = useState({
     sectionID: "",
@@ -173,7 +176,7 @@ function VideoForm() {
             setNum={setNum}
           />
         </>
-      ) : isLoading ? (
+      ) : isLoading && !Data? (
         <div className="grid place-items-center h-full w-full">
           <LoadingScreen />
         </div>

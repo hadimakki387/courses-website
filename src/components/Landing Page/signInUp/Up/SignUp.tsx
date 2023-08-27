@@ -7,10 +7,14 @@ import NameInput from "./NameInput";
 
 function SignUp({
   showSignUp,
+  showSignIn,
   getSignUpData,
+  flash
 }: {
   showSignUp: any;
+  showSignIn:any
   getSignUpData: any;
+  flash:any
 }) {
   const [signInData, setSignInData] = useState({});
   const [emailValid, setEmailValid] = useState(false);
@@ -83,7 +87,7 @@ function SignUp({
                           handleInputChange={handleInputChange}
                         />
                       </div>
-
+                      {flash==="user Exist"&&<div className="text-sm text-red-600">user exists</div>}
                       <div className="mt-10 text-center">
                         <button
                           className={`btn flex-center btn-blue w-full ${
@@ -98,7 +102,7 @@ function SignUp({
                           </span>
                         </button>
 
-                        <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline">
+                        <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline" onClick={showSignIn}>
                           Login
                         </button>
                       </div>

@@ -27,7 +27,7 @@ function ContentBar() {
 
   return (
     <div
-      className={`course-lighter-bg-color space-y-4 w-full ${
+      className={`course-lighter-bg-color space-y-4 w-full min-[1300px]:ml-[20vw] ${
         SideBar ? "brightness-50 transition-all duration-300" : ""
       }`}
     >

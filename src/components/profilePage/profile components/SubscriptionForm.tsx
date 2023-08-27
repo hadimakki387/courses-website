@@ -9,8 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function SubscriptionFrom() {
-  const [ShowEditInfo, editProfile, planSettings, data, user] =
+  const [ShowEditInfo, editProfile, planSettings, data, user,flash] =
     useContext(ProfileContext);
+    console.log(" the flash in the sub form is ",flash)
   const [plan, setPlan] = useState("");
   const [img, setImg]: any = useState({
     imgURL: "",
@@ -37,7 +38,6 @@ function SubscriptionFrom() {
     setPasswordValid(validatePassword(e.target.value))
   };
 
-  console.log(passwordValid)
 
   const sendPlanData = () => {
     if (plan && img.imgURL && img.imgID && password && passwordValid) {
@@ -65,6 +65,8 @@ function SubscriptionFrom() {
   const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
   const sub = data.plans.find((plan: any) => plan._id === user.plan);
+
+
 
   return (
     <div className={`flex flex-col gap-2`}>
@@ -122,7 +124,7 @@ function SubscriptionFrom() {
                   />
                   {!passwordValid && password && <p className="text-sm text-red-600 relative bottom-5">at least 8 digits</p>}
                 </div>
-
+                {flash?.data==="Incorrect password"&&<div className="text-sm text-red-600 relative bottom-9">Incorrect password</div>}
                 <div className="flex w-full justify-start gap-4">
                   <button
                     onClick={sendPlanData}
