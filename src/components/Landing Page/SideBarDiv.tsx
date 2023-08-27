@@ -54,7 +54,6 @@ function SideBarDiv({
     setSideBar(false);
     if (index.text3) {
       handleDeleteCookies()
-      signOut({redirect:false});
     }
   };
   const session = useSession();
