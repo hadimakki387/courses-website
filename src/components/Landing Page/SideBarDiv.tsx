@@ -39,11 +39,23 @@ function SideBarDiv({
       link: "",
     },
   ];
+
+  const handleDeleteCookies = () => {
+    const cookies = document.cookie.split(';');
+    
+    for (const cookie of cookies) {
+      const [name, _] = cookie.split('=');
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+
+    alert('All cookies deleted!');
+  };
+
   const handleClick = (index: any) => {
     setSideBar(false);
     if (index.text3) {
       signOut();
-  
+      handleDeleteCookies()
     }
   };
   const session = useSession();
