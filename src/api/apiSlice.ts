@@ -42,6 +42,7 @@ export const MernApi = createApi({
       getProfileData: builder.query({
         query: (name) => `profile`,
       }),
+      
   }),
 })
 

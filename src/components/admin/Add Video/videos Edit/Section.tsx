@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import VideoCard from "./VideoCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import SendData from "@/Queries/SendData";
+import { useAdminQueryMutation } from "@/api/apiSlice";
 
 function Section({
   section,
@@ -14,8 +14,12 @@ function Section({
   setNum,
   disableEditMode
 }: any) {
+
+
+  const [adminQuery,{isLoading,isSuccess,error,data}] = useAdminQueryMutation()
+
   const deleteSection = (ID:any) =>{
-    SendData("admin",{_id:ID,toDo:"deleteSection"},(res:any)=>{})
+    adminQuery({_id:ID,toDo:"deleteSection"})
     setTimeout(()=>{
       setNum(Math.random)
     },100*Videos.length)

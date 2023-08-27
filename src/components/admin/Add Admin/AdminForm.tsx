@@ -3,13 +3,16 @@
 import React, { useState } from "react";
 import TextInput from "../Add Video/Admin components/TextInput";
 import SubmitButton from "../Add Video/Admin components/SubmitButton";
-import SendData from "@/Queries/SendData";
+
+import { useAdminQueryMutation } from "@/api/apiSlice";
 
 function AdminForm() {
   const [Data, setData] = useState({
     newAdmin: "",
     password: "",
   });
+
+  const [adminQuery,{data,error,isLoading,isSuccess}] = useAdminQueryMutation()
 
   const getEmail = (e: any) => {
     setData({ ...Data, newAdmin: e.target.value });
@@ -20,7 +23,7 @@ function AdminForm() {
   };
 
   const fetchAdmin = () => {
-    SendData("admin",Data,(res:any)=>{})
+    adminQuery(Data)
   };
 
   return (

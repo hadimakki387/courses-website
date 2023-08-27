@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useAdminQueryMutation } from "@/api/apiSlice";
 import AdminForm from "@/components/admin/Add Admin/AdminForm";
 import VideoForm from "@/components/admin/Add Video/VideoForm";
@@ -9,12 +8,14 @@ import ApprovePayments from "@/components/admin/approve payments/ApprovePayments
 import UnauthorizedPage from "@/components/unauthorized/UnauthorizedPage";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import LoadingScreen from "../loading/LoadingScreen";
 
 function AdminIndex() {
   const [active, setActive] = useState("videos");
   const [menu, setMenu] = useState(false);
 
-  const [getAuth,{isLoading,isSuccess,data:admin,error}] = useAdminQueryMutation()
+  const [getAuth, { isLoading, isSuccess, data: admin, error }] =
+    useAdminQueryMutation();
 
   function handleSetActive(section: string) {
     setActive(section);
@@ -27,14 +28,13 @@ function AdminIndex() {
 
   const session = useSession();
   const isAuth = session.status === "authenticated" ? true : false;
-  const user = session.data?.user
+  const user = session.data?.user;
 
-  useEffect(()=>{
-    if(user?.id){
-      getAuth({id:user?.id , toDo:"getAdmin"})
+  useEffect(() => {
+    if (user?.id) {
+      getAuth({ id: user?.id, toDo: "getAdmin" });
     }
-  },[session,user])
-
+  }, [session, user, getAuth]);
 
   return (
     <div
@@ -42,7 +42,7 @@ function AdminIndex() {
         active !== "videos" && active !== "payments" && "h-full"
       }`}
     >
-      {isAuth && admin?.isAdmin===true ? (
+      {isSuccess && isAuth && admin?.isAdmin === true ? (
         <>
           <div className=" max-[990px]:hidden">
             <SidePanel
@@ -74,9 +74,13 @@ function AdminIndex() {
             )}
           </div>
         </>
-      ) : (
+      ) : isSuccess && !isAuth ? (
         <UnauthorizedPage />
-      )}
+      ) : isLoading ? (
+        <div className="h-screen w-screen flex justify-center items-center">
+          <LoadingScreen />
+        </div>
+      ) : null}
     </div>
   );
 }

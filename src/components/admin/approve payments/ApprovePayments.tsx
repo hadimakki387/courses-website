@@ -1,5 +1,4 @@
 
-import SendData from "@/Queries/SendData";
 import { useAdminQueryMutation, useGetAdminDataQuery } from "@/api/apiSlice";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +21,7 @@ function ApprovePayments() {
 
   useEffect(() => {
     refetch();
-  }, [num]);
+  }, [num,refetch]);
 
   function findUserByID(userID: string) {
     return data.users.find((user: any) => user._id === userID);

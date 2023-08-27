@@ -1,6 +1,6 @@
 'use client'
 
-import SendData from "@/Queries/SendData";
+import { useAdminQueryMutation } from "@/api/apiSlice";
 import TextInput from "@/components/admin/Add Video/Admin components/TextInput";
 import React, { useState } from "react";
 
@@ -9,6 +9,7 @@ function SignInAdmin() {
     adminEmail: "",
     password: "",
   });
+  const [adminQuery,{isLoading,isSuccess,error,data}] = useAdminQueryMutation()
 
   const handleEmail = (e: any) => {
     setAdmin({ ...admin, adminEmail: e.target.value });
@@ -17,8 +18,7 @@ function SignInAdmin() {
     setAdmin({ ...admin, password: e.target.value });
   };
   const fetchAdmin = ()=>{
-    SendData("admin",admin,(res:any)=>{})
-    console.log(admin)
+    adminQuery(admin)
   }
  
   return (
