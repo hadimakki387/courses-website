@@ -41,7 +41,7 @@ function SideBarDiv({
   ];
 
  
-console.log("cookies are ",document.cookie)
+
   const handleClick = async(index: any) => {
     setSideBar(false);
     if (index.text3) {

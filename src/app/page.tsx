@@ -5,15 +5,11 @@ import SignInUpNavs from "@/components/Landing Page/SignInUpNavs";
 import WebsiteCourses from "@/components/Landing Page/WebsiteCourses";
 import Footer from "@/components/Landing Page/footer/Footer";
 import Plans from "@/components/Landing Page/plans/Plans";
-import SignIn from "@/components/Landing Page/signInUp/In/SignIn";
-import SignUp from "@/components/Landing Page/signInUp/Up/SignUp";
+
 import NavBar from "@/components/NavBar";
-import { create } from "domain";
 import { useState, useEffect, HtmlHTMLAttributes } from "react";
 import { signIn, useSession } from "next-auth/react";
 
-import ClickAwayListener from "react-click-away-listener";
-import { useSignInMutation } from "@/api/apiSlice";
 
 export default function Home() {
   const [signIn1, setSignIn] = useState(false);
