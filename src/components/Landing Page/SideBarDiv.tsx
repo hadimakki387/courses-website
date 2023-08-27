@@ -53,8 +53,8 @@ function SideBarDiv({
   const handleClick = (index: any) => {
     setSideBar(false);
     if (index.text3) {
-      signOut({redirect:false});
       handleDeleteCookies()
+      signOut({redirect:false});
     }
   };
   const session = useSession();
