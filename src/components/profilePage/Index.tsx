@@ -8,38 +8,40 @@ import ProfileActivity from "./profile components/ProfileActivity";
 import ProfileHeader from "./profile components/ProfileHeader";
 import ProfileeditInfoSection from "./profile components/ProfileeditInfoSection";
 import { ProfileContext } from "@/context/ProfileContext";
-import GetData from "@/Queries/GetData";
 import LoadingScreen from "../loading/LoadingScreen";
-import SendData from "@/Queries/SendData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
+import { useGetProfileDataQuery, useProfileQueryMutation } from "@/api/apiSlice";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo, setIsEditInfo] = useState(false);
-  const [data, setData]: any = useState();
+  
   const [subRes, setSubRes]: any = useState();
   const session = useSession();
 
   const isAuth = session.status === "authenticated" ? true : false;
   const authUser = session.data?.user;
 
-  const [ loading ,setLoading ] = useState(true)
-
 
   const [user, setUser]:any = useState({
     _id: "",
     watchedVideos: [],
   });
+ 
+
+  const {data,isSuccess,isLoading,isError,error,refetch} = useGetProfileDataQuery({})
+  const [profileQuery,{data:PostData,isSuccess:PostSuccess,error:PostError}] = useProfileQueryMutation()
 
   useEffect(() => {
     if (authUser) {
-      GetData("profile", setData);
-      SendData("profile", { id: authUser?.id, toDo: "getUser" }, setUser);
+      profileQuery({ id: authUser?.id, toDo: "getUser" })
     }
   }, [authUser]);
+
+  console.log("profileData ",PostData)
 
   const showSideBar = () => {
     setSideBar(!SideBar);
@@ -51,10 +53,10 @@ function Index() {
   const planSettings = async (e: any) => {
     const data = {
       ...e,
-      payerID: user._id,
+      payerID: PostData._id,
     };
 
-    SendData("profile", { data: data, toDo: "sendPayment" }, setSubRes);
+    profileQuery({ data: data, toDo: "sendPayment" })
   };
 
   useEffect(() => {
@@ -83,22 +85,13 @@ function Index() {
     }
   }, [SideBar]);
 
-  useEffect(()=>{
-    if(data && user && isAuth ){
-      setLoading(false)
-    }
-  },[data,user,isAuth,authUser])
-  useEffect(()=>{
-    setTimeout(()=>{
-      if(!loading){
-        setLoading(false)
-      }
-    },60000)
-  },[])
+ 
+  
+
 
   return (
     <div>
-      {!loading? (
+      {isSuccess && isAuth && PostData? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos?.length < 2
@@ -147,10 +140,13 @@ function Index() {
                     My Activity
                   </h2>
 
-                  {data.videos?.map((video: any, index: any) => {
-                    const watchedVideoActivities = user.watchedVideos.map(
+                  {data.videos.map((video: any, index: any) => {
+                    
+                    const watchedVideoActivities = PostData.watchedVideos.map(
                       (item:any, index:any) => {
+                        console.log("item is", video)
                         if (video._id === item) {
+                          
                           return (
                             <ProfileActivity title={video.title} key={index} />
                           );
@@ -172,11 +168,11 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ) : loading ? (
+      ) : isLoading && !isAuth ? (
         <div className="w-screen h-screen grid place-items-center">
           <LoadingScreen />
         </div>
-      ) : !loading && !isAuth?(
+      ) : !isError && !isAuth && !PostData?.email ?(
         <UnauthorizedPage />
       ):null}
     </div>
