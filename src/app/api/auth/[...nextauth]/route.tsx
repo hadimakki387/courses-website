@@ -16,7 +16,7 @@ const handler = NextAuth({
       async authorize(credentials, req) {
         console.log(credentials);
 
-        const res = await fetch("http://localhost:3000/api/landingPage", {
+        const res = await fetch("https://mern-course.netlify.app/landingPage", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
