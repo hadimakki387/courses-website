@@ -1,4 +1,4 @@
-import SendData from "@/Queries/SendData";
+import { useAdminQueryMutation } from "@/api/apiSlice";
 import { faCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
@@ -14,6 +14,9 @@ function VideoCard({
   setNum,
   disableEditMode,
 }: any) {
+
+  const [adminQuery,{isLoading,isSuccess,error,data}] = useAdminQueryMutation()
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
@@ -30,7 +33,7 @@ function VideoCard({
   }, [editMode, handleUpdate, index]);
 
   const deleteVideo = (UUID: any) => {
-    SendData("admin",{ UUID, toDO: "deleteVideo" },(res:any)=>{})
+    adminQuery({ UUID, toDO: "deleteVideo" })
     setNum(Math.random);
   };
   const alert = () => {

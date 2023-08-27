@@ -5,20 +5,34 @@ import CategorySelect from "./Admin components/CategorySelect";
 import TextInput from "./Admin components/TextInput";
 import SubmitButton from "./Admin components/SubmitButton";
 import Index from "./videos Edit/Index";
-import GetData from "@/Queries/GetData";
 import AddSection from "./addSection/AddSection";
 import LoadingScreen from "@/components/loading/LoadingScreen";
-
 import AddCourse from "./Add Course/AddCourse";
-import SendData from "@/Queries/SendData";
+import { useAdminQueryMutation, useGetAdminDataQuery } from "@/api/apiSlice";
 
 function VideoForm() {
-  const [Data, setData]: any = useState([]);
   const [num, setNum] = useState(0);
+  const {
+    isLoading,
+    isSuccess,
+    data: Data,
+    refetch,
+    error,
+    isError,
+  } = useGetAdminDataQuery({});
+  const [
+    adminQuery,
+    {
+      isLoading: PostLoading,
+      isSuccess: PostSuccess,
+      error: PostError,
+      data: PostData,
+    },
+  ] = useAdminQueryMutation();
 
   useEffect(() => {
-    GetData("admin", setData);
-  }, [num]);
+    refetch();
+  }, [num,refetch]);
 
   const [video, setVideo] = useState({
     sectionID: "",
@@ -74,25 +88,19 @@ function VideoForm() {
   const fetchNewVideo = async () => {
     const hasEmptyValue = Object.values(video).some((value) => value === "");
     if (!hasEmptyValue) {
-      await SendData("admin",video,(res:any)=>{})
+      adminQuery(video)
       setNum(num + 1);
     }
-
-
   };
 
   const fetchVideoUpdate = (e: any) => {
-    SendData("admin",{ Data: e, toDo: "fetchVideoUpdate" },(res:any)=>{})
+    adminQuery({ Data: e, toDo: "fetchVideoUpdate" })
     setNum(num + 1);
   };
 
   return (
-    <div
-      className={`flex flex-col gap-8 ${
-        !Data.videos && !Data.sections ? "h-screen" : ""
-      }  `}
-    >
-      {Data.videos && Data.sections ? (
+    <div className={`flex flex-col gap-8 ${isLoading ? "h-screen" : ""}  `}>
+      {isSuccess ? (
         <>
           <div>
             <AddCourse />
@@ -140,23 +148,22 @@ function VideoForm() {
                   handleChange={secsHandle}
                 />
               </div>
-              
             </div>
             <div className="flex items-center mb-4">
-                <input
-                  id="default-checkbox"
-                  type="checkbox"
-                  value=""
-                  onChange={isFreeHandle}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  htmlFor="default-checkbox"
-                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
-                  IS FREE?
-                </label>
-              </div>
+              <input
+                id="default-checkbox"
+                type="checkbox"
+                value=""
+                onChange={isFreeHandle}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                htmlFor="default-checkbox"
+                className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                IS FREE?
+              </label>
+            </div>
             <SubmitButton fetchNewVideo={fetchNewVideo} />
           </div>
 
@@ -166,11 +173,11 @@ function VideoForm() {
             setNum={setNum}
           />
         </>
-      ) : (
+      ) : isLoading ? (
         <div className="grid place-items-center h-full w-full">
           <LoadingScreen />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

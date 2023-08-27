@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextInput from "../Admin components/TextInput";
 import CategorySelect from "../Admin components/CategorySelect";
-import SendData from "@/Queries/SendData";
+import { useAdminQueryMutation } from "@/api/apiSlice";
 
 function AddSection({courses,setNum}:any) {
   const [section, setSection] = useState({
@@ -15,15 +15,15 @@ function AddSection({courses,setNum}:any) {
     setSection({
       ...section,
       courseName: e.target.value,
-    });
-    
-    
+    });  
   };
+
+  const [adminQuery,{isLoading,isSuccess,error,data}] = useAdminQueryMutation()
 
 
   const fecthSection = () => {
     if(section.courseName && section.sectionName){
-       SendData("admin",section,(res:any)=>{})
+       adminQuery(section)
     }
     setNum(Math.random)
   };

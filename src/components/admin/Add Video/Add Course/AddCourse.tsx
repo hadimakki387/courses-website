@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import TextInput from "../Admin components/TextInput";
-import SendData from "@/Queries/SendData";
+import { useAdminQueryMutation } from "@/api/apiSlice";
 
 function AddCourse() {
   const [course, setCourse] = useState();
+  const [adminQuery,{isLoading,isSuccess,error,data}] = useAdminQueryMutation()
 
   const CourseHandle = (e: any) => {
     setCourse(e.target.value);
   };
   const fetchNewCourse = () => {
-    SendData("admin", { data: course, toDo: "AddNewCourse" }, (e: any) => {
-
-    });
+    adminQuery({ data: course, toDo: "AddNewCourse" })
     console.log(course);
   };
   return (

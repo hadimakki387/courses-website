@@ -7,16 +7,15 @@ import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import LoadingScreen from "../loading/LoadingScreen";
-import GetData from "@/Queries/GetData";
-import SendData from "@/Queries/SendData";
 import { useSession } from "next-auth/react";
-import { Session } from "inspector";
-import Link from "next/link";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
+import {
+  useAdminQueryMutation,
+  useGetAdminDataQuery,
+  useMernQueryMutation,
+} from "@/api/apiSlice";
 
 function Index() {
-  const [Data, setData]: any = useState([]);
-  const [num, setNum] = useState(0);
   const [SideBar, setSideBar] = useState(false);
   const [PlayingVideo, setPlayingVideo]: any = useState({
     _id: "",
@@ -28,32 +27,34 @@ function Index() {
     __v: { $numberInt: "0" },
   });
   const [IsVideosBar, setIsVideosBar] = useState(false);
-  const [res, setRes] = useState();
   const session = useSession();
   const user = session.data?.user;
   const isAuth = session.status === "authenticated" ? true : false;
-  const [ loading ,setLoading ] = useState(true)
+  const {
+    data: Data,
+    isLoading: getLoading,
+    isSuccess: getSuccess,
+    isError: getIsError,
+    error: getError,
+    refetch,
+  } = useGetAdminDataQuery({});
+  const [mernQuery, { data: postData, isSuccess, isError, isLoading, error }] =
+    useMernQueryMutation();
 
   useEffect(() => {
     if (PlayingVideo._id && user) {
-      SendData(
-        "MERN",
-        {
-          PlayingVideo: PlayingVideo,
-          user: user?.id,
-          toDo: "AddWatchedVideos",
-        },
-        (res: any) => {}
-      );
+      mernQuery({
+        PlayingVideo: PlayingVideo,
+        user: user?.id,
+        toDo: "AddWatchedVideos",
+      });
     }
   }, [PlayingVideo, user]);
 
-  useEffect(() => {
-    GetData("admin", setData);
-  }, [num]);
+
 
   useEffect(() => {
-    if (Data.videos && Data.videos.length > 0) {
+    if (Data?.videos && Data?.videos.length > 0) {
       setPlayingVideo(Data.videos[0]);
     }
   }, [Data]);
@@ -74,9 +75,6 @@ function Index() {
     setIsVideosBar(!IsVideosBar);
   };
 
-
-
-
   useEffect(() => {
     const isWindows = navigator.platform.includes("Win");
 
@@ -93,32 +91,19 @@ function Index() {
     }
   }, [SideBar]);
 
-  useEffect(()=>{
-    if(Data.videos && Data.sections && user && isAuth ){
-      setLoading(false)
-    }
-  },[Data,user,isAuth])
-  useEffect(()=>{
-    setTimeout(()=>{
-      if(!loading){
-        setLoading(false)
-      }
-    },60000)
-  },[])
 
-  const isVip = Data.users?.find((use: any) => use._id === user?.id).plan?true:false;
 
- 
-
- 
+  const isVip = Data?.users.find((use: any) => use._id === user?.id).plan
+    ? true
+    : false;
 
   return (
     <div
       className={`course-lighter-bg-color max-[1000px]:h-full ${
-        Data.videos && Data.sections ? "" : "h-screen"
+        getSuccess ? "" : "h-screen"
       }`}
     >
-      {!loading? (
+      {!getLoading ? (
         <>
           <NavBar
             showSignIn={() => {}}
@@ -138,7 +123,7 @@ function Index() {
                 showVideosBar,
                 setPlayingVideo,
                 showSideBar,
-                isVip
+                isVip,
               ]}
             >
               <VideosBar IsVideosBar={IsVideosBar} />
@@ -146,13 +131,13 @@ function Index() {
             </FakeVideoContext.Provider>
           </div>
         </>
-      ) : loading? (
+      ) : getLoading ? (
         <div className="grid place-items-center h-full ">
           <LoadingScreen />
         </div>
-      ) : !loading && !isAuth?(
-        <UnauthorizedPage/>
-      ):null}
+      ) : !getLoading && !isAuth ? (
+        <UnauthorizedPage />
+      ) : null}
     </div>
   );
 }
