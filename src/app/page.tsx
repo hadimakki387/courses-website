@@ -91,8 +91,6 @@ export default function Home() {
     });
   };
 
-
-
   const getSignUpData = async (e: any) => {
     setSignUpData(e);
     await CreateUser(e);

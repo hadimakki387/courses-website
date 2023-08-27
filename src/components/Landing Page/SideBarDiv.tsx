@@ -40,20 +40,12 @@ function SideBarDiv({
     },
   ];
 
-  const handleDeleteCookies = () => {
-    const cookies = document.cookie.split(';');
-    
-    for (const cookie of cookies) {
-      const [name, _] = cookie.split('=');
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    }
-
-  };
-
-  const handleClick = (index: any) => {
+ 
+console.log("cookies are ",document.cookie)
+  const handleClick = async(index: any) => {
     setSideBar(false);
     if (index.text3) {
-      handleDeleteCookies()
+      await signOut({redirect:false})
     }
   };
   const session = useSession();
