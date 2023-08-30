@@ -44,6 +44,8 @@ function Video() {
     },
   };
 
+  console.log(PlayingVideo)
+
   return (
     <>
       <div
@@ -69,12 +71,13 @@ function Video() {
         </div>
       </div>
 
-      <YouTube
+      {!PlayingVideo.type?<YouTube
         videoId={PlayingVideo.url}
         opts={opts}
         onEnd={handleVideoEnd}
         iframeClassName={"video-container"}
-      />
+      />:<iframe src={`https://www.dailymotion.com/embed/video/${PlayingVideo.url}`} className="video-container"  allowFullScreen></iframe>
+}
     </>
   );
 }

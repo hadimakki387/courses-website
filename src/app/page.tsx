@@ -22,7 +22,7 @@ export default function Home() {
 
   async function CreateUser(param: any) {
     try {
-      const res = await fetch("https://mern-course.netlify.app/api/landingPage", {
+      const res = await fetch("https://codestream.netlify.app/api/landingPage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +138,7 @@ console.log(flash)
         <div className="mx-[13%] max-[990px]:mx-[5%] max-[500px]:mx-2">
           <Header />
           <WebsiteCourses />
-          <Plans />
+          <Plans setSignIn={setSignIn}/>
         </div>
         <div className="mt-12">
           <Footer />

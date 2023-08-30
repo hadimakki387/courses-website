@@ -1,6 +1,7 @@
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import React, { useContext } from "react";
 
 function TitleOfSideBar() {
@@ -26,7 +27,7 @@ function TitleOfSideBar() {
   return (
     <div className="flex justify-between">
       <div className="flex items-center gap-4">
-        <div>LOGO</div>
+        <div><Image src={"/logo-img.png"} width={50} height={"50"} alt="logo"/></div>
         <div className="flex flex-col">
           <div>MERN stack from scratch</div>
           <div className="flex text-xs gap-4">

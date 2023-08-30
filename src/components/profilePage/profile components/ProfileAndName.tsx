@@ -21,9 +21,6 @@ function ProfileAndName({
   const sub = data.plans?.find((plan: any) => {
     return plan._id === user.plan;
   });
-  console.log("the plans are " , data.plans)
-  console.log("the user is ",user)
-  console.log( "the sub is" , sub)
 
   const showSubInfo = () => {
     ShowEditInfo();

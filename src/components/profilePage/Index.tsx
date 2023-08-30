@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import NavBar from "../NavBar";
 import Footer from "../Landing Page/footer/Footer";
@@ -14,6 +15,7 @@ import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
 import { useGetProfileDataQuery, useProfileQueryMutation, useSendPaymentMutation } from "@/api/apiSlice";
+
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
@@ -37,6 +39,16 @@ function Index() {
       profileQuery({ id: authUser?.id, toDo: "getUser" })
     }
   }, [authUser]);
+  
+
+  const params  = useSearchParams()
+  const param = params.get("selectPlan")
+  useEffect(()=>{
+    if(param==="true"){
+      setIsEditInfo(true)
+    }
+  },[])
+
 
   const showSideBar = () => {
     setSideBar(!SideBar);
@@ -129,32 +141,32 @@ function Index() {
               ) : null}
 
               {/* This is the activity section */}
-              {data.videos ? (
-                <div className="w-full flex flex-col gap-2">
-                  <h2 className="text-2xl text-center leading-loose ">
-                    My Activity
-                  </h2>
-
-                  {data.videos.map((video: any, index: any) => {
-                    
-                    const watchedVideoActivities = PostData.watchedVideos.map(
-                      (item:any, index:any) => {
-    
-                        if (video._id === item) {
-                          
-                          return (
-                            <ProfileActivity title={video.title} key={index} />
-                          );
+              
+              <h2 className="text-2xl text-center leading-loose mb-2">
+                      My Activity
+                    </h2>
+                {data.videos ? (
+                  <div className="w-full flex flex-col gap-2 overflow-y-scroll h-[50vh] ">
+                    {data.videos.map((video: any, index: any) => {
+                
+                      const watchedVideoActivities = PostData.watchedVideos.map(
+                        (item:any, index:any) => {
+                          if (video._id === item) {
+                
+                            return (
+                              <ProfileActivity title={video.title} key={index} />
+                            );
+                          }
+                          return null;
                         }
-                        return null;
-                      }
-                    );
-                    return watchedVideoActivities; // Return the array of ProfileActivity components
-                  })}
-                </div>
-              ) : (
-                <div>loading...</div>
-              )}
+                      );
+                      return watchedVideoActivities; // Return the array of ProfileActivity components
+                    })}
+                  </div>
+                ) : (
+                  <div>loading...</div>
+                )}
+              
 
               {/* This is the activity section */}
             </ProfileContext.Provider>

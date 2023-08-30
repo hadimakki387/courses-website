@@ -103,7 +103,7 @@ function Index() {
         getSuccess ? "" : "h-screen"
       }`}
     >
-      {!getLoading ? (
+      {!getLoading && Data? (
         <>
         <div className="fixed z-30 w-full course-lighter-bg-color">
           <NavBar

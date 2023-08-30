@@ -9,7 +9,8 @@ const videoSchema = new Schema({
   },
   sectionID: String,
   videoId: Number,
-  isFree:{type:Boolean , default:false}
+  isFree:{type:Boolean , default:false},
+  type:String,
 });
 
 const Video = models.Video || model("Video", videoSchema);

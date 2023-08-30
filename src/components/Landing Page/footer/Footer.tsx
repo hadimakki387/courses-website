@@ -70,7 +70,7 @@ function Footer() {
                BRAND
               </div>
               <p className="mx-auto mb-8 max-w-sm font-medium leading-loose text-white lg:mx-0 lg:max-w-full">
-                Nine out of ten doctors recommend Brand over competing
+                Nine out of ten doctors recommend Code Stream over competing
                 brands. Come inside, see for yourself, and massively level up
                 your development skills in the process.
               </p>
