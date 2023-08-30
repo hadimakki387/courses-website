@@ -80,7 +80,7 @@ function SubscriptionFrom() {
               <div>Want to upgrade your subscription?</div>
               <div className="flex flex-col gap-4">
                 <div>
-                  <div>choose a plan</div>
+                  <div className="mb-1">choose a plan</div>
                   <CheckBoxes setPlan={setPlan} Plan={plan} />
                 </div>
 

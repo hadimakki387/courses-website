@@ -16,7 +16,7 @@ function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
 
   return (
     <div
-      className={`flex flex-col gap-4 w-[20vw]  text-white p-4 ${
+      className={`flex flex-col gap-4 w-[23vw]  text-white p-4 ${
         SideBar ? "brightness-50 transition-all duration-300" : ""
       } max-[1300px]:absolute z-10 course-page-bg transition-all duration-300  ${
         !IsVideosBar ? "max-[1300px]:-translate-x-full " : ""

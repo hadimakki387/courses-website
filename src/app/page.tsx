@@ -22,7 +22,7 @@ export default function Home() {
 
   async function CreateUser(param: any) {
     try {
-      const res = await fetch("https://codestream.netlify.app/api/landingPage", {
+      const res = await fetch("http://localhost:3000/api/landingPage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
