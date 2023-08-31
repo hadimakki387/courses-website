@@ -27,7 +27,7 @@ function Plans({ setSignIn }: any) {
           setSignIn={setSignIn}
         />
         <PlanCard
-          price={17}
+          price={20}
           title="3 Months Plan"
           description="Be in the know. Fetch an endless stream of input with our 3 months plan."
           img="sub-monthly"
