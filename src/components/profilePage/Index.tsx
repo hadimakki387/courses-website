@@ -14,41 +14,51 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
-import { useGetProfileDataQuery, useProfileQueryMutation, useSendPaymentMutation } from "@/api/apiSlice";
-
+import {
+  useGetProfileDataQuery,
+  useProfileQueryMutation,
+  useSendPaymentMutation,
+} from "@/api/apiSlice";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo, setIsEditInfo] = useState(false);
-  
+
   const [subRes, setSubRes]: any = useState();
   const session = useSession();
 
   const isAuth = session.status === "authenticated" ? true : false;
   const authUser = session.data?.user;
-  let flash:any
-  const {data,isSuccess,isLoading,isError,error,refetch} = useGetProfileDataQuery({})
-  const [profileQuery,{data:PostData,isSuccess:PostSuccess,error:PostError}] = useProfileQueryMutation()
-  const [sendPayment,{data:PaymentRes,isSuccess:paymentSucces,error:PaymentError}] = useSendPaymentMutation()
-
-  
-
+  let flash: any;
+  const { data, isSuccess, isLoading, isError, error, refetch } =
+    useGetProfileDataQuery({});
+  const [
+    profileQuery,
+    {
+      data: PostData,
+      isSuccess: PostSuccess,
+      error: PostError,
+      isLoading: PostLoading,
+    },
+  ] = useProfileQueryMutation();
+  const [
+    sendPayment,
+    { data: PaymentRes, isSuccess: paymentSucces, error: PaymentError },
+  ] = useSendPaymentMutation();
 
   useEffect(() => {
     if (authUser) {
-      profileQuery({ id: authUser?.id, toDo: "getUser" })
+      profileQuery({ id: authUser?.id, toDo: "getUser" });
     }
   }, [authUser]);
-  
 
-  const params  = useSearchParams()
-  const param = params.get("selectPlan")
-  useEffect(()=>{
-    if(param==="true"){
-      setIsEditInfo(true)
+  const params = useSearchParams();
+  const param = params.get("selectPlan");
+  useEffect(() => {
+    if (param === "true") {
+      setIsEditInfo(true);
     }
-  },[])
-
+  }, []);
 
   const showSideBar = () => {
     setSideBar(!SideBar);
@@ -63,12 +73,12 @@ function Index() {
       payerID: PostData._id,
     };
 
-    sendPayment({ data: data, toDo: "sendPayment" })
+    sendPayment({ data: data, toDo: "sendPayment" });
   };
 
-  useEffect(()=>{
-    setSubRes(PaymentRes)
-  },[PaymentRes])
+  useEffect(() => {
+    setSubRes(PaymentRes);
+  }, [PaymentRes]);
 
   useEffect(() => {
     if (subRes === "saved") {
@@ -95,7 +105,8 @@ function Index() {
       }
     }
   }, [SideBar]);
- 
+
+
   return (
     <div>
       {isSuccess && isAuth && PostData ? (
@@ -117,7 +128,14 @@ function Index() {
 
           <div className=" w-[60vw] max-[1350px]:w-[85vw] m-auto mb-4">
             <ProfileContext.Provider
-              value={[ShowEditInfo, editProfile, planSettings, data, PostData ,PaymentError]}
+              value={[
+                ShowEditInfo,
+                editProfile,
+                planSettings,
+                data,
+                PostData,
+                PaymentError,
+              ]}
             >
               <ProfileHeader />
 
@@ -141,32 +159,32 @@ function Index() {
               ) : null}
 
               {/* This is the activity section */}
-              
+
               <h2 className="text-2xl text-center leading-loose mb-2">
-                      My Activity
-                    </h2>
-                {data.videos ? (
-                  <div className="w-full flex flex-col gap-2 overflow-y-scroll h-[50vh] ">
-                    {data.videos.map((video: any, index: any) => {
-                
-                      const watchedVideoActivities = PostData.watchedVideos.map(
-                        (item:any, index:any) => {
-                          if (video._id === item) {
-                
-                            return (
-                              <ProfileActivity title={video.title} key={index} />
-                            );
-                          }
-                          return null;
+                My Activity
+              </h2>
+              {data.videos ? (
+                <div className={`w-full flex flex-col gap-2 ${PostData.watchedVideos.length>10&&"overflow-y-scroll h-[50vh]"}`} >
+                  {data.videos.map((video: any, index: any) => {
+                    const watchedVideoActivities = PostData.watchedVideos.map(
+                      (item: any, index: any) => {
+                        if (video._id === item) {
+                          return (
+                            <ProfileActivity title={video.title} key={index} />
+                          );
                         }
-                      );
-                      return watchedVideoActivities; // Return the array of ProfileActivity components
-                    })}
-                  </div>
-                ) : (
-                  <div>loading...</div>
-                )}
-              
+                        return null;
+                      }
+                    );
+                    return watchedVideoActivities; // Return the array of ProfileActivity components
+                  })}
+                </div>
+              ) : PostData.watchedVideos.length === 0 ||
+                !PostData.watchedVideos ? (
+                <div>Didint watch any video yet</div>
+              ) : PostLoading ? (
+                <div>loading...</div>
+              ) : null}
 
               {/* This is the activity section */}
             </ProfileContext.Provider>
@@ -175,13 +193,13 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ) : isLoading && !isAuth && !data? (
+      ) : isLoading && !isAuth && !data ? (
         <div className="w-screen h-screen grid place-items-center">
           <LoadingScreen />
         </div>
-      ) : !isError && !isAuth && !PostData?.email ?(
+      ) : !isError && !isAuth && !PostData?.email ? (
         <UnauthorizedPage />
-      ):null}
+      ) : null}
     </div>
   );
 }

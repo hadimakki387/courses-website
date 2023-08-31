@@ -42,18 +42,6 @@ function Index() {
     useMernQueryMutation();
 
   useEffect(() => {
-    if (PlayingVideo._id && user) {
-      mernQuery({
-        PlayingVideo: PlayingVideo,
-        user: user?.id,
-        toDo: "AddWatchedVideos",
-      });
-    }
-  }, [PlayingVideo, user]);
-
-
-
-  useEffect(() => {
     if (Data?.videos && Data?.videos.length > 0) {
       setPlayingVideo(Data.videos[0]);
     }
@@ -91,11 +79,22 @@ function Index() {
     }
   }, [SideBar]);
 
-
-
   const isVip = Data?.users.find((use: any) => use._id === user?.id).plan
     ? true
     : false;
+
+  useEffect(() => {
+    if (PlayingVideo._id && user  ) {
+      if(PlayingVideo.isFree || isVip){
+        mernQuery({
+        PlayingVideo: PlayingVideo,
+        user: user?.id,
+        toDo: "AddWatchedVideos",
+      });
+      }
+      
+    }
+  }, [PlayingVideo, user]);
 
   return (
     <div
@@ -103,16 +102,16 @@ function Index() {
         getSuccess ? "" : "h-screen"
       }`}
     >
-      {!getLoading && Data? (
+      {!getLoading && Data ? (
         <>
-        <div className="fixed z-30 w-full course-lighter-bg-color">
-          <NavBar
-            showSignIn={() => {}}
-            showSignUp={() => {}}
-            showSideBar={showSideBar}
-          />
-        </div>
-          
+          <div className="fixed z-30 w-full course-lighter-bg-color">
+            <NavBar
+              showSignIn={() => {}}
+              showSignUp={() => {}}
+              showSideBar={showSideBar}
+            />
+          </div>
+
           <div className="flex h-full pt-16 ">
             <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
 
