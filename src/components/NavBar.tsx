@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import LoadingSpinner from "./loading/loadingSpinner/LoadingSpinner";
 
 function NavBar({
   showSignIn,
@@ -13,8 +14,21 @@ function NavBar({
   showSideBar: any;
 }) {
   const session = useSession();
-  const isAuth = session.status === "authenticated" ? true : false;
+  const [isAuth,setIsAuth] = useState(false)
+  const [loading, setLoading] = useState(true)
+  useEffect(()=>{
+    session.status === "authenticated" ? true : session.status === "unauthenticated"?false:'loading'
+    if(session.status === "authenticated"){
+      setIsAuth(true)
+      setLoading(false)
+    }else if(session.status === "unauthenticated"){
+      setIsAuth(false)
+      setLoading(false)
+    }
+  },[session])
+  
   console.log(isAuth)
+  console.log(loading)
   return (
     <div className="flex justify-between items-center z-30  py-3 m-auto w-[98%] ">
       <Link href={"/"} className="text-white">
@@ -36,7 +50,7 @@ function NavBar({
       )}
 
       <div className="text-white flex justify-center items-center gap-4 ">
-        {isAuth ? (
+        {isAuth && !loading? (
           <Image
             width={50}
             height={50}
@@ -45,7 +59,7 @@ function NavBar({
             className="rounded-[17px] w-11 hover:cursor-pointer"
             onClick={showSideBar}
           />
-        ) : (
+        ) :!isAuth && !loading? (
           <>
             <button className="hover:underline" onClick={showSignIn}>
               Sign In
@@ -61,7 +75,7 @@ function NavBar({
               </span>
             </button>
           </>
-        )}
+        ):loading && !isAuth &&<div><LoadingSpinner/></div>}
       </div>
     </div>
   );

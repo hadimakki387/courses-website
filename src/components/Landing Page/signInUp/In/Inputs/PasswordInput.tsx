@@ -10,6 +10,7 @@ function PasswordInput({
 }) {
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [showPass,setShowPass] = useState(false)
 
   const validatePassword = (input: string) => {
     // Customize your password validation logic here
@@ -25,6 +26,9 @@ function PasswordInput({
     handleInputChange(e); // Pass the event to the parent handler if needed
     setPasswordValid(validatePassword(newPassword))
   };
+  const ShowPass =() =>{
+      setShowPass(!showPass)
+  }
 
   return (
     <>
@@ -36,7 +40,7 @@ function PasswordInput({
       </label>
       <div className="relative flex items-center border-b border-panel-700">
         <input
-          type="password"
+          type={!showPass?"password":"text"}
           name="UserPassword"
           className="input is-minimal text-sm text-white"
           autoComplete="current-password"
@@ -48,6 +52,7 @@ function PasswordInput({
           type="button"
           title="Toggle private mode"
           className="ml-4 pr-8 text-2xs font-bold text-grey"
+          onClick={ShowPass}
         >
           Show
         </button>

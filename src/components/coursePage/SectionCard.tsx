@@ -18,11 +18,13 @@ function SectionCard({
   sectionID,
   video,
   sectionNum,
+  user
 }: {
   sectionName: any;
   sectionNum: any;
   sectionID: any;
   video: any;
+  user:any
 }) {
   const [EP, setEP] = useState(false);
   const showEPs = () => {
@@ -50,12 +52,7 @@ function SectionCard({
 
   const authUser = session.data?.user;
 
-  const [mernQuery, { data: user, error, isLoading, isSuccess }] =
-    useMernQueryMutation();
 
-  useEffect(() => {
-    mernQuery({ id: authUser?.id, toDo: "getUser" });
-  }, []);
 
   const checkIfFreeAndChoose = (id: any, isFree: any) => {
     if (user.plan || isFree) {
@@ -65,7 +62,7 @@ function SectionCard({
 
   return (
     <div className="flex flex-col gap-2  ">
-      {isSuccess ? (
+      
         <>
           <div
             onClick={showEPs}
@@ -139,9 +136,7 @@ function SectionCard({
               }
             })}
         </>
-      ) : (
-        <div>loading...</div>
-      )}
+  
     </div>
   );
 }

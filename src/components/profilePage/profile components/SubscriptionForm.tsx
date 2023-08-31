@@ -93,9 +93,6 @@ function SubscriptionFrom() {
                       <ul>
                         <li>• For card payments, call us at (+961 78886897)</li>
                         <li>
-                          • If you prefer Western Union, that&apos;s great too!
-                        </li>
-                        <li>
                           • If you&apos;re into cryptocurrencies, give us a
                           shout for details.
                         </li>
