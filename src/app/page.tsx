@@ -44,7 +44,7 @@ export default function Home() {
       console.error("Fetch error:", error);
     }
   }
-  
+
   const router = useRouter();
 
   const showSignIn = () => {
@@ -85,29 +85,37 @@ export default function Home() {
   const getSignInData = async (e: any) => {
     setSignInData(e);
 
-    await signIn("credentials", {
-      signInEmail: e.signInEmail,
-      UserPassword: e.UserPassword,
-      redirect:false
-    });
-    router.push("MERN-course");
+    try {
+      await signIn("credentials", {
+        signInEmail: e.signInEmail,
+        UserPassword: e.UserPassword,
+        redirect: false,
+      });
+      router.push("/MERN-course");
+    } catch (error) {
+      console.error("Sign-in failed:", error);
+    }
   };
 
   const getSignUpData = async (e: any) => {
     setSignUpData(e);
     await CreateUser(e);
     if (userExist === false) {
-      await signIn("credentials", {
-        signInEmail: e.signUpEmail,
-        UserPassword: e.UserPassword,
-        redirect:false
-      });
-      router.push("/MERN-course");
+      try {
+        await signIn("credentials", {
+          signInEmail: e.signUpEmail,
+          UserPassword: e.UserPassword,
+          redirect: false,
+        });
+        router.push("/MERN-course");
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       setFlash("user Exist");
     }
   };
-  console.log(router)
+
 
   return (
     <>
