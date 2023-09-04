@@ -9,7 +9,7 @@ import Plans from "@/components/Landing Page/plans/Plans";
 import NavBar from "@/components/NavBar";
 import { useState, useEffect, HtmlHTMLAttributes } from "react";
 import { signIn, useSession } from "next-auth/react";
-
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [signIn1, setSignIn] = useState(false);
@@ -22,13 +22,16 @@ export default function Home() {
 
   async function CreateUser(param: any) {
     try {
-      const res = await fetch("https://codestream.netlify.app/api/landingPage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(param),
-      });
+      const res = await fetch(
+        "https://codestream.netlify.app/api/landingPage",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(param),
+        }
+      );
 
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
@@ -41,7 +44,8 @@ export default function Home() {
       console.error("Fetch error:", error);
     }
   }
-
+  
+  const router = useRouter();
 
   const showSignIn = () => {
     if (signUp) {
@@ -84,7 +88,9 @@ export default function Home() {
     await signIn("credentials", {
       signInEmail: e.signInEmail,
       UserPassword: e.UserPassword,
+      redirect:false
     });
+    router.push("MERN-course");
   };
 
   const getSignUpData = async (e: any) => {
@@ -94,17 +100,14 @@ export default function Home() {
       await signIn("credentials", {
         signInEmail: e.signUpEmail,
         UserPassword: e.UserPassword,
+        redirect:false
       });
+      router.push("/MERN-course");
     } else {
-      setFlash("user Exist")
+      setFlash("user Exist");
     }
   };
-
-console.log(flash)
-
-
-
- 
+  console.log(router)
 
   return (
     <>
@@ -116,7 +119,7 @@ console.log(flash)
         showSignUp={showSignUp}
         getSignInData={getSignInData}
         getSignUpData={getSignUpData}
-        flash = {flash}
+        flash={flash}
       />
 
       <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />
@@ -128,7 +131,6 @@ console.log(flash)
           signIn1 || signUp || SideBar ? "brightness-50 " : ""
         } transition-all duration-300`}
       >
-        
         <NavBar
           showSignIn={showSignIn}
           showSignUp={showSignUp}
@@ -138,7 +140,7 @@ console.log(flash)
         <div className="mx-[13%] max-[990px]:mx-[5%] max-[500px]:mx-2">
           <Header />
           <WebsiteCourses />
-          <Plans setSignIn={setSignIn}/>
+          <Plans setSignIn={setSignIn} />
         </div>
         <div className="mt-12">
           <Footer />

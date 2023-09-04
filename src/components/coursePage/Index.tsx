@@ -96,6 +96,10 @@ function Index() {
     }
   }, [PlayingVideo, user]);
 
+  console.log(getLoading)
+  console.log(Data)
+  console.log(isAuth)
+
   return (
     <div
       className={`course-lighter-bg-color max-[1000px]:h-full ${
