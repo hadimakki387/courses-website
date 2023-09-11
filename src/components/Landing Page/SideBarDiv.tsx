@@ -40,17 +40,13 @@ function SideBarDiv({
     },
   ];
 
- 
-
-  const handleClick = async(index: any) => {
+  const handleClick = async (index: any) => {
     setSideBar(false);
     if (index.text3) {
-      await signOut({redirect:false})
+      await signOut();
     }
   };
   const session = useSession();
-
-
 
   return (
     <div
