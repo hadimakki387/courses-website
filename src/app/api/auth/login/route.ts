@@ -1,10 +1,10 @@
 import User from "@/Models/UserSchema";
 import MongoConnection from "@/utils/MongoConnection";
-import * as bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { UserInterface } from "@/interfaces";
 import moment from "moment"
+import { compare } from "bcryptjs";
 
 export async function POST(req: Request, res: Response) {
   MongoConnection();
@@ -14,7 +14,7 @@ export async function POST(req: Request, res: Response) {
     email: body.email,
   });
 
-  if (user && (await bcrypt.compare(body.password, user.password))) {
+  if (user && (await compare(body.password, user.password))) {
 
     const token = jwt.sign(
       { email: user.email, id: user.id, name: user.name },
