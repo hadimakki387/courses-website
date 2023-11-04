@@ -4,32 +4,54 @@ import CloseSvg from "../In/SVGs/CloseSvg";
 import Email from "../In/Inputs/Email";
 import PasswordInput from "../In/Inputs/PasswordInput";
 import NameInput from "./NameInput";
+import { useSignUpMutation } from "@/api/apiSlice";
+import { generateToast, updateToast } from "@/utils/globalFunctions/global-functions";
+import { ToastType } from "@/constants";
 
 function SignUp({
   showSignUp,
   showSignIn,
-  getSignUpData,
-  flash
+
+  
 }: {
   showSignUp: any;
-  showSignIn:any
-  getSignUpData: any;
-  flash:any
+  showSignIn: any;
+
+  
 }) {
   const [signInData, setSignInData] = useState({});
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
-  const [nameValid,setNameValid] = useState(false)
-
+  const [nameValid, setNameValid] = useState(false);
+  const [signUp, { data }] = useSignUpMutation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (emailValid && passwordValid && nameValid) {
-      console.log("fetch sent")
-      getSignUpData(signInData);
-      console.log(signInData);
+      const id = generateToast({
+        message:"Creating You Account",
+        isLoading:true,
+        toastType:ToastType.default
+      })
+      signUp(signInData)
+        .unwrap()
+        .then(() => {
+          updateToast(id,"Your Account Has Been Created",{
+            isLoading:false,
+            toastType:ToastType.success,
+            duration:2000
+          })
+          window.location.reload();
+        })
+        .catch((err) => {
+          updateToast(id,`${err.data.message}`,{
+            isLoading:false,
+            toastType:ToastType.error,
+            duration:2000
+          })
+        });
     }
-  console.log("not sent ")
+    console.log("not sent ");
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +98,7 @@ function SignUp({
                       </div>
                       <div className="control" data-js="email_field">
                         <Email
-                          name="signUpEmail"
+                          name="email"
                           handleInputChange={handleInputChange}
                           setEmailValid={setEmailValid}
                         />
@@ -87,7 +109,7 @@ function SignUp({
                           handleInputChange={handleInputChange}
                         />
                       </div>
-                      {flash==="user Exist"&&<div className="text-sm text-red-600">user exists</div>}
+                      
                       <div className="mt-10 text-center">
                         <button
                           className={`btn flex-center btn-blue w-full ${
@@ -102,7 +124,10 @@ function SignUp({
                           </span>
                         </button>
 
-                        <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline" onClick={showSignIn}>
+                        <button
+                          className="mx-auto mt-4 block text-sm text-grey-600 hover:underline"
+                          onClick={showSignIn}
+                        >
                           Login
                         </button>
                       </div>

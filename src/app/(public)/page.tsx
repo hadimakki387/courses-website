@@ -8,44 +8,14 @@ import Plans from "@/components/Landing Page/plans/Plans";
 
 import NavBar from "@/components/NavBar";
 import { useState, useEffect, HtmlHTMLAttributes } from "react";
-import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { generateToast } from "@/utils/globalFunctions/global-functions";
 
 export default function Home() {
   const [signIn1, setSignIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [SideBar, setSideBar] = useState(false);
-  const [signInData, setSignInData] = useState({});
-  const [signUpData, setSignUpData] = useState({});
-  let userExist: any;
-  const [flash, setFlash] = useState("");
 
-  async function CreateUser(param: any) {
-    try {
-      const res = await fetch(
-        "https://codestream.netlify.app/api/landingPage",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(param),
-        }
-      );
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      userExist = data;
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  }
-
-  const router = useRouter();
 
   const showSignIn = () => {
     if (signUp) {
@@ -82,41 +52,10 @@ export default function Home() {
     }
   }, [signIn1, signUp, SideBar]);
 
-  const getSignInData = async (e: any) => {
-    setSignInData(e);
-
-    try {
-      await signIn("credentials", {
-        signInEmail: e.signInEmail,
-        UserPassword: e.UserPassword,
-        redirect: false,
-      });
-      router.push("/MERN-course");
-    } catch (error) {
-      console.error("Sign-in failed:", error);
-    }
-  };
-
-  const getSignUpData = async (e: any) => {
-    setSignUpData(e);
-    await CreateUser(e);
-    if (userExist === false) {
-      try {
-        await signIn("credentials", {
-          signInEmail: e.signUpEmail,
-          UserPassword: e.UserPassword,
-          redirect: false,
-        });
-        router.push("/MERN-course");
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      setFlash("user Exist");
-    }
-  };
 
 
+
+ 
   return (
     <>
       {/* the signIn/Up windows */}
@@ -125,9 +64,8 @@ export default function Home() {
         signUp={signUp}
         showSignIn={showSignIn}
         showSignUp={showSignUp}
-        getSignInData={getSignInData}
-        getSignUpData={getSignUpData}
-        flash={flash}
+
+      
       />
 
       <SideBarDiv setSideBar={setSideBar} SideBar={SideBar} />

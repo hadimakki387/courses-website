@@ -11,7 +11,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 function SubscriptionFrom() {
   const [ShowEditInfo, editProfile, planSettings, data, user, flash] =
     useContext(ProfileContext);
-  console.log(" the flash in the sub form is ", flash);
+
   const [plan, setPlan] = useState("");
   const [img, setImg]: any = useState({
     imgURL: "",
@@ -143,11 +143,7 @@ function SubscriptionFrom() {
                     </p>
                   )}
                 </div>
-                {flash?.data === "Incorrect password" && (
-                  <div className="text-sm text-red-600 relative bottom-9">
-                    Incorrect password
-                  </div>
-                )}
+                
                 <div className="flex w-full justify-start gap-4">
                   <button
                     onClick={sendPlanData}

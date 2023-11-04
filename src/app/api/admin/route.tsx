@@ -52,7 +52,7 @@ export async function POST(req: any, res: any) {
 
   const videos = await Video.find();
   const message = await req.json();
-  console.log(message);
+
 
   if (message.duration) {
     return AddVideo(message, videos);

@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+
 import LoadingSpinner from "./loading/loadingSpinner/LoadingSpinner";
+import Cookies from "js-cookie";
+import { useGetUserQuery } from "@/api/apiSlice";
 
 function NavBar({
   showSignIn,
@@ -13,22 +15,17 @@ function NavBar({
   showSignUp: any;
   showSideBar: any;
 }) {
-  const session = useSession();
-  const [isAuth,setIsAuth] = useState(false)
-  const [loading, setLoading] = useState(true)
+
+  const userId = Cookies.get("codestreamUserId");
+  const { data: user, isLoading,refetch } = useGetUserQuery({  });
   useEffect(()=>{
-    session.status === "authenticated" ? true : session.status === "unauthenticated"?false:'loading'
-    if(session.status === "authenticated"){
-      setIsAuth(true)
-      setLoading(false)
-    }else if(session.status === "unauthenticated"){
-      setIsAuth(false)
-      setLoading(false)
+    if(user){
+      refetch()
     }
-  },[session])
-  
-  console.log(isAuth)
-  console.log(loading)
+  },[user,isLoading])
+
+
+
   return (
     <div className="flex justify-between items-center z-30  py-3 m-auto w-[98%] ">
       <Link href={"/"} className="text-white">
@@ -40,7 +37,7 @@ function NavBar({
           className="w-44 max-[460px]:w-32"
         />
       </Link>
-      {isAuth && (
+      {user && !isLoading && window.location.pathname !== "/MERN-course" &&(
         <Link
           href={"/MERN-course"}
           className="text-white text-lg bg-[#203352] px-6 py-2 rounded-md hover:text-sky-500 hover:bg-[#203352] transition-all duration-300 max-[800px]:hidden"
@@ -50,7 +47,7 @@ function NavBar({
       )}
 
       <div className="text-white flex justify-center items-center gap-4 ">
-        {isAuth && !loading? (
+        {user && !isLoading ? (
           <Image
             width={50}
             height={50}
@@ -59,7 +56,7 @@ function NavBar({
             className="rounded-[17px] w-11 hover:cursor-pointer"
             onClick={showSideBar}
           />
-        ) :!isAuth && !loading? (
+        ) : !user && !isLoading ? (
           <>
             <button className="hover:underline" onClick={showSignIn}>
               Sign In
@@ -75,7 +72,14 @@ function NavBar({
               </span>
             </button>
           </>
-        ):loading && !isAuth &&<div><LoadingSpinner/></div>}
+        ) : (
+          isLoading &&
+          !user && (
+            <div>
+              <LoadingSpinner />
+            </div>
+          )
+        )}
       </div>
     </div>
   );

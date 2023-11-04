@@ -7,13 +7,16 @@ import ContentBar from "./ContentBar";
 import SideBarDiv from "../Landing Page/SideBarDiv";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
 import LoadingScreen from "../loading/LoadingScreen";
-import { useSession } from "next-auth/react";
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
 import {
   useAdminQueryMutation,
+
   useGetAdminDataQuery,
+
+  useGetUserQuery,
   useMernQueryMutation,
 } from "@/api/apiSlice";
+import Cookies from "js-cookie";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
@@ -27,11 +30,17 @@ function Index() {
     __v: { $numberInt: "0" },
   });
   const [IsVideosBar, setIsVideosBar] = useState(false);
-  const session = useSession();
-  const user = session.data?.user;
-  const isAuth = session.status === "authenticated" ? true : false;
+ 
+
+  const {data:user,error:userError} = useGetUserQuery({})
+
+ 
+
+
+  
+  const isAuth = true 
   const {
-    data: Data,
+    data: adminData,
     isLoading: getLoading,
     isSuccess: getSuccess,
     isError: getIsError,
@@ -42,13 +51,13 @@ function Index() {
     useMernQueryMutation();
 
   useEffect(() => {
-    if (Data?.videos && Data?.videos.length > 0) {
-      setPlayingVideo(Data.videos[0]);
+    if (adminData?.videos && adminData?.videos.length > 0) {
+      setPlayingVideo(adminData.videos[0]);
     }
-  }, [Data]);
+  }, [adminData]);
 
   function chosenVideo(e: any) {
-    const clickedVideo = Data.videos.find((video: any) => video.videoId === e);
+    const clickedVideo = adminData.videos.find((video: any) => video.videoId === e);
     if (clickedVideo) {
       setPlayingVideo(clickedVideo);
     }
@@ -79,26 +88,26 @@ function Index() {
     }
   }, [SideBar]);
 
-  const isVip = Data?.users.find((use: any) => use._id === user?.id).plan
+  const isVip = adminData?.users.find((use: any) => use._id === user?.id)?.plan
     ? true
     : false;
+   
 
   useEffect(() => {
+    
     if (PlayingVideo._id && user  ) {
+      
       if(PlayingVideo.isFree || isVip){
         mernQuery({
         PlayingVideo: PlayingVideo,
-        user: user?.id,
-        toDo: "AddWatchedVideos",
+        user: user?._id,
       });
       }
       
     }
   }, [PlayingVideo, user]);
 
-  console.log(getLoading)
-  console.log(Data)
-  console.log(isAuth)
+
 
   return (
     <div
@@ -106,7 +115,7 @@ function Index() {
         getSuccess ? "" : "h-screen"
       }`}
     >
-      {!getLoading && Data ? (
+      {!getLoading && adminData ? (
         <>
           <div className="fixed z-30 w-full course-lighter-bg-color">
             <NavBar
@@ -121,9 +130,9 @@ function Index() {
 
             <FakeVideoContext.Provider
               value={[
-                Data.videos,
+                adminData.videos,
                 PlayingVideo,
-                Data.sections,
+                adminData.sections,
                 chosenVideo,
                 SideBar,
                 showVideosBar,
@@ -141,8 +150,6 @@ function Index() {
         <div className="grid place-items-center h-full ">
           <LoadingScreen />
         </div>
-      ) : !getLoading && !isAuth ? (
-        <UnauthorizedPage />
       ) : null}
     </div>
   );

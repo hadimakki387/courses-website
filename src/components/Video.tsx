@@ -23,8 +23,6 @@ function Video() {
     setPlayingVideo(videos[nextIndex]);
   };
 
-
-
   const handleVideoEnd = () => {
     setShowNextVideoDialog(true);
   };
@@ -44,8 +42,6 @@ function Video() {
     },
   };
 
-  console.log(PlayingVideo)
-
   return (
     <>
       <div
@@ -55,7 +51,7 @@ function Video() {
       >
         <div>next Video?</div>
         <div className="flex justify-center item-center gap-8 text-xl max-[460px]:text-sm">
-        <button
+          <button
             onClick={handleNextVideoNo}
             className="course-lighter-bg-divs px-6 py-3 rounded-md "
           >
@@ -67,17 +63,24 @@ function Video() {
           >
             Next
           </button>
-
         </div>
       </div>
 
-      {!PlayingVideo.type?<YouTube
-        videoId={PlayingVideo.url}
-        opts={opts}
-        onEnd={handleVideoEnd}
-        iframeClassName={"video-container"}
-      />:<iframe src={`https://www.dailymotion.com/embed/video/${PlayingVideo.url}`} className="video-container"  allowFullScreen></iframe>
-}
+      {!PlayingVideo.type ? (
+        <YouTube
+          videoId={PlayingVideo.url}
+          opts={opts}
+          onEnd={handleVideoEnd}
+          iframeClassName={"video-container bg-black"}
+          loading="lazy"
+        />
+      ) : (
+        <iframe
+          src={`https://www.dailymotion.com/embed/video/${PlayingVideo.url}`}
+          className="video-container"
+          allowFullScreen
+        ></iframe>
+      )}
     </>
   );
 }

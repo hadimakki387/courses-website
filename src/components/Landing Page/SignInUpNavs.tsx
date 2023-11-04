@@ -1,23 +1,16 @@
-import React from "react";
 import SignIn from "./signInUp/In/SignIn";
 import SignUp from "./signInUp/Up/SignUp";
 
 function SignInUpNavs({
   showSignIn,
-  getSignInData,
   showSignUp,
-  getSignUpData,
   signUp,
   signIn,
-  flash
 }: {
   showSignIn: any;
-  getSignInData: any;
   showSignUp: any;
-  getSignUpData: any;
   signUp: boolean;
   signIn: boolean;
-  flash:string
 }) {
   return (
     <>
@@ -29,7 +22,7 @@ function SignInUpNavs({
             : "-translate-y-[-100%]"
         } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        <SignIn showSignIn={showSignIn} showSignUp={showSignUp} getSignInData={getSignInData} flash={flash}/>
+        <SignIn showSignIn={showSignIn} showSignUp={showSignUp} />
       </div>
 
       <div
@@ -39,7 +32,7 @@ function SignInUpNavs({
             : "-translate-y-[-100%]"
         } transition-all duration-300 max-[1050px]:w-[70vw] max-[650px]:w-[90vw] max-[500px]:bottom-0  max-[500px]:w-screen`}
       >
-        <SignUp showSignUp={showSignUp} showSignIn={showSignIn} getSignUpData={getSignUpData} flash={flash}/>
+        <SignUp showSignUp={showSignUp} showSignIn={showSignIn} />
       </div>
     </>
   );

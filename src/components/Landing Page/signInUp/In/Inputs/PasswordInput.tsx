@@ -41,7 +41,7 @@ function PasswordInput({
       <div className="relative flex items-center border-b border-panel-700">
         <input
           type={!showPass?"password":"text"}
-          name="UserPassword"
+          name="password"
           className="input is-minimal text-sm text-white"
           autoComplete="current-password"
           placeholder="Enter Password"

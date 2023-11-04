@@ -35,7 +35,7 @@ function VideoForm() {
       refetch()
     },1000)
   }, [num]);
-  console.log(num)
+
 
   const [video, setVideo] = useState({
     sectionID: "",

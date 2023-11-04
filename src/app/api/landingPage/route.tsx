@@ -13,8 +13,7 @@ export async function POST(req: Request) {
     });
 
     if (user) {
-
-      return new Response(JSON.stringify(true));
+      return new Response(JSON.stringify(user));
     } else {
       const user = new User({
         name: body.name,
@@ -32,7 +31,7 @@ export async function POST(req: Request) {
     const user = await User.findOne({
       email: body.signInEmail,
     });
-    console.log(body.UserPassword);
+
     if (user && (await bcrypt.compare(body.UserPassword, user.password))) {
       const { password, ...userWithoutPass } = user;
       return new Response(JSON.stringify(userWithoutPass));

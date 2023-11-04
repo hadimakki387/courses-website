@@ -6,7 +6,7 @@ function CheckBoxes({ setPlan ,Plan}: { setPlan: any ,Plan:any}) {
 
   const [ShowEditInfo, editProfile, planSettings, data] =
   useContext(ProfileContext);
-  console.log(data.plans)
+
 
   return (
     <>

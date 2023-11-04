@@ -1,7 +1,11 @@
+"use client"
+import { ToastType } from "@/constants";
+import { generateToast } from "@/utils/globalFunctions/global-functions";
 import Image from "next/image";
 import React from "react";
 
 function Header() {
+  
   return (
     <div className="text-white h-[85vh] flex justify-between items-center  relative Header mx-24 max-[990px]:mx-0 max-[990px]:items-start max-[990px]:mt-12 max-[990px]:h-[50vh]">
       <div className=" flex flex-col text-7xl z-10 font-extrabold max-[990px]:text-center max-[990px]:m-auto max-[890px]:text-5xl max-[452px]:text-4xl">

@@ -1,8 +1,11 @@
-import { signOut, useSession } from "next-auth/react";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useGetUserQuery } from "@/api/apiSlice";
 
 function SideBarDiv({
   SideBar,
@@ -42,11 +45,15 @@ function SideBarDiv({
 
   const handleClick = async (index: any) => {
     setSideBar(false);
+
     if (index.text3) {
-      await signOut();
+      Cookies.remove("codestreamUserId");
+      Cookies.remove("codestreamToken");
+      window.location.reload();
     }
   };
-  const session = useSession();
+
+  const { data: user } = useGetUserQuery({});
 
   return (
     <div
@@ -69,7 +76,9 @@ function SideBarDiv({
                   />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm">{session.data?.user.name}</p>
+                  <p className="text-sm">
+                    {user?.name ? user?.name : "User Name"}
+                  </p>
                   <p className="text-xs">plan</p>
                 </div>
               </div>

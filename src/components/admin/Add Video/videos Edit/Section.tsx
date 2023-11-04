@@ -27,7 +27,7 @@ function Section({
   }
 
   const [show,setShow] = useState(false)
-  console.log(show)
+
 
   return (
     <div key={section.id} className="flex flex-col gap-3">

@@ -39,7 +39,7 @@ function ApprovePayments() {
     adminQuery({ payment: payment, plan: plan, toDo: "approveRequest" })
     setNum(num + 1);
   };
-  console.log(data);
+
   return (
     <>
       {data ? (

@@ -12,45 +12,33 @@ import { ProfileContext } from "@/context/ProfileContext";
 import LoadingScreen from "../loading/LoadingScreen";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
-import { useSession } from "next-auth/react";
+
 import UnauthorizedPage from "../unauthorized/UnauthorizedPage";
 import {
   useGetProfileDataQuery,
+  useGetUserQuery,
   useProfileQueryMutation,
   useSendPaymentMutation,
 } from "@/api/apiSlice";
+import {
+  generateToast,
+  updateToast,
+} from "@/utils/globalFunctions/global-functions";
+import { ToastType } from "@/constants";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
   const [IsEditInfo, setIsEditInfo] = useState(false);
 
-  const [subRes, setSubRes]: any = useState();
-  const session = useSession();
-
-  const isAuth = session.status === "authenticated" ? true : false;
-  const authUser = session.data?.user;
-  let flash: any;
   const { data, isSuccess, isLoading, isError, error, refetch } =
     useGetProfileDataQuery({});
-  const [
-    profileQuery,
-    {
-      data: PostData,
-      isSuccess: PostSuccess,
-      error: PostError,
-      isLoading: PostLoading,
-    },
-  ] = useProfileQueryMutation();
+
   const [
     sendPayment,
     { data: PaymentRes, isSuccess: paymentSucces, error: PaymentError },
   ] = useSendPaymentMutation();
 
-  useEffect(() => {
-    if (authUser) {
-      profileQuery({ id: authUser?.id, toDo: "getUser" });
-    }
-  }, [authUser]);
+  const { data: user, isLoading: userLoading } = useGetUserQuery({});
 
   const params = useSearchParams();
   const param = params.get("selectPlan");
@@ -70,24 +58,33 @@ function Index() {
   const planSettings = async (e: any) => {
     const data = {
       ...e,
-      payerID: PostData._id,
+      payerID: user._id,
     };
 
-    sendPayment({ data: data, toDo: "sendPayment" });
+    const id = generateToast({
+      message: "Sending Your Payment",
+      isLoading: true,
+      toastType: ToastType.default,
+    });
+    sendPayment({ data: data })
+      .unwrap()
+      .then(() => {
+        updateToast(id, "Your Payment has been sent", {
+          isLoading: false,
+          toastType: ToastType.success,
+          duration: 2000,
+        });
+        setIsEditInfo(false)
+      })
+      .catch((err) => {
+        updateToast(id, `${err.data.message}`, {
+          isLoading: false,
+          toastType: ToastType.error,
+          duration: 2000,
+        });
+        setIsEditInfo(false)
+      });
   };
-
-  useEffect(() => {
-    setSubRes(PaymentRes);
-  }, [PaymentRes]);
-
-  useEffect(() => {
-    if (subRes === "saved") {
-      setIsEditInfo(false);
-      setTimeout(() => {
-        setSubRes("");
-      }, 5000);
-    }
-  }, [subRes]);
 
   useEffect(() => {
     // Check if the user is on a Windows platform
@@ -106,10 +103,9 @@ function Index() {
     }
   }, [SideBar]);
 
-
   return (
     <div>
-      {isSuccess && isAuth && PostData ? (
+      {isSuccess && !userLoading ? (
         <div
           className={`course-lighter-bg-color text-white bg-red-700 profilePage transform-none${
             data && data.videos?.length < 2
@@ -133,30 +129,13 @@ function Index() {
                 editProfile,
                 planSettings,
                 data,
-                PostData,
+                user,
                 PaymentError,
               ]}
             >
               <ProfileHeader />
 
               {IsEditInfo && <ProfileeditInfoSection />}
-              {subRes === "saved" ? (
-                <div className="w-full bg-green-700  p-4 flex justify-center items-center gap-4 rounded-md mt-4">
-                  Your Request Has Been Recieved{" "}
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="border border-white p-2 rounded-full"
-                  />
-                </div>
-              ) : subRes === "error" ? (
-                <div className="w-full bg-red-800  p-4 flex justify-center items-center gap-4 rounded-md mt-4">
-                  Your Request Has Been Declined Please Try Again Later{" "}
-                  <FontAwesomeIcon
-                    icon={faX}
-                    className="border border-white p-2 rounded-full"
-                  />
-                </div>
-              ) : null}
 
               {/* This is the activity section */}
 
@@ -164,9 +143,14 @@ function Index() {
                 My Activity
               </h2>
               {data.videos ? (
-                <div className={`w-full flex flex-col gap-2 ${PostData.watchedVideos.length>10&&"overflow-y-scroll h-[50vh]"}`} >
+                <div
+                  className={`w-full flex flex-col gap-2 ${
+                    user.watchedVideos.length > 10 &&
+                    "overflow-y-scroll h-[50vh]"
+                  }`}
+                >
                   {data.videos.map((video: any, index: any) => {
-                    const watchedVideoActivities = PostData.watchedVideos.map(
+                    const watchedVideoActivities = user.watchedVideos.map(
                       (item: any, index: any) => {
                         if (video._id === item) {
                           return (
@@ -179,10 +163,9 @@ function Index() {
                     return watchedVideoActivities; // Return the array of ProfileActivity components
                   })}
                 </div>
-              ) : PostData.watchedVideos.length === 0 ||
-                !PostData.watchedVideos ? (
+              ) : user.watchedVideos.length === 0 || !user.watchedVideos ? (
                 <div>Didint watch any video yet</div>
-              ) : PostLoading ? (
+              ) : userLoading ? (
                 <div>loading...</div>
               ) : null}
 
@@ -193,12 +176,10 @@ function Index() {
             <Footer />
           </div>
         </div>
-      ) : isLoading && !isAuth && !data ? (
+      ) : (userLoading && !user) || (isLoading && !data) ? (
         <div className="w-screen h-screen grid place-items-center">
           <LoadingScreen />
         </div>
-      ) : !isError && !isAuth && !PostData?.email ? (
-        <UnauthorizedPage />
       ) : null}
     </div>
   );

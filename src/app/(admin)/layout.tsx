@@ -1,10 +1,12 @@
 "use client";
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "react-toastify/dist/ReactToastify.css";
-import ToastWrapper from "./ToastWrapper";
-import { useEffect, useState } from "react";
+
+import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
+import { MernApi } from "@/api/apiSlice";
+import AdminAuthGuard from "./AdminAuthGuard"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,18 +20,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [client, setClient] = useState(false);
-  useEffect(() => {
-    setClient(true);
-  }, []);
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastWrapper>
-          {children}
-        </ToastWrapper>
-        
-
+        <ApiProvider api={MernApi}>
+          <AdminAuthGuard>{children}</AdminAuthGuard> 
+        </ApiProvider>
       </body>
     </html>
   );

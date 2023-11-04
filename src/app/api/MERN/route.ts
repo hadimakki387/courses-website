@@ -21,55 +21,44 @@ export async function POST(req: any, res: any) {
 
   const body = await req.json();
 
-  if (body.toDo === "AddWatchedVideos") {
-    const user = await User.findById(body.user);
-    console.log(user);
-    // check if he watched this video before
-    const isFound = user.watchedVideos.find(
-      (video: any) => video === body.PlayingVideo._id
-    );
+  const user = await User.findById(body.user);
 
-    try {
-      // check if the user has watched videos or not
-      // if he didnt automatically save the playing video
-      if (user.watchedVideos.length !== 0) {
-        // if he didnt watch save the playing video
-        if (!isFound) {
-          const watchedVideos = [...user.watchedVideos, body.PlayingVideo._id];
-          const AddWatchedVideos = await User.findOneAndUpdate(
-            { _id: user },
-            { watchedVideos: watchedVideos }
-          );
-          console.log("not found");
-          return new Response(JSON.stringify("saved"));
-        }
+  console.log(user)
 
-        return new Response(JSON.stringify("user watched this video"));
-      } else {
-        console.log("no videos");
-        const watchedVideos = [body.PlayingVideo._id];
-        console.log(watchedVideos);
+  // check if he watched this video before
+  const isFound = user.watchedVideos.find(
+    (video: any) => video === body.PlayingVideo._id
+  );
+
+  try {
+    // check if the user has watched videos or not
+    // if he didnt automatically save the playing video
+    if (user.watchedVideos.length !== 0) {
+      // if he didnt watch save the playing video
+      if (!isFound) {
+        const watchedVideos = [...user.watchedVideos, body.PlayingVideo._id];
         const AddWatchedVideos = await User.findOneAndUpdate(
           { _id: user },
           { watchedVideos: watchedVideos }
         );
-        console.log("updated");
-        return new Response(
-          JSON.stringify({ message: "user watched this video" })
-        );
+        console.log("not found");
+        return new Response(JSON.stringify("saved"));
       }
-    } catch (err) {
-      return new Response(JSON.stringify(err));
-    }
-  }
 
-  if (body.toDo === "getUser") {
-    try {
-      const user = await User.findOne({ _id: body.id });
-      return new Response(JSON.stringify(user));
-    } catch (e) {
-      console.log(e);
-      return new Response(JSON.stringify(e));
+      return new Response(JSON.stringify("user watched this video"));
+    } else {
+      const watchedVideos = [body.PlayingVideo._id];
+      console.log(watchedVideos);
+      const AddWatchedVideos = await User.findOneAndUpdate(
+        { _id: user },
+        { watchedVideos: watchedVideos }
+      );
+  
+      return new Response(
+        JSON.stringify({ message: "saved" })
+      );
     }
+  } catch (err) {
+    return new Response(JSON.stringify(err));
   }
 }

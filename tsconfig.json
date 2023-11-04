@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/page.jsx", "src/app/particles.js", "src/app/context/FakeVideosContext.js", "src/app/api/admin/route.tsx", "src/Queries/GetVideos.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/page.jsx", "src/app/particles.js", "src/app/context/FakeVideosContext.js", "src/app/api/admin/route.tsx", "src/Queries/GetVideos.js", "src/app/api/users/getuser/[id]/route.js"],
   "exclude": ["node_modules"]
 }

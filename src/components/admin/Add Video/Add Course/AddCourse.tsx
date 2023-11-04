@@ -11,7 +11,6 @@ function AddCourse() {
   };
   const fetchNewCourse = () => {
     adminQuery({ data: course, toDo: "AddNewCourse" })
-    console.log(course);
   };
   return (
     <div className="flex flex-col gap-4">

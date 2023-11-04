@@ -8,7 +8,6 @@ import {
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
 import { FakeVideoContext } from "@/context/FakeVideosContext";
-import { useSession } from "next-auth/react";
 import { useMernQueryMutation } from "@/api/apiSlice";
 
 // ... (imports and other code)
@@ -48,9 +47,7 @@ function SectionCard({
   }, [PlayingVideo.sectionID, sectionID]);
 
   const isAuth = false;
-  const session = useSession();
 
-  const authUser = session.data?.user;
 
 
 
@@ -59,6 +56,7 @@ function SectionCard({
       chosenVideo(id);
     }
   };
+  console.log(user.plan)
 
   return (
     <div className="flex flex-col gap-2  ">

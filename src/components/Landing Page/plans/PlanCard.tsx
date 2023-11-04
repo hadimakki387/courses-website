@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -22,8 +22,8 @@ function PlanCard({
 }) {
 
   const router = useRouter();
-  const session = useSession();
-  const isAuth = session.status === "authenticated" ? true : false;
+
+  const isAuth = true 
 
   const planSelection = () => {
     if (isAuth) {

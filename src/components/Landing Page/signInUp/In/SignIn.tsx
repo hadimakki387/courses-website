@@ -4,29 +4,63 @@ import CloseSvg from "./SVGs/CloseSvg";
 import CheckSvg from "./SVGs/CheckSvg";
 import Email from "./Inputs/Email";
 import PasswordInput from "./Inputs/PasswordInput";
+import { useSignInMutation } from "@/api/apiSlice";
+import { useRouter } from "next/navigation";
+import { ToastType } from "@/constants";
+import { generateToast, getUniqueID, updateToast } from "@/utils/globalFunctions/global-functions";
 
 function SignIn({
   showSignUp,
   showSignIn,
-  getSignInData,
-  flash
 }: {
   showSignUp: any;
-  getSignInData: any;
-  showSignIn:any
-  flash:string
+  showSignIn: any;
 }) {
   const [signInData, setSignInData] = useState({});
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
+  const [signIn, { data, error }] = useSignInMutation();
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if(emailValid && passwordValid){
-      getSignInData(signInData);
 
+  
+
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  if (emailValid && passwordValid) {
+    try {
+      const id = generateToast({
+        message: "Signing You In",
+        isLoading: true,
+        toastType: ToastType.default
+      });
+
+      signIn(signInData)
+        .unwrap()
+        .then(() => {
+          updateToast(id, "You Are Signed In", {
+            isLoading: false,
+            toastType: ToastType.success,
+            duration: 2000
+          });
+          
+            window.location.reload();
+        
+        })
+        .catch((err) => {
+          updateToast(id, `${err.data.message}`, {
+            isLoading: false,
+            toastType: ToastType.error,
+            duration: 2000
+          });
+          console.log(err);
+        });
+    } catch (error) {
+      console.error("Sign-in failed:", error);
     }
-  };
+  }
+};
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,7 +99,7 @@ function SignIn({
                     <form onSubmit={handleSubmit}>
                       <div className="control" data-js="email_field">
                         <Email
-                          name="signInEmail"
+                          name="email"
                           setEmailValid={setEmailValid}
                           handleInputChange={handleInputChange}
                         />
@@ -76,8 +110,7 @@ function SignIn({
                           handleInputChange={handleInputChange}
                         />
                       </div>
-                      
-                      
+
                       <div className="mt-10 text-center">
                         <button
                           className={`btn flex-center btn-blue w-full ${
@@ -87,11 +120,14 @@ function SignIn({
                           }`}
                           type="submit"
                         >
-                          <span className="text-wrap inline-block flex-shrink-0" >
+                          <span className="text-wrap inline-block flex-shrink-0">
                             Log In
                           </span>
                         </button>
-                        <button className="mx-auto mt-4 block text-sm text-grey-600 hover:underline" onClick={showSignUp}>
+                        <button
+                          className="mx-auto mt-4 block text-sm text-grey-600 hover:underline"
+                          onClick={showSignUp}
+                        >
                           Sign Up
                         </button>
                       </div>
