@@ -10,7 +10,7 @@ const token = Cookie.get("codestreamToken");
 export const MernApi = createApi({
   reducerPath: "MernApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: local,
+    baseUrl: production,
     headers: {
       Authorization: `${token}`,
     },
