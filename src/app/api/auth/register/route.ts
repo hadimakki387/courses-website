@@ -1,8 +1,8 @@
 import User from "@/Models/UserSchema";
 import MongoConnection from "@/utils/MongoConnection";
-import * as bcrypt from "bcryptjs";
+import { hash } from "bcrypt";
 import httpStatus from "http-status";
-import { JsonWebTokenError, sign } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import moment from "moment";
 
 export async function POST(req: Request) {
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     const user = new User({
       name: body.name,
       email: body.email,
-      password: await bcrypt.hash(body.password, 10),
+      password: await hash(body.password, 10),
       image: "",
       isVIP: false,
       watchedVideos: [],

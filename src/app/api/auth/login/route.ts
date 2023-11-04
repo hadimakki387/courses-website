@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { UserInterface } from "@/interfaces";
 import moment from "moment"
-import { compare } from "bcryptjs";
+import { compare } from "bcrypt";
+
 
 export async function POST(req: Request, res: Response) {
   MongoConnection();
