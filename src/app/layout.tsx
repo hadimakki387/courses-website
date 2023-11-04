@@ -17,10 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [client, setClient] = useState(false);
-  useEffect(() => {
-    setClient(true);
-  }, []);
+
   return (
     <html lang="en">
       <body className={inter.className}>
