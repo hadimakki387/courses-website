@@ -6,6 +6,7 @@ import ClickAwayListener from "react-click-away-listener";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useGetUserQuery } from "@/api/apiSlice";
+import { getIdFromCookie } from "@/utils/globalFunctions/global-functions";
 
 function SideBarDiv({
   SideBar,
@@ -53,7 +54,7 @@ function SideBarDiv({
     }
   };
 
-  const { data: user } = useGetUserQuery({});
+  const { data: user } = useGetUserQuery({id:getIdFromCookie()});
 
   return (
     <div

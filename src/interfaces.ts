@@ -7,5 +7,8 @@ export interface UserInterface{
     subscribed_at:string,
     password:string,
     id:string
+    watchedVideos:string[],
+    plan:string
+    _id:string
 }
 

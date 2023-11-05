@@ -22,7 +22,6 @@ export const MernApi = createApi({
     adminQuery: builder.mutation({
       query: (data) => ({
         url: `admin`,
-
         method: "POST",
         body: data,
       }),
@@ -87,12 +86,32 @@ export const MernApi = createApi({
         return response.UserData || {};
       },
     }),
-    getUser: builder.query({
-      query: () => `users/getuser/${Cookie.get("codestreamUserId")}`,
+    getUser: builder.query<UserInterface, any>({
+      query: ({id}) => `users/getuser/${id}`,
       transformResponse: (response: any) => {
         return response;
       },
     }),
+    updateName: builder.mutation<Pick<UserInterface, "password" | "name">,any>(
+      {
+        query: ({ id, data }) => ({
+          url: `/users/${Cookie.get("codestreamUserId")}`,
+          method: "PATCH",
+          body: data,
+        }),
+        async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+          try {
+            const { data: updatedPost } = await queryFulfilled
+            const patchResult = dispatch(
+              MernApi.util.updateQueryData('getUser', {id:id}, (draft) => {
+                draft.name = updatedPost.name
+              })
+            )
+          } catch {}
+        },
+      }
+    )
+    
   }),
 });
 
@@ -108,4 +127,5 @@ export const {
   useSignUpMutation,
   useSendPaymentMutation,
   useGetUserQuery,
+  useUpdateNameMutation,
 } = MernApi;

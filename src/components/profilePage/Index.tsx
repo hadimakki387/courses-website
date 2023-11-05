@@ -22,6 +22,7 @@ import {
 } from "@/api/apiSlice";
 import {
   generateToast,
+  getIdFromCookie,
   updateToast,
 } from "@/utils/globalFunctions/global-functions";
 import { ToastType } from "@/constants";
@@ -38,7 +39,11 @@ function Index() {
     { data: PaymentRes, isSuccess: paymentSucces, error: PaymentError },
   ] = useSendPaymentMutation();
 
-  const { data: user, isLoading: userLoading } = useGetUserQuery({});
+  const { data: user, isLoading: userLoading,error:UserError } = useGetUserQuery({id:getIdFromCookie()});
+  console.log("this is the user")
+  console.log(user)
+  console.log(UserError)
+  console.log(getIdFromCookie())
 
   const params = useSearchParams();
   const param = params.get("selectPlan");
@@ -58,7 +63,7 @@ function Index() {
   const planSettings = async (e: any) => {
     const data = {
       ...e,
-      payerID: user._id,
+      payerID: user?.id,
     };
 
     const id = generateToast({
@@ -145,12 +150,12 @@ function Index() {
               {data.videos ? (
                 <div
                   className={`w-full flex flex-col gap-2 ${
-                    user.watchedVideos.length > 10 &&
+                    user?.watchedVideos && user?.watchedVideos.length > 10 &&
                     "overflow-y-scroll h-[50vh]"
                   }`}
                 >
                   {data.videos.map((video: any, index: any) => {
-                    const watchedVideoActivities = user.watchedVideos.map(
+                    const watchedVideoActivities = user?.watchedVideos.map(
                       (item: any, index: any) => {
                         if (video._id === item) {
                           return (
@@ -163,7 +168,7 @@ function Index() {
                     return watchedVideoActivities; // Return the array of ProfileActivity components
                   })}
                 </div>
-              ) : user.watchedVideos.length === 0 || !user.watchedVideos ? (
+              ) : user?.watchedVideos.length === 0 || !user?.watchedVideos ? (
                 <div>Didint watch any video yet</div>
               ) : userLoading ? (
                 <div>loading...</div>

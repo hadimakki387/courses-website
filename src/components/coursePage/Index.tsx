@@ -17,6 +17,7 @@ import {
   useMernQueryMutation,
 } from "@/api/apiSlice";
 import Cookies from "js-cookie";
+import { getIdFromCookie } from "@/utils/globalFunctions/global-functions";
 
 function Index() {
   const [SideBar, setSideBar] = useState(false);
@@ -32,9 +33,7 @@ function Index() {
   const [IsVideosBar, setIsVideosBar] = useState(false);
  
 
-  const {data:user,error:userError} = useGetUserQuery({})
-
- 
+  const {data:user,error:userError} = useGetUserQuery({id:getIdFromCookie()})
 
 
   
@@ -88,10 +87,10 @@ function Index() {
     }
   }, [SideBar]);
 
-  const isVip = adminData?.users.find((use: any) => use._id === user?.id)?.plan
-    ? true
-    : false;
-   
+  const isPlanFound = adminData?.plans.find((plan:any)=>plan._id ===user?.plan)
+
+  const isVip = user?.plan && isPlanFound ?true:false
+  console.log(user)
 
   useEffect(() => {
     

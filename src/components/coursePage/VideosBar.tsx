@@ -7,6 +7,7 @@ import { FakeVideoContext } from "@/context/FakeVideosContext";
 import { useGetUserQuery, useMernQueryMutation } from "@/api/apiSlice";
 
 import LoadingSpinner from "../loading/loadingSpinner/LoadingSpinner";
+import { getIdFromCookie } from "@/utils/globalFunctions/global-functions";
 
 function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
   const [
@@ -19,7 +20,7 @@ function VideosBar({ IsVideosBar }: { IsVideosBar: boolean }) {
     setPlayingVideo,
   ] = useContext(FakeVideoContext);
 
-  const { data: user, isSuccess } = useGetUserQuery({});
+  const { data: user, isSuccess } = useGetUserQuery({id:getIdFromCookie()});
 
   return (
     <div

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import LoadingSpinner from "./loading/loadingSpinner/LoadingSpinner";
 import Cookies from "js-cookie";
 import { useGetUserQuery } from "@/api/apiSlice";
+import { getIdFromCookie } from "@/utils/globalFunctions/global-functions";
 
 function NavBar({
   showSignIn,
@@ -17,7 +18,7 @@ function NavBar({
 }) {
 
   const userId = Cookies.get("codestreamUserId");
-  const { data: user, isLoading,refetch } = useGetUserQuery({  });
+  const { data: user, isLoading,refetch } = useGetUserQuery({id:getIdFromCookie()});
   useEffect(()=>{
     if(user){
       refetch()

@@ -48,7 +48,7 @@ export async function POST(req: Request) {
         UserData,
         token: {
           value: token,
-          expires: moment().add(1, "h").toISOString(),
+          expires: moment().add(15,'d').toISOString(),
         },
       })
     );

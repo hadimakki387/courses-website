@@ -1,11 +1,16 @@
+import { useUpdateNameMutation } from "@/api/apiSlice";
 import InputText from "@/components/inputs/InputText";
+import { ToastType } from "@/constants";
 import { ProfileContext } from "@/context/ProfileContext";
+import { generateToast, getIdFromCookie, updateToast } from "@/utils/globalFunctions/global-functions";
 import React, { useContext, useState } from "react";
 
 function PersonalInfoForm() {
-  const [ShowEditInfo, editProfile,planSettings,data] = useContext(ProfileContext);
+  const [ShowEditInfo, editProfile, planSettings, data] =
+    useContext(ProfileContext);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [updateName] = useUpdateNameMutation();
 
   const handleName = (e: any) => {
     setName(e.target.value);
@@ -14,15 +19,33 @@ function PersonalInfoForm() {
     setPassword(e.target.value);
   };
   const submitData = () => {
-    editProfile({
-      name: name,
-      password: password,
-    });
+   const id = generateToast({
+      message:"Updating You Name",
+      isLoading:true
+    })
+    updateName({
+      id: getIdFromCookie(),
+      data: {
+        name: name,
+        password: password,
+      },
+    }).unwrap().then(()=>{
+      updateToast(id,"Name updated",{
+        toastType:ToastType.success,
+        isLoading:false,
+        duration:2000
+      })
+    }).catch((err)=>{
+      updateToast(id,`${err.data.message}`,{
+        toastType:ToastType.error,
+        isLoading:false,
+        duration:2000
+      })
+    })
   };
 
   return (
     <div className="flex flex-col ">
-      
       <InputText
         name="UserName"
         type="text"

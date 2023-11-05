@@ -6,10 +6,11 @@ import React, { useEffect, useLayoutEffect } from "react";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "@/components/loading/LoadingScreen";
+import { getIdFromCookie } from "@/utils/globalFunctions/global-functions";
 
 function AdminAuthGuard({ children }: { children: React.ReactNode }) {
 
-  const { data: user, isLoading } = useGetUserQuery({ });
+  const { data: user, isLoading } = useGetUserQuery({id:getIdFromCookie()});
   const router = useRouter();
 
   useLayoutEffect(() => {
