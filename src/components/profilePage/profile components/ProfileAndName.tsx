@@ -1,4 +1,5 @@
 import { ProfileContext } from "@/context/ProfileContext";
+import dayjs from "dayjs";
 import Image from "next/image";
 import React, { useContext } from "react";
 
@@ -14,9 +15,7 @@ function ProfileAndName({
   const [ShowEditInfo, editProfile, planSettings, data, user] =
     useContext(ProfileContext);
 
-  const date = new Date(user.created_at);
-  const options: any = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = date.toLocaleDateString(undefined, options);
+  const formattedDate = dayjs(user.created_at).format('MMMM D, YYYY');
 
   const sub = data.plans?.find((plan: any) => {
     return plan._id === user.plan;

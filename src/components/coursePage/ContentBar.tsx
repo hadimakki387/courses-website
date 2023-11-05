@@ -23,6 +23,9 @@ function ContentBar() {
 
   const [ratio, setRatio] = useState(100 * aspectRatio);
 
+
+
+
   return (
     <div
       className={`course-lighter-bg-color space-y-4 w-full min-[1300px]:ml-[23vw] ${

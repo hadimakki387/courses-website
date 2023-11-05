@@ -2,7 +2,11 @@ import { useUpdateNameMutation } from "@/api/apiSlice";
 import InputText from "@/components/inputs/InputText";
 import { ToastType } from "@/constants";
 import { ProfileContext } from "@/context/ProfileContext";
-import { generateToast, getIdFromCookie, updateToast } from "@/utils/globalFunctions/global-functions";
+import {
+  generateToast,
+  getIdFromCookie,
+  updateToast,
+} from "@/utils/globalFunctions/global-functions";
 import React, { useContext, useState } from "react";
 
 function PersonalInfoForm() {
@@ -19,29 +23,33 @@ function PersonalInfoForm() {
     setPassword(e.target.value);
   };
   const submitData = () => {
-   const id = generateToast({
-      message:"Updating You Name",
-      isLoading:true
-    })
+    const id = generateToast({
+      message: "Updating You Name",
+      isLoading: true,
+      toastType: ToastType.default,
+    });
     updateName({
       id: getIdFromCookie(),
       data: {
         name: name,
         password: password,
       },
-    }).unwrap().then(()=>{
-      updateToast(id,"Name updated",{
-        toastType:ToastType.success,
-        isLoading:false,
-        duration:2000
-      })
-    }).catch((err)=>{
-      updateToast(id,`${err.data.message}`,{
-        toastType:ToastType.error,
-        isLoading:false,
-        duration:2000
-      })
     })
+      .unwrap()
+      .then(() => {
+        updateToast(id, "Name updated", {
+          toastType: ToastType.success,
+          isLoading: false,
+          duration: 2000,
+        });
+      })
+      .catch((err) => {
+        updateToast(id, `${err.data.message}`, {
+          toastType: ToastType.error,
+          isLoading: false,
+          duration: 2000,
+        });
+      });
   };
 
   return (

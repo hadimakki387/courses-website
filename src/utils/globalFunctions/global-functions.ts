@@ -1,5 +1,4 @@
 import { ToastType } from "@/constants";
-import { compareSync } from "bcryptjs";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import Cookies from "js-cookie";
@@ -57,9 +56,7 @@ export function extractIdFromUrl(url:string){
   return id
 }
 
-export async function checkPasswordMatch(pass:string,hash:string){
-  return compareSync(pass, hash)
-}
+
 
 export function getIdFromCookie(){
   const cookie = Cookies.get("codestreamUserId")

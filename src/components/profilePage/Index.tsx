@@ -40,10 +40,7 @@ function Index() {
   ] = useSendPaymentMutation();
 
   const { data: user, isLoading: userLoading,error:UserError } = useGetUserQuery({id:getIdFromCookie()});
-  console.log("this is the user")
-  console.log(user)
-  console.log(UserError)
-  console.log(getIdFromCookie())
+
 
   const params = useSearchParams();
   const param = params.get("selectPlan");
@@ -63,7 +60,7 @@ function Index() {
   const planSettings = async (e: any) => {
     const data = {
       ...e,
-      payerID: user?.id,
+      payerID: user?._id,
     };
 
     const id = generateToast({

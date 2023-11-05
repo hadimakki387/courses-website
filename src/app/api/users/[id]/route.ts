@@ -1,8 +1,8 @@
 import User from "@/Models/UserSchema";
 import {
-  checkPasswordMatch,
   extractIdFromUrl,
 } from "@/utils/globalFunctions/global-functions";
+import { compare } from "bcrypt";
 import httpStatus from "http-status";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -21,7 +21,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     );
 
   if (user) {
-    const userMatch = await checkPasswordMatch(body.password, user.password);
+    const userMatch = await compare(body.password, user.password);
     if (user && !userMatch)
       return new Response(
         JSON.stringify({

@@ -7,6 +7,7 @@ import { OurFileRouter } from "@/app/api/uploadthing/core";
 import "@uploadthing/react/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import dayjs from "dayjs";
 
 function SubscriptionFrom() {
   const [ShowEditInfo, editProfile, planSettings, data, user, flash] =
@@ -55,9 +56,7 @@ function SubscriptionFrom() {
     });
   }, [res]);
 
-  const date = new Date(user.subscribed_at);
-  const options: any = { year: "numeric", month: "long", day: "numeric" };
-  const formattedDate = date.toLocaleDateString(undefined, options);
+  const formattedDate = dayjs(user.subscribed_at).format("MMMM D, YYYY");
 
   const currentDate: any = new Date();
   const timeDifference = currentDate - new Date(user.subscribed_at).getTime();
@@ -99,9 +98,9 @@ function SubscriptionFrom() {
                       </ul>
                     </div>
                     <div className="mt-4">
-                      Once you&apos;ve made the payment, simply send us a screenshot
-                      of the transaction. We&apos;ll work to approve your request as
-                      quickly as possible.
+                      Once you&apos;ve made the payment, simply send us a
+                      screenshot of the transaction. We&apos;ll work to approve
+                      your request as quickly as possible.
                     </div>
                   </div>
                   <main className="justify-between  bg-[#1e2f4b] hover:bg-[#213452] transition-all duration-300">
@@ -143,7 +142,7 @@ function SubscriptionFrom() {
                     </p>
                   )}
                 </div>
-                
+
                 <div className="flex w-full justify-start gap-4">
                   <button
                     onClick={sendPlanData}
