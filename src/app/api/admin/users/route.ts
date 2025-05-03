@@ -1,8 +1,10 @@
 import Plan from "@/Models/PlansSchema";
 import User from "@/Models/UserSchema";
+import MongoConnection from "@/utils/MongoConnection";
 import { NextResponse } from "next/server";
 
 export async function GET(req: any, res: any) {
+  await MongoConnection();
   //   const page = parseInt(req.nextUrl.searchParams.get("page"));
   //   const limit = parseInt(req.nextUrl.searchParams.get("limit"));
   //   const skip = (page - 1) * limit;
