@@ -1,8 +1,10 @@
-import { UserInterface } from "@/interfaces";
+import { AdminUserInterface, PlanInterface, UserInterface } from "@/interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookie from "js-cookie";
 const production = "https://codestream.netlify.app/api/";
 const local = "http://localhost:3000/api/";
+const baseUrl =
+  process.env.NEXT_PUBLIC_NODE_ENV === "local" ? local : production;
 
 const token = Cookie.get("codestreamToken");
 
@@ -10,7 +12,7 @@ const token = Cookie.get("codestreamToken");
 export const MernApi = createApi({
   reducerPath: "MernApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: production,
+    baseUrl: baseUrl,
     headers: {
       Authorization: `${token}`,
     },
@@ -87,12 +89,12 @@ export const MernApi = createApi({
       },
     }),
     getUser: builder.query<UserInterface, any>({
-      query: ({id}) => `users/getuser/${id}`,
+      query: ({ id }) => `users/getuser/${id}`,
       transformResponse: (response: any) => {
         return response;
       },
     }),
-    updateName: builder.mutation<Pick<UserInterface, "password" | "name">,any>(
+    updateName: builder.mutation<Pick<UserInterface, "password" | "name">, any>(
       {
         query: ({ id, data }) => ({
           url: `/users/${Cookie.get("codestreamUserId")}`,
@@ -101,17 +103,40 @@ export const MernApi = createApi({
         }),
         async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
           try {
-            const { data: updatedPost } = await queryFulfilled
+            const { data: updatedPost } = await queryFulfilled;
             const patchResult = dispatch(
-              MernApi.util.updateQueryData('getUser', {id:id}, (draft) => {
-                draft.name = updatedPost.name
+              MernApi.util.updateQueryData("getUser", { id: id }, (draft) => {
+                draft.name = updatedPost.name;
               })
-            )
+            );
           } catch {}
         },
       }
-    )
-    
+    ),
+    getAdminUsers: builder.query<
+      AdminUserInterface[],
+      {
+        page?: number;
+        limit?: number;
+      }
+    >({
+      query: ({ page = 1, limit = 20 }) => {
+        return {
+          url: `/admin/users`,
+          params: { page, limit },
+        };
+      },
+    }),
+    getAdminPlans: builder.query<PlanInterface[], void>({
+      query: () => `/admin/users/plans`,
+    }),
+    updateUserPlan: builder.mutation<void, { planId: string; userId: string }>({
+      query: ({ planId, userId }) => ({
+        url: `/admin/users/plans`,
+        method: "POST",
+        body: { planId, userId },
+      }),
+    }),
   }),
 });
 
@@ -128,4 +153,7 @@ export const {
   useSendPaymentMutation,
   useGetUserQuery,
   useUpdateNameMutation,
+  useGetAdminUsersQuery,
+  useGetAdminPlansQuery,
+  useUpdateUserPlanMutation,
 } = MernApi;

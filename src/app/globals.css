@@ -4,33 +4,32 @@
 *,
 *:after,
 *:before {
-	box-sizing: border-box;
-	transform-style:initial 
+  box-sizing: border-box;
+  transform-style: initial;
 }
 
-.main{
-  background: #151f32  url("/home-banner-bg.png");
+.main {
+  background: #151f32 url("/home-banner-bg.png");
   background-blend-mode: luminosity;
   background-position: top;
   background-position-y: -50%;
   background-repeat: no-repeat;
   background-size: auto;
   bottom: 0;
+}
+@media (max-width: 1100px) {
+  .main {
+    background-position-y: -20%;
+  }
+}
 
+html {
+  height: 100%;
+  background-color: rgb(24 24 27);
 }
-@media (max-width:1100px) {
- .main{
-  background-position-y: -20%;
-}
-}
-
-html{
+body {
   height: 100%;
 }
-body{
-  height: 100%;
-}
-
 
 .btn-blue {
   --tw-gradient-from: #328af1;
@@ -79,51 +78,51 @@ body{
   background: linear-gradient(180deg, #a1b6e5, #253d63);
 }
 
-.sm-text-c{
+.sm-text-c {
   color: #bad9fc;
 }
 
-.course-page-bg{
+.course-page-bg {
   background: #0d131d;
 }
 
-.course-lighter-bg-color{
+.course-lighter-bg-color {
   background: #151f32;
 }
-.course-lighter-bg-divs{
+.course-lighter-bg-divs {
   background: #18273f;
 }
 
-.from-frameworks-light{
+.from-frameworks-light {
   --tw-gradient-to: #ec454f;
   --tw-gradient-from: #f44881;
-  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to,rgba(244,72,129,0));
-  background-image: linear-gradient(to left,var(--tw-gradient-stops));
-
+  --tw-gradient-stops: var(--tw-gradient-from),
+    var(--tw-gradient-to, rgba(244, 72, 129, 0));
+  background-image: linear-gradient(to left, var(--tw-gradient-stops));
 }
 
-.NavBar{
+.NavBar {
   z-index: 20;
   background: #18273f50;
   backdrop-filter: blur(4px);
 }
 
-.profilePage{
+.profilePage {
   background-image: url("/upper-gradient.svg");
   background-repeat: no-repeat;
 }
 
-.experience-shadow{
-  border:1px solid rgba(14, 164, 233, 0.1) ;
+.experience-shadow {
+  border: 1px solid rgba(14, 164, 233, 0.1);
   --tw-border-opacity: 0;
   box-shadow: rgb(14 165 233 / var(--tw-border-opacity)) 0px 2px 29px 0px;
   filter: grayscale(100%);
 }
-.experience-shadow:hover{
+.experience-shadow:hover {
   --tw-border-opacity: 0.2;
-  border: rgb(14, 164, 233) ;
+  border: rgb(14, 164, 233);
   box-shadow: rgb(14 165 233 / var(--tw-border-opacity)) 0px 2px 29px 0px;
-  border:1px solid rgba(14, 164, 233, 0.3) ;
+  border: 1px solid rgba(14, 164, 233, 0.3);
   filter: grayscale(0);
 }
 

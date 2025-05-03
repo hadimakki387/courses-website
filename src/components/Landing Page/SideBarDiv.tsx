@@ -54,7 +54,7 @@ function SideBarDiv({
     }
   };
 
-  const { data: user } = useGetUserQuery({id:getIdFromCookie()});
+  const { data: user } = useGetUserQuery({ id: getIdFromCookie() });
 
   return (
     <div

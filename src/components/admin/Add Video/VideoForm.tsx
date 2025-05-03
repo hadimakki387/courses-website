@@ -31,11 +31,10 @@ function VideoForm() {
   ] = useAdminQueryMutation();
 
   useEffect(() => {
-    setTimeout(()=>{
-      refetch()
-    },1000)
+    setTimeout(() => {
+      refetch();
+    }, 1000);
   }, [num]);
-
 
   const [video, setVideo] = useState({
     sectionID: "",
@@ -91,18 +90,18 @@ function VideoForm() {
   const fetchNewVideo = async () => {
     const hasEmptyValue = Object.values(video).some((value) => value === "");
     if (!hasEmptyValue) {
-      adminQuery(video)
+      adminQuery(video);
       setNum(num + 1);
     }
   };
 
   const fetchVideoUpdate = (e: any) => {
-    adminQuery({ Data: e, toDo: "fetchVideoUpdate" })
+    adminQuery({ Data: e, toDo: "fetchVideoUpdate" });
     setNum(num + 1);
   };
 
   return (
-    <div className={`flex flex-col gap-8 ${isLoading ? "h-screen" : ""}  `}>
+    <div className={`flex flex-col gap-8 ${isLoading ? "min-h-screen" : ""}  `}>
       {isSuccess ? (
         <>
           <div>
@@ -176,7 +175,7 @@ function VideoForm() {
             setNum={setNum}
           />
         </>
-      ) : isLoading && !Data? (
+      ) : isLoading && !Data ? (
         <div className="grid place-items-center h-full w-full">
           <LoadingScreen />
         </div>

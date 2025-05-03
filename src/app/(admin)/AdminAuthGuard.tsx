@@ -9,8 +9,7 @@ import LoadingScreen from "@/components/loading/LoadingScreen";
 import { getIdFromCookie } from "@/utils/globalFunctions/global-functions";
 
 function AdminAuthGuard({ children }: { children: React.ReactNode }) {
-
-  const { data: user, isLoading } = useGetUserQuery({id:getIdFromCookie()});
+  const { data: user, isLoading } = useGetUserQuery({ id: getIdFromCookie() });
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -19,17 +18,16 @@ function AdminAuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [user, isLoading]);
 
-
   return (
     <>
       {user && !isLoading && user?.isAdmin ? (
         <>{children}</>
-      ) : (!user && !isLoading) || !user?.isAdmin  ? (
+      ) : user && !user?.isAdmin ? (
         <div className="course-lighter-bg-color">
           <UnauthorizedPage />
         </div>
       ) : !user && isLoading ? (
-        <div className="h-screen w-screen flex justify-center items-center bg-zinc-950">
+        <div className="min-h-screen w-screen flex justify-center items-center bg-zinc-950">
           <LoadingScreen />
         </div>
       ) : null}
